@@ -1,0 +1,11 @@
+{
+  "key": "express-mongoose-js-permission-rbac",
+  "name": "Express + Mongoose (JavaScript, Permission RBAC)",
+  "description": "Express API with Mongoose, layered architecture, JWT auth, and permission-based access control (roles map to permissions).",
+  "category": "Backend",
+  "framework": "Express.js",
+  "variant": "Mongoose (Advanced/Pro Devs)",
+  "language": "JavaScript",
+  "rbac": "Permission",
+  "devCommand": "npm run dev"
+}

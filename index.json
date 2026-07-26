@@ -1,22 +1,46 @@
 [
   {
-    "key": "express-mongoose-js",
-    "name": "Express + Mongoose (JavaScript)",
-    "description": "Express API with Mongoose, layered architecture (routes/controllers/services/repositories), Docker, Redis/BullMQ jobs.",
+    "key": "express-mongoose-js-permission-rbac",
+    "name": "Express + Mongoose (JavaScript, Permission RBAC)",
+    "description": "Express API with Mongoose, layered architecture, JWT auth, and permission-based access control (roles map to permissions).",
     "category": "Backend",
     "framework": "Express.js",
     "variant": "Mongoose (Advanced/Pro Devs)",
     "language": "JavaScript",
+    "rbac": "Permission",
     "devCommand": "npm run dev"
   },
   {
-    "key": "express-mongoose-ts",
-    "name": "Express + Mongoose (TypeScript)",
-    "description": "Express API with Mongoose, layered architecture (routes/controllers/services/repositories), Docker, Redis/BullMQ jobs.",
+    "key": "express-mongoose-js-simple-rbac",
+    "name": "Express + Mongoose (JavaScript, Simple RBAC)",
+    "description": "Express API with Mongoose, layered architecture, JWT auth, and simple role-based access control (admin/user).",
+    "category": "Backend",
+    "framework": "Express.js",
+    "variant": "Mongoose (Advanced/Pro Devs)",
+    "language": "JavaScript",
+    "rbac": "Simple",
+    "devCommand": "npm run dev"
+  },
+  {
+    "key": "express-mongoose-ts-permission-rbac",
+    "name": "Express + Mongoose (TypeScript, Permission RBAC)",
+    "description": "Express API with Mongoose, layered architecture, JWT auth, and permission-based access control (roles map to permissions).",
     "category": "Backend",
     "framework": "Express.js",
     "variant": "Mongoose (Advanced/Pro Devs)",
     "language": "TypeScript",
+    "rbac": "Permission",
+    "devCommand": "npm run dev"
+  },
+  {
+    "key": "express-mongoose-ts-simple-rbac",
+    "name": "Express + Mongoose (TypeScript, Simple RBAC)",
+    "description": "Express API with Mongoose, layered architecture, JWT auth, and simple role-based access control (admin/user).",
+    "category": "Backend",
+    "framework": "Express.js",
+    "variant": "Mongoose (Advanced/Pro Devs)",
+    "language": "TypeScript",
+    "rbac": "Simple",
     "devCommand": "npm run dev"
   },
   {

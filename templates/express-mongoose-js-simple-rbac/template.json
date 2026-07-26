@@ -1,0 +1,11 @@
+{
+  "key": "express-mongoose-js-simple-rbac",
+  "name": "Express + Mongoose (JavaScript, Simple RBAC)",
+  "description": "Express API with Mongoose, layered architecture, JWT auth, and simple role-based access control (admin/user).",
+  "category": "Backend",
+  "framework": "Express.js",
+  "variant": "Mongoose (Advanced/Pro Devs)",
+  "language": "JavaScript",
+  "rbac": "Simple",
+  "devCommand": "npm run dev"
+}

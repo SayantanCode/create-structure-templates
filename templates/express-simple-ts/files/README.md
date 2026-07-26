@@ -8,6 +8,10 @@ A minimal Express + Mongoose starter: one model, one route, no extras.
 - `src/models/` — Mongoose schemas
 - `src/routes/` — Express routers
 
+## Response format
+
+Every endpoint returns `{ success: true, data }` or `{ success: false, error: { message } }`.
+
 ## Adding a new resource
 
 1. Add a schema in `src/models/<name>.model.ts`
