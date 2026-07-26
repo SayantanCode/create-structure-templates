@@ -1,0 +1,102 @@
+[
+  {
+    "key": "express-mongoose-js",
+    "name": "Express + Mongoose (JavaScript)",
+    "description": "Express API with Mongoose, layered architecture (routes/controllers/services/repositories), Docker, Redis/BullMQ jobs.",
+    "category": "Backend",
+    "framework": "Express.js",
+    "variant": "Mongoose (Advanced/Pro Devs)",
+    "language": "JavaScript",
+    "devCommand": "npm run dev"
+  },
+  {
+    "key": "express-mongoose-ts",
+    "name": "Express + Mongoose (TypeScript)",
+    "description": "Express API with Mongoose, layered architecture (routes/controllers/services/repositories), Docker, Redis/BullMQ jobs.",
+    "category": "Backend",
+    "framework": "Express.js",
+    "variant": "Mongoose (Advanced/Pro Devs)",
+    "language": "TypeScript",
+    "devCommand": "npm run dev"
+  },
+  {
+    "key": "express-simple-js",
+    "name": "Express + Mongoose (Simple, JavaScript)",
+    "description": "Minimal Express + Mongoose starter: one model, one route, no extras. Good for beginners or quick prototypes.",
+    "category": "Backend",
+    "framework": "Express.js",
+    "variant": "Simple",
+    "language": "JavaScript",
+    "devCommand": "npm run dev"
+  },
+  {
+    "key": "express-simple-ts",
+    "name": "Express + Mongoose (Simple, TypeScript)",
+    "description": "Minimal Express + Mongoose starter: one model, one route, no extras. Good for beginners or quick prototypes.",
+    "category": "Backend",
+    "framework": "Express.js",
+    "variant": "Simple",
+    "language": "TypeScript",
+    "devCommand": "npm run dev"
+  },
+  {
+    "key": "next-js-app-js",
+    "name": "Next.js App Router (JavaScript)",
+    "description": "Next.js app using the App Router, JavaScript.",
+    "category": "Frontend",
+    "framework": "Next.js",
+    "router": "App Router",
+    "language": "JavaScript",
+    "devCommand": "npm run dev"
+  },
+  {
+    "key": "next-js-app-ts",
+    "name": "Next.js App Router (TypeScript)",
+    "description": "Next.js app using the App Router, TypeScript.",
+    "category": "Frontend",
+    "framework": "Next.js",
+    "router": "App Router",
+    "language": "TypeScript",
+    "devCommand": "npm run dev"
+  },
+  {
+    "key": "next-js-pages-js",
+    "name": "Next.js Pages Router (JavaScript)",
+    "description": "Next.js app using the Pages Router, JavaScript.",
+    "category": "Frontend",
+    "framework": "Next.js",
+    "router": "Pages Router",
+    "language": "JavaScript",
+    "devCommand": "npm run dev"
+  },
+  {
+    "key": "next-js-pages-ts",
+    "name": "Next.js Pages Router (TypeScript)",
+    "description": "Next.js app using the Pages Router, TypeScript.",
+    "category": "Frontend",
+    "framework": "Next.js",
+    "router": "Pages Router",
+    "language": "TypeScript",
+    "devCommand": "npm run dev"
+  },
+  {
+    "key": "react-vite-js",
+    "name": "React + Vite (JavaScript)",
+    "description": "React app scaffolded with Vite, JavaScript, ESLint.",
+    "category": "Frontend",
+    "framework": "React",
+    "variant": "Vite",
+    "language": "JavaScript",
+    "devCommand": "npm run dev"
+  },
+  {
+    "key": "react-vite-ts",
+    "name": "React + Vite (TypeScript)",
+    "description": "React app scaffolded with Vite, TypeScript, ESLint.",
+    "category": "Frontend",
+    "framework": "React",
+    "variant": "Vite",
+    "language": "TypeScript",
+    "devCommand": "npm run dev"
+  }
+]

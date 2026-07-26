@@ -1,0 +1,10 @@
+{
+  "key": "next-js-app-js",
+  "name": "Next.js App Router (JavaScript)",
+  "description": "Next.js app using the App Router, JavaScript.",
+  "category": "Frontend",
+  "framework": "Next.js",
+  "router": "App Router",
+  "language": "JavaScript",
+  "devCommand": "npm run dev"
+}

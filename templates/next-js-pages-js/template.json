@@ -1,0 +1,10 @@
+{
+  "key": "next-js-pages-js",
+  "name": "Next.js Pages Router (JavaScript)",
+  "description": "Next.js app using the Pages Router, JavaScript.",
+  "category": "Frontend",
+  "framework": "Next.js",
+  "router": "Pages Router",
+  "language": "JavaScript",
+  "devCommand": "npm run dev"
+}

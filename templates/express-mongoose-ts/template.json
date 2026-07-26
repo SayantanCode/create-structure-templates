@@ -1,0 +1,10 @@
+{
+  "key": "express-mongoose-ts",
+  "name": "Express + Mongoose (TypeScript)",
+  "description": "Express API with Mongoose, layered architecture (routes/controllers/services/repositories), Docker, Redis/BullMQ jobs.",
+  "category": "Backend",
+  "framework": "Express.js",
+  "variant": "Mongoose (Advanced/Pro Devs)",
+  "language": "TypeScript",
+  "devCommand": "npm run dev"
+}

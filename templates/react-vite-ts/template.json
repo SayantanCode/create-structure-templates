@@ -1,0 +1,10 @@
+{
+  "key": "react-vite-ts",
+  "name": "React + Vite (TypeScript)",
+  "description": "React app scaffolded with Vite, TypeScript, ESLint.",
+  "category": "Frontend",
+  "framework": "React",
+  "variant": "Vite",
+  "language": "TypeScript",
+  "devCommand": "npm run dev"
+}

@@ -1,0 +1,10 @@
+{
+  "key": "express-simple-js",
+  "name": "Express + Mongoose (Simple, JavaScript)",
+  "description": "Minimal Express + Mongoose starter: one model, one route, no extras. Good for beginners or quick prototypes.",
+  "category": "Backend",
+  "framework": "Express.js",
+  "variant": "Simple",
+  "language": "JavaScript",
+  "devCommand": "npm run dev"
+}
