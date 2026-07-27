@@ -1,0 +1,208 @@
+{
+  "bases": [
+    "express-esm"
+  ],
+  "modules": [
+    {
+      "key": "auth-jwt",
+      "name": "JWT Auth",
+      "dimension": "auth",
+      "dependsOn": [
+        "db-mongoose"
+      ],
+      "languages": [
+        "esm"
+      ],
+      "esm": {
+        "dependencies": {
+          "jsonwebtoken": "^9.0.2",
+          "bcryptjs": "^2.4.3",
+          "cookie-parser": "^1.4.6",
+          "zod": "^3.23.8"
+        },
+        "devDependencies": {},
+        "envExample": [
+          "",
+          "# Use long, random values in production (e.g. `openssl rand -hex 32`)",
+          "JWT_ACCESS_SECRET=change-me-access-secret",
+          "JWT_REFRESH_SECRET=change-me-refresh-secret",
+          "JWT_ACCESS_EXPIRES_IN=15m",
+          "JWT_REFRESH_EXPIRES_IN=7d"
+        ],
+        "wiring": {
+          "app": {
+            "imports": [
+              "import cookieParser from \"cookie-parser\";"
+            ],
+            "middleware": [
+              "app.use(cookieParser());"
+            ]
+          },
+          "routes/index": {
+            "imports": [
+              "import authRoutes from \"../routes/auth.routes.js\";"
+            ],
+            "mounts": [
+              "router.use(\"/auth\", authRoutes);"
+            ]
+          },
+          "test/setup": {
+            "env": [
+              "process.env.JWT_ACCESS_SECRET ||= \"test-access-secret\";",
+              "process.env.JWT_REFRESH_SECRET ||= \"test-refresh-secret\";"
+            ]
+          }
+        },
+        "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n"
+      }
+    },
+    {
+      "key": "db-mongoose",
+      "name": "MongoDB + Mongoose",
+      "dimension": "database",
+      "dependsOn": [],
+      "languages": [
+        "esm"
+      ],
+      "esm": {
+        "dependencies": {
+          "mongoose": "^8.4.1"
+        },
+        "devDependencies": {
+          "mongodb-memory-server": "^10.0.0"
+        },
+        "envExample": [
+          "MONGO_URI=mongodb://127.0.0.1:27017/{{projectName}}"
+        ],
+        "wiring": {
+          "server": {
+            "imports": [
+              "import { connectDB } from \"./config/db.js\";"
+            ],
+            "startup": [
+              "await connectDB();"
+            ]
+          },
+          "test/setup": {
+            "imports": [
+              "import mongoose from \"mongoose\";",
+              "import { MongoMemoryServer } from \"mongodb-memory-server\";"
+            ],
+            "state": [
+              "let mongoServer;"
+            ],
+            "beforeAll": [
+              "mongoServer = await MongoMemoryServer.create();",
+              "const mongoUri = mongoServer.getUri();",
+              "process.env.MONGO_URI = mongoUri;",
+              "await mongoose.connect(mongoUri);"
+            ],
+            "afterAll": [
+              "await mongoose.disconnect();",
+              "await mongoServer.stop();"
+            ]
+          }
+        },
+        "readme": "\n## Database\n\nMongoDB via Mongoose. Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+      }
+    },
+    {
+      "key": "rbac-permission",
+      "name": "Permission-based RBAC",
+      "dimension": "rbac",
+      "dependsOn": [
+        "auth-jwt"
+      ],
+      "languages": [
+        "esm"
+      ],
+      "esm": {
+        "dependencies": {},
+        "devDependencies": {},
+        "wiring": {
+          "routes/index": {
+            "imports": [
+              "import adminRoutes from \"../routes/admin.routes.js\";"
+            ],
+            "mounts": [
+              "router.use(\"/\", adminRoutes);"
+            ]
+          }
+        },
+        "readme": "\n## RBAC (Permission-based)\n\nA role maps to a list of permissions in `config/permissions.js`, and routes declare which permission they need:\n\n```js\nrouter.get(\"/admin-check\", requireAuth, requirePermission(\"admin:access\"), handler);\n```\n\nAdd a new role, or change what an existing role can do, by editing `config/permissions.js` only. See `routes/admin.routes.js` for a working example (`GET /api/v1/admin-check`).\n"
+      }
+    },
+    {
+      "key": "rbac-simple",
+      "name": "Simple Role RBAC",
+      "dimension": "rbac",
+      "dependsOn": [
+        "auth-jwt"
+      ],
+      "languages": [
+        "esm"
+      ],
+      "esm": {
+        "dependencies": {},
+        "devDependencies": {},
+        "wiring": {
+          "routes/index": {
+            "imports": [
+              "import adminRoutes from \"../routes/admin.routes.js\";"
+            ],
+            "mounts": [
+              "router.use(\"/\", adminRoutes);"
+            ]
+          }
+        },
+        "readme": "\n## RBAC (Simple)\n\nEach user has one `role`: `\"user\"` or `\"admin\"`. Protect a route with:\n\n```js\nrouter.get(\"/admin-check\", requireAuth, requireRole(\"admin\"), handler);\n```\n\nSee `routes/admin.routes.js` for a working example (`GET /api/v1/admin-check`).\n"
+      }
+    },
+    {
+      "key": "testing-jest",
+      "name": "Jest",
+      "dimension": "testing",
+      "dependsOn": [],
+      "languages": [
+        "esm"
+      ],
+      "esm": {
+        "dependencies": {},
+        "devDependencies": {
+          "jest": "^29.7.0",
+          "supertest": "^7.0.0"
+        },
+        "scripts": {
+          "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles"
+        },
+        "packageJsonExtra": {
+          "jest": {
+            "testEnvironment": "node",
+            "setupFilesAfterEnv": [
+              "<rootDir>/test/setup.js"
+            ]
+          }
+        },
+        "wiring": {},
+        "readme": "\n## Testing\n\n```bash\nnpm test\n```\n"
+      }
+    },
+    {
+      "key": "validation-zod",
+      "name": "Zod",
+      "dimension": "validation",
+      "dependsOn": [],
+      "languages": [
+        "esm"
+      ],
+      "esm": {
+        "dependencies": {
+          "zod": "^3.23.8"
+        },
+        "devDependencies": {},
+        "wiring": {},
+        "readme": "\n## Validation\n\nRequest bodies are validated with [Zod](https://zod.dev). See `validators/example.validator.js` for the pattern, and `middlewares/validate.js` for the `validateWith(schema)` middleware.\n"
+      }
+    }
+  ]
+}
