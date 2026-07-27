@@ -3,7 +3,7 @@
   "name": "MongoDB + Mongoose",
   "dimension": "database",
   "dependsOn": [],
-  "languages": ["esm", "ts"],
+  "languages": ["esm", "ts", "cjs"],
   "esm": {
     "dependencies": { "mongoose": "^8.4.1" },
     "devDependencies": { "mongodb-memory-server": "^10.0.0" },
@@ -45,6 +45,32 @@
           "import { MongoMemoryServer } from \"mongodb-memory-server\";"
         ],
         "state": ["let mongoServer: MongoMemoryServer;"],
+        "beforeAll": [
+          "mongoServer = await MongoMemoryServer.create();",
+          "const mongoUri = mongoServer.getUri();",
+          "process.env.MONGO_URI = mongoUri;",
+          "await mongoose.connect(mongoUri);"
+        ],
+        "afterAll": ["await mongoose.disconnect();", "await mongoServer.stop();"]
+      }
+    },
+    "readme": "\n## Database\n\nMongoDB via Mongoose. Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+  },
+  "cjs": {
+    "dependencies": { "mongoose": "^8.4.1" },
+    "devDependencies": { "mongodb-memory-server": "^10.0.0" },
+    "envExample": ["MONGO_URI=mongodb://127.0.0.1:27017/{{projectName}}"],
+    "wiring": {
+      "server": {
+        "imports": ["const { connectDB } = require(\"./config/db.js\");"],
+        "startup": ["await connectDB();"]
+      },
+      "test/setup": {
+        "imports": [
+          "const mongoose = require(\"mongoose\");",
+          "const { MongoMemoryServer } = require(\"mongodb-memory-server\");"
+        ],
+        "state": ["let mongoServer;"],
         "beforeAll": [
           "mongoServer = await MongoMemoryServer.create();",
           "const mongoUri = mongoServer.getUri();",

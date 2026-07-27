@@ -3,7 +3,7 @@
   "name": "Jest",
   "dimension": "testing",
   "dependsOn": [],
-  "languages": ["esm", "ts"],
+  "languages": ["esm", "ts", "cjs"],
   "esm": {
     "dependencies": {},
     "devDependencies": { "jest": "^29.7.0", "supertest": "^7.0.0" },
@@ -40,6 +40,21 @@
         "moduleNameMapper": { "^(\\.{1,2}/.*)\\.js$": "$1" },
         "transform": { "^.+\\.tsx?$": ["ts-jest", { "useESM": true, "isolatedModules": true }] },
         "setupFilesAfterEnv": ["<rootDir>/src/test/setup.ts"]
+      }
+    },
+    "wiring": {},
+    "readme": "\n## Testing\n\n```bash\nnpm test\n```\n"
+  },
+  "cjs": {
+    "dependencies": {},
+    "devDependencies": { "jest": "^29.7.0", "supertest": "^7.0.0" },
+    "scripts": {
+      "test": "jest --detectOpenHandles"
+    },
+    "packageJsonExtra": {
+      "jest": {
+        "testEnvironment": "node",
+        "setupFilesAfterEnv": ["<rootDir>/test/setup.js"]
       }
     },
     "wiring": {},

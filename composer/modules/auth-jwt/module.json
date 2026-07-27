@@ -3,7 +3,7 @@
   "name": "JWT Auth",
   "dimension": "auth",
   "dependsOn": ["db-mongoose"],
-  "languages": ["esm", "ts"],
+  "languages": ["esm", "ts", "cjs"],
   "esm": {
     "dependencies": {
       "jsonwebtoken": "^9.0.2",
@@ -65,6 +65,40 @@
       },
       "routes/index": {
         "imports": ["import authRoutes from \"../routes/auth.routes.js\";"],
+        "mounts": ["router.use(\"/auth\", authRoutes);"]
+      },
+      "test/setup": {
+        "env": [
+          "process.env.JWT_ACCESS_SECRET ||= \"test-access-secret\";",
+          "process.env.JWT_REFRESH_SECRET ||= \"test-refresh-secret\";"
+        ]
+      }
+    },
+    "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n"
+  },
+  "cjs": {
+    "dependencies": {
+      "jsonwebtoken": "^9.0.2",
+      "bcryptjs": "^2.4.3",
+      "cookie-parser": "^1.4.6",
+      "zod": "^3.23.8"
+    },
+    "devDependencies": {},
+    "envExample": [
+      "",
+      "# Use long, random values in production (e.g. `openssl rand -hex 32`)",
+      "JWT_ACCESS_SECRET=change-me-access-secret",
+      "JWT_REFRESH_SECRET=change-me-refresh-secret",
+      "JWT_ACCESS_EXPIRES_IN=15m",
+      "JWT_REFRESH_EXPIRES_IN=7d"
+    ],
+    "wiring": {
+      "app": {
+        "imports": ["const cookieParser = require(\"cookie-parser\");"],
+        "middleware": ["app.use(cookieParser());"]
+      },
+      "routes/index": {
+        "imports": ["const authRoutes = require(\"../routes/auth.routes.js\");"],
         "mounts": ["router.use(\"/auth\", authRoutes);"]
       },
       "test/setup": {

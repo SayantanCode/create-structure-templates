@@ -3,7 +3,7 @@
   "name": "Simple Role RBAC",
   "dimension": "rbac",
   "dependsOn": ["auth-jwt"],
-  "languages": ["esm", "ts"],
+  "languages": ["esm", "ts", "cjs"],
   "esm": {
     "dependencies": {},
     "devDependencies": {},
@@ -25,5 +25,16 @@
       }
     },
     "readme": "\n## RBAC (Simple)\n\nEach user has one `role`: `\"user\"` or `\"admin\"`. Protect a route with:\n\n```ts\nrouter.get(\"/admin-check\", requireAuth, requireRole(\"admin\"), handler);\n```\n\nSee `routes/admin.routes.ts` for a working example (`GET /api/v1/admin-check`).\n"
+  },
+  "cjs": {
+    "dependencies": {},
+    "devDependencies": {},
+    "wiring": {
+      "routes/index": {
+        "imports": ["const adminRoutes = require(\"../routes/admin.routes.js\");"],
+        "mounts": ["router.use(\"/\", adminRoutes);"]
+      }
+    },
+    "readme": "\n## RBAC (Simple)\n\nEach user has one `role`: `\"user\"` or `\"admin\"`. Protect a route with:\n\n```js\nrouter.get(\"/admin-check\", requireAuth, requireRole(\"admin\"), handler);\n```\n\nSee `routes/admin.routes.js` for a working example (`GET /api/v1/admin-check`).\n"
   }
 }

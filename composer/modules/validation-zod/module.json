@@ -3,7 +3,7 @@
   "name": "Zod",
   "dimension": "validation",
   "dependsOn": [],
-  "languages": ["esm", "ts"],
+  "languages": ["esm", "ts", "cjs"],
   "esm": {
     "dependencies": { "zod": "^3.23.8" },
     "devDependencies": {},
@@ -15,5 +15,11 @@
     "devDependencies": {},
     "wiring": {},
     "readme": "\n## Validation\n\nRequest bodies are validated with [Zod](https://zod.dev). See `validators/example.validator.ts` for the pattern, and `middlewares/validate.ts` for the `validateWith(schema)` middleware.\n"
+  },
+  "cjs": {
+    "dependencies": { "zod": "^3.23.8" },
+    "devDependencies": {},
+    "wiring": {},
+    "readme": "\n## Validation\n\nRequest bodies are validated with [Zod](https://zod.dev). See `validators/example.validator.js` for the pattern, and `middlewares/validate.js` for the `validateWith(schema)` middleware.\n"
   }
 }
