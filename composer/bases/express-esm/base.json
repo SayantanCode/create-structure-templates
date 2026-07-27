@@ -1,5 +1,6 @@
 {
   "key": "express-esm",
   "name": "Express (JavaScript)",
-  "language": "esm"
+  "language": "esm",
+  "framework": "express"
 }

@@ -3,6 +3,7 @@
   "name": "Simple Role RBAC",
   "dimension": "rbac",
   "dependsOn": ["auth-jwt"],
+  "framework": "express",
   "languages": ["esm", "ts", "cjs"],
   "esm": {
     "dependencies": {},

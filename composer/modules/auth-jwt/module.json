@@ -3,6 +3,7 @@
   "name": "JWT Auth",
   "dimension": "auth",
   "dependsOn": ["db-mongoose"],
+  "framework": "express",
   "languages": ["esm", "ts", "cjs"],
   "esm": {
     "dependencies": {

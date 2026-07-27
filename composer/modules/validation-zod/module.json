@@ -3,6 +3,7 @@
   "name": "Zod",
   "dimension": "validation",
   "dependsOn": [],
+  "framework": "any",
   "languages": ["esm", "ts", "cjs"],
   "esm": {
     "dependencies": { "zod": "^3.23.8" },

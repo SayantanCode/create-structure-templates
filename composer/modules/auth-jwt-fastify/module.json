@@ -1,0 +1,42 @@
+{
+  "key": "auth-jwt-fastify",
+  "name": "JWT Auth",
+  "dimension": "auth",
+  "dependsOn": ["db-mongoose"],
+  "framework": "fastify",
+  "languages": ["esm"],
+  "esm": {
+    "dependencies": {
+      "jsonwebtoken": "^9.0.2",
+      "bcryptjs": "^2.4.3",
+      "@fastify/cookie": "^9.4.0",
+      "zod": "^3.23.8"
+    },
+    "devDependencies": {},
+    "envExample": [
+      "",
+      "# Use long, random values in production (e.g. `openssl rand -hex 32`)",
+      "JWT_ACCESS_SECRET=change-me-access-secret",
+      "JWT_REFRESH_SECRET=change-me-refresh-secret",
+      "JWT_ACCESS_EXPIRES_IN=15m",
+      "JWT_REFRESH_EXPIRES_IN=7d"
+    ],
+    "wiring": {
+      "app": {
+        "imports": ["import cookie from \"@fastify/cookie\";"],
+        "middleware": ["fastify.register(cookie);"]
+      },
+      "routes/index": {
+        "imports": ["import authRoutes from \"../routes/auth.routes.js\";"],
+        "mounts": ["fastify.register(authRoutes, { prefix: \"/auth\" });"]
+      },
+      "test/setup": {
+        "env": [
+          "process.env.JWT_ACCESS_SECRET ||= \"test-access-secret\";",
+          "process.env.JWT_REFRESH_SECRET ||= \"test-refresh-secret\";"
+        ]
+      }
+    },
+    "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie via `@fastify/cookie`).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n"
+  }
+}

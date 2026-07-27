@@ -1,0 +1,19 @@
+import { ApiError } from "../utils/ApiError.js";
+import { ROLE_PERMISSIONS } from "../config/permissions.js";
+
+// Permission-based RBAC: a route declares which permission it needs, and a
+// user's role is looked up against config/permissions.js to see if it grants
+// that permission. Requires requireAuth to have already run (so
+// request.user exists). Returns a Fastify preHandler.
+export function requirePermission(...requiredPermissions) {
+  return async (request, _reply) => {
+    if (!request.user) {
+      throw ApiError.unauthorized();
+    }
+    const granted = ROLE_PERMISSIONS[request.user.role] || [];
+    const hasAll = requiredPermissions.every((permission) => granted.includes(permission));
+    if (!hasAll) {
+      throw ApiError.forbidden(`Requires permission: ${requiredPermissions.join(", ")}`);
+    }
+  };
+}

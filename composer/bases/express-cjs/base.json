@@ -1,5 +1,6 @@
 {
   "key": "express-cjs",
   "name": "Express (JavaScript, CommonJS)",
-  "language": "cjs"
+  "language": "cjs",
+  "framework": "express"
 }

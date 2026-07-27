@@ -1,0 +1,6 @@
+{
+  "key": "fastify-esm",
+  "name": "Fastify (JavaScript)",
+  "language": "esm",
+  "framework": "fastify"
+}

@@ -3,6 +3,7 @@
   "name": "MongoDB + Mongoose",
   "dimension": "database",
   "dependsOn": [],
+  "framework": "any",
   "languages": ["esm", "ts", "cjs"],
   "esm": {
     "dependencies": { "mongoose": "^8.4.1" },

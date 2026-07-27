@@ -1,0 +1,19 @@
+{
+  "key": "rbac-permission-fastify",
+  "name": "Permission-based RBAC",
+  "dimension": "rbac",
+  "dependsOn": ["auth-jwt-fastify"],
+  "framework": "fastify",
+  "languages": ["esm"],
+  "esm": {
+    "dependencies": {},
+    "devDependencies": {},
+    "wiring": {
+      "routes/index": {
+        "imports": ["import adminRoutes from \"../routes/admin.routes.js\";"],
+        "mounts": ["fastify.register(adminRoutes);"]
+      }
+    },
+    "readme": "\n## RBAC (Permission-based)\n\nA role maps to a list of permissions in `config/permissions.js`, and routes declare which permission they need:\n\n```js\nfastify.get(\"/admin-check\", { preHandler: [requireAuth, requirePermission(\"admin:access\")] }, handler);\n```\n\nAdd a new role, or change what an existing role can do, by editing `config/permissions.js` only. See `routes/admin.routes.js` for a working example (`GET /api/v1/admin-check`).\n"
+  }
+}

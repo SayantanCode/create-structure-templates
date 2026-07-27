@@ -1,0 +1,23 @@
+{
+  "key": "testing-jest-fastify",
+  "name": "Jest",
+  "dimension": "testing",
+  "dependsOn": [],
+  "framework": "fastify",
+  "languages": ["esm"],
+  "esm": {
+    "dependencies": {},
+    "devDependencies": { "jest": "^29.7.0" },
+    "scripts": {
+      "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles"
+    },
+    "packageJsonExtra": {
+      "jest": {
+        "testEnvironment": "node",
+        "setupFilesAfterEnv": ["<rootDir>/test/setup.js"]
+      }
+    },
+    "wiring": {},
+    "readme": "\n## Testing\n\n```bash\nnpm test\n```\n\nUses Fastify's built-in `.inject()` for HTTP-level tests — no supertest needed.\n"
+  }
+}

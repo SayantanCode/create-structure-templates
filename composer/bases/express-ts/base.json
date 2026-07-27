@@ -1,5 +1,6 @@
 {
   "key": "express-ts",
   "name": "Express (TypeScript)",
-  "language": "ts"
+  "language": "ts",
+  "framework": "express"
 }

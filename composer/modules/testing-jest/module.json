@@ -3,6 +3,7 @@
   "name": "Jest",
   "dimension": "testing",
   "dependsOn": [],
+  "framework": "express",
   "languages": ["esm", "ts", "cjs"],
   "esm": {
     "dependencies": {},
