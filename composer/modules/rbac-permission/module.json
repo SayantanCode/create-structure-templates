@@ -3,7 +3,7 @@
   "name": "Permission-based RBAC",
   "dimension": "rbac",
   "dependsOn": ["auth-jwt"],
-  "languages": ["esm"],
+  "languages": ["esm", "ts"],
   "esm": {
     "dependencies": {},
     "devDependencies": {},
@@ -14,5 +14,16 @@
       }
     },
     "readme": "\n## RBAC (Permission-based)\n\nA role maps to a list of permissions in `config/permissions.js`, and routes declare which permission they need:\n\n```js\nrouter.get(\"/admin-check\", requireAuth, requirePermission(\"admin:access\"), handler);\n```\n\nAdd a new role, or change what an existing role can do, by editing `config/permissions.js` only. See `routes/admin.routes.js` for a working example (`GET /api/v1/admin-check`).\n"
+  },
+  "ts": {
+    "dependencies": {},
+    "devDependencies": {},
+    "wiring": {
+      "routes/index": {
+        "imports": ["import adminRoutes from \"../routes/admin.routes.js\";"],
+        "mounts": ["router.use(\"/\", adminRoutes);"]
+      }
+    },
+    "readme": "\n## RBAC (Permission-based)\n\nA role maps to a list of permissions in `config/permissions.ts`, and routes declare which permission they need:\n\n```ts\nrouter.get(\"/admin-check\", requireAuth, requirePermission(\"admin:access\"), handler);\n```\n\nAdd a new role, or change what an existing role can do, by editing `config/permissions.ts` only. See `routes/admin.routes.ts` for a working example (`GET /api/v1/admin-check`).\n"
   }
 }

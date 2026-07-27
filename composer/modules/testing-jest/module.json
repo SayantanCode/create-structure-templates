@@ -3,7 +3,7 @@
   "name": "Jest",
   "dimension": "testing",
   "dependsOn": [],
-  "languages": ["esm"],
+  "languages": ["esm", "ts"],
   "esm": {
     "dependencies": {},
     "devDependencies": { "jest": "^29.7.0", "supertest": "^7.0.0" },
@@ -14,6 +14,32 @@
       "jest": {
         "testEnvironment": "node",
         "setupFilesAfterEnv": ["<rootDir>/test/setup.js"]
+      }
+    },
+    "wiring": {},
+    "readme": "\n## Testing\n\n```bash\nnpm test\n```\n"
+  },
+  "ts": {
+    "dependencies": {},
+    "devDependencies": {
+      "jest": "^29.7.0",
+      "supertest": "^7.0.0",
+      "@types/jest": "^29.5.12",
+      "@types/supertest": "^6.0.2",
+      "ts-jest": "^29.1.5"
+    },
+    "scripts": {
+      "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles"
+    },
+    "packageJsonExtra": {
+      "jest": {
+        "preset": "ts-jest/presets/default-esm",
+        "testEnvironment": "node",
+        "extensionsToTreatAsEsm": [".ts"],
+        "testPathIgnorePatterns": ["/node_modules/", "/dist/"],
+        "moduleNameMapper": { "^(\\.{1,2}/.*)\\.js$": "$1" },
+        "transform": { "^.+\\.tsx?$": ["ts-jest", { "useESM": true, "isolatedModules": true }] },
+        "setupFilesAfterEnv": ["<rootDir>/src/test/setup.ts"]
       }
     },
     "wiring": {},

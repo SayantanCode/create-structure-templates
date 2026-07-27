@@ -5,11 +5,20 @@ const ROOT = path.resolve(".");
 const COMPOSER_DIR = path.join(ROOT, "composer");
 
 const basesDir = path.join(COMPOSER_DIR, "bases");
-const bases = fs
+const baseKeys = fs
   .readdirSync(basesDir, { withFileTypes: true })
   .filter((e) => e.isDirectory())
   .map((e) => e.name)
   .sort();
+
+const bases = baseKeys.map((key) => {
+  const manifestPath = path.join(basesDir, key, "base.json");
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
+  if (manifest.key !== key) {
+    throw new Error(`base.json "key" (${manifest.key}) doesn't match directory name (${key})`);
+  }
+  return manifest;
+});
 
 const modulesDir = path.join(COMPOSER_DIR, "modules");
 const moduleKeys = fs

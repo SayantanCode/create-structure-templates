@@ -1,6 +1,15 @@
 {
   "bases": [
-    "express-esm"
+    {
+      "key": "express-esm",
+      "name": "Express (JavaScript)",
+      "language": "esm"
+    },
+    {
+      "key": "express-ts",
+      "name": "Express (TypeScript)",
+      "language": "ts"
+    }
   ],
   "modules": [
     {
@@ -11,7 +20,8 @@
         "db-mongoose"
       ],
       "languages": [
-        "esm"
+        "esm",
+        "ts"
       ],
       "esm": {
         "dependencies": {
@@ -54,6 +64,52 @@
           }
         },
         "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n"
+      },
+      "ts": {
+        "dependencies": {
+          "jsonwebtoken": "^9.0.2",
+          "bcryptjs": "^2.4.3",
+          "cookie-parser": "^1.4.6",
+          "zod": "^3.23.8"
+        },
+        "devDependencies": {
+          "@types/jsonwebtoken": "^9.0.6",
+          "@types/bcryptjs": "^2.4.6",
+          "@types/cookie-parser": "^1.4.7"
+        },
+        "envExample": [
+          "",
+          "# Use long, random values in production (e.g. `openssl rand -hex 32`)",
+          "JWT_ACCESS_SECRET=change-me-access-secret",
+          "JWT_REFRESH_SECRET=change-me-refresh-secret",
+          "JWT_ACCESS_EXPIRES_IN=15m",
+          "JWT_REFRESH_EXPIRES_IN=7d"
+        ],
+        "wiring": {
+          "app": {
+            "imports": [
+              "import cookieParser from \"cookie-parser\";"
+            ],
+            "middleware": [
+              "app.use(cookieParser());"
+            ]
+          },
+          "routes/index": {
+            "imports": [
+              "import authRoutes from \"../routes/auth.routes.js\";"
+            ],
+            "mounts": [
+              "router.use(\"/auth\", authRoutes);"
+            ]
+          },
+          "test/setup": {
+            "env": [
+              "process.env.JWT_ACCESS_SECRET ||= \"test-access-secret\";",
+              "process.env.JWT_REFRESH_SECRET ||= \"test-refresh-secret\";"
+            ]
+          }
+        },
+        "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n"
       }
     },
     {
@@ -62,7 +118,8 @@
       "dimension": "database",
       "dependsOn": [],
       "languages": [
-        "esm"
+        "esm",
+        "ts"
       ],
       "esm": {
         "dependencies": {
@@ -104,6 +161,47 @@
           }
         },
         "readme": "\n## Database\n\nMongoDB via Mongoose. Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+      },
+      "ts": {
+        "dependencies": {
+          "mongoose": "^8.4.1"
+        },
+        "devDependencies": {
+          "mongodb-memory-server": "^10.0.0"
+        },
+        "envExample": [
+          "MONGO_URI=mongodb://127.0.0.1:27017/{{projectName}}"
+        ],
+        "wiring": {
+          "server": {
+            "imports": [
+              "import { connectDB } from \"./config/db.js\";"
+            ],
+            "startup": [
+              "await connectDB();"
+            ]
+          },
+          "test/setup": {
+            "imports": [
+              "import mongoose from \"mongoose\";",
+              "import { MongoMemoryServer } from \"mongodb-memory-server\";"
+            ],
+            "state": [
+              "let mongoServer: MongoMemoryServer;"
+            ],
+            "beforeAll": [
+              "mongoServer = await MongoMemoryServer.create();",
+              "const mongoUri = mongoServer.getUri();",
+              "process.env.MONGO_URI = mongoUri;",
+              "await mongoose.connect(mongoUri);"
+            ],
+            "afterAll": [
+              "await mongoose.disconnect();",
+              "await mongoServer.stop();"
+            ]
+          }
+        },
+        "readme": "\n## Database\n\nMongoDB via Mongoose. Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
       }
     },
     {
@@ -114,7 +212,8 @@
         "auth-jwt"
       ],
       "languages": [
-        "esm"
+        "esm",
+        "ts"
       ],
       "esm": {
         "dependencies": {},
@@ -130,6 +229,21 @@
           }
         },
         "readme": "\n## RBAC (Permission-based)\n\nA role maps to a list of permissions in `config/permissions.js`, and routes declare which permission they need:\n\n```js\nrouter.get(\"/admin-check\", requireAuth, requirePermission(\"admin:access\"), handler);\n```\n\nAdd a new role, or change what an existing role can do, by editing `config/permissions.js` only. See `routes/admin.routes.js` for a working example (`GET /api/v1/admin-check`).\n"
+      },
+      "ts": {
+        "dependencies": {},
+        "devDependencies": {},
+        "wiring": {
+          "routes/index": {
+            "imports": [
+              "import adminRoutes from \"../routes/admin.routes.js\";"
+            ],
+            "mounts": [
+              "router.use(\"/\", adminRoutes);"
+            ]
+          }
+        },
+        "readme": "\n## RBAC (Permission-based)\n\nA role maps to a list of permissions in `config/permissions.ts`, and routes declare which permission they need:\n\n```ts\nrouter.get(\"/admin-check\", requireAuth, requirePermission(\"admin:access\"), handler);\n```\n\nAdd a new role, or change what an existing role can do, by editing `config/permissions.ts` only. See `routes/admin.routes.ts` for a working example (`GET /api/v1/admin-check`).\n"
       }
     },
     {
@@ -140,7 +254,8 @@
         "auth-jwt"
       ],
       "languages": [
-        "esm"
+        "esm",
+        "ts"
       ],
       "esm": {
         "dependencies": {},
@@ -156,6 +271,21 @@
           }
         },
         "readme": "\n## RBAC (Simple)\n\nEach user has one `role`: `\"user\"` or `\"admin\"`. Protect a route with:\n\n```js\nrouter.get(\"/admin-check\", requireAuth, requireRole(\"admin\"), handler);\n```\n\nSee `routes/admin.routes.js` for a working example (`GET /api/v1/admin-check`).\n"
+      },
+      "ts": {
+        "dependencies": {},
+        "devDependencies": {},
+        "wiring": {
+          "routes/index": {
+            "imports": [
+              "import adminRoutes from \"../routes/admin.routes.js\";"
+            ],
+            "mounts": [
+              "router.use(\"/\", adminRoutes);"
+            ]
+          }
+        },
+        "readme": "\n## RBAC (Simple)\n\nEach user has one `role`: `\"user\"` or `\"admin\"`. Protect a route with:\n\n```ts\nrouter.get(\"/admin-check\", requireAuth, requireRole(\"admin\"), handler);\n```\n\nSee `routes/admin.routes.ts` for a working example (`GET /api/v1/admin-check`).\n"
       }
     },
     {
@@ -164,7 +294,8 @@
       "dimension": "testing",
       "dependsOn": [],
       "languages": [
-        "esm"
+        "esm",
+        "ts"
       ],
       "esm": {
         "dependencies": {},
@@ -185,6 +316,49 @@
         },
         "wiring": {},
         "readme": "\n## Testing\n\n```bash\nnpm test\n```\n"
+      },
+      "ts": {
+        "dependencies": {},
+        "devDependencies": {
+          "jest": "^29.7.0",
+          "supertest": "^7.0.0",
+          "@types/jest": "^29.5.12",
+          "@types/supertest": "^6.0.2",
+          "ts-jest": "^29.1.5"
+        },
+        "scripts": {
+          "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles"
+        },
+        "packageJsonExtra": {
+          "jest": {
+            "preset": "ts-jest/presets/default-esm",
+            "testEnvironment": "node",
+            "extensionsToTreatAsEsm": [
+              ".ts"
+            ],
+            "testPathIgnorePatterns": [
+              "/node_modules/",
+              "/dist/"
+            ],
+            "moduleNameMapper": {
+              "^(\\.{1,2}/.*)\\.js$": "$1"
+            },
+            "transform": {
+              "^.+\\.tsx?$": [
+                "ts-jest",
+                {
+                  "useESM": true,
+                  "isolatedModules": true
+                }
+              ]
+            },
+            "setupFilesAfterEnv": [
+              "<rootDir>/src/test/setup.ts"
+            ]
+          }
+        },
+        "wiring": {},
+        "readme": "\n## Testing\n\n```bash\nnpm test\n```\n"
       }
     },
     {
@@ -193,7 +367,8 @@
       "dimension": "validation",
       "dependsOn": [],
       "languages": [
-        "esm"
+        "esm",
+        "ts"
       ],
       "esm": {
         "dependencies": {
@@ -202,6 +377,14 @@
         "devDependencies": {},
         "wiring": {},
         "readme": "\n## Validation\n\nRequest bodies are validated with [Zod](https://zod.dev). See `validators/example.validator.js` for the pattern, and `middlewares/validate.js` for the `validateWith(schema)` middleware.\n"
+      },
+      "ts": {
+        "dependencies": {
+          "zod": "^3.23.8"
+        },
+        "devDependencies": {},
+        "wiring": {},
+        "readme": "\n## Validation\n\nRequest bodies are validated with [Zod](https://zod.dev). See `validators/example.validator.ts` for the pattern, and `middlewares/validate.ts` for the `validateWith(schema)` middleware.\n"
       }
     }
   ]
