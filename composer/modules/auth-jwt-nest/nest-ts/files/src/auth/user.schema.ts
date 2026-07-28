@@ -23,7 +23,10 @@ export class User {
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
-function stripSensitiveFields(_doc: unknown, ret: Record<string, unknown>) {
+// Loosely typed: mongoose's own transform type ties `ret` to the exact
+// hydrated-document shape, which is more precise than this generic helper
+// needs to care about.
+function stripSensitiveFields(_doc: unknown, ret: any) {
   delete ret.password;
   delete ret.__v;
   return ret;

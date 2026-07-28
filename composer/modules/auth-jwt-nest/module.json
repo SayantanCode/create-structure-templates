@@ -27,7 +27,7 @@
     ],
     "wiring": {
       "main": {
-        "imports": ["import * as cookieParser from \"cookie-parser\";"],
+        "imports": ["import cookieParser from \"cookie-parser\";"],
         "middleware": ["app.use(cookieParser());"]
       },
       "app.module": {
