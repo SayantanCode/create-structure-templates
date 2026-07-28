@@ -1,0 +1,32 @@
+{
+  "key": "docker",
+  "name": "Docker",
+  "dimension": "docker",
+  "dependsOn": [],
+  "framework": "any",
+  "languages": ["esm", "cjs", "ts", "nest-ts"],
+  "esm": {
+    "dependencies": {},
+    "devDependencies": {},
+    "wiring": {},
+    "readme": "\n## Docker\n\n```bash\ndocker build -t your-app-name .\ndocker run --env-file .env -p 4000:4000 your-app-name\n```\n"
+  },
+  "cjs": {
+    "dependencies": {},
+    "devDependencies": {},
+    "wiring": {},
+    "readme": "\n## Docker\n\n```bash\ndocker build -t your-app-name .\ndocker run --env-file .env -p 4000:4000 your-app-name\n```\n"
+  },
+  "ts": {
+    "dependencies": {},
+    "devDependencies": {},
+    "wiring": {},
+    "readme": "\n## Docker\n\nMulti-stage build (compiles with `tsc`, then runs the compiled output only):\n\n```bash\ndocker build -t your-app-name .\ndocker run --env-file .env -p 4000:4000 your-app-name\n```\n"
+  },
+  "nest-ts": {
+    "dependencies": {},
+    "devDependencies": {},
+    "wiring": {},
+    "readme": "\n## Docker\n\nMulti-stage build (compiles with `nest build`, then runs the compiled output only):\n\n```bash\ndocker build -t your-app-name .\ndocker run --env-file .env -p 4000:4000 your-app-name\n```\n"
+  }
+}

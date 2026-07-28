@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "echo \"No tests configured\" && exit 0"
   },
   "dependencies": {
     "express": "^4.19.2",

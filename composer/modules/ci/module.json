@@ -1,0 +1,32 @@
+{
+  "key": "ci",
+  "name": "GitHub Actions",
+  "dimension": "ci",
+  "dependsOn": [],
+  "framework": "any",
+  "languages": ["esm", "cjs", "ts", "nest-ts"],
+  "esm": {
+    "dependencies": {},
+    "devDependencies": {},
+    "wiring": {},
+    "readme": "\n## CI\n\nGitHub Actions runs `npm test` on every push/PR to `main` (`.github/workflows/ci.yml`). If you didn't pick a testing module, this is a harmless no-op — add real tests any time and it starts running them automatically.\n"
+  },
+  "cjs": {
+    "dependencies": {},
+    "devDependencies": {},
+    "wiring": {},
+    "readme": "\n## CI\n\nGitHub Actions runs `npm test` on every push/PR to `main` (`.github/workflows/ci.yml`). If you didn't pick a testing module, this is a harmless no-op — add real tests any time and it starts running them automatically.\n"
+  },
+  "ts": {
+    "dependencies": {},
+    "devDependencies": {},
+    "wiring": {},
+    "readme": "\n## CI\n\nGitHub Actions runs `npm run build` then `npm test` on every push/PR to `main` (`.github/workflows/ci.yml`). If you didn't pick a testing module, `npm test` is a harmless no-op — add real tests any time and it starts running them automatically.\n"
+  },
+  "nest-ts": {
+    "dependencies": {},
+    "devDependencies": {},
+    "wiring": {},
+    "readme": "\n## CI\n\nGitHub Actions runs `npm run build` then `npm test` on every push/PR to `main` (`.github/workflows/ci.yml`). If you didn't pick a testing module, `npm test` is a harmless no-op — add real tests any time and it starts running them automatically.\n"
+  }
+}

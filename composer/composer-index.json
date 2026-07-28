@@ -289,6 +289,43 @@
       }
     },
     {
+      "key": "ci",
+      "name": "GitHub Actions",
+      "dimension": "ci",
+      "dependsOn": [],
+      "framework": "any",
+      "languages": [
+        "esm",
+        "cjs",
+        "ts",
+        "nest-ts"
+      ],
+      "esm": {
+        "dependencies": {},
+        "devDependencies": {},
+        "wiring": {},
+        "readme": "\n## CI\n\nGitHub Actions runs `npm test` on every push/PR to `main` (`.github/workflows/ci.yml`). If you didn't pick a testing module, this is a harmless no-op — add real tests any time and it starts running them automatically.\n"
+      },
+      "cjs": {
+        "dependencies": {},
+        "devDependencies": {},
+        "wiring": {},
+        "readme": "\n## CI\n\nGitHub Actions runs `npm test` on every push/PR to `main` (`.github/workflows/ci.yml`). If you didn't pick a testing module, this is a harmless no-op — add real tests any time and it starts running them automatically.\n"
+      },
+      "ts": {
+        "dependencies": {},
+        "devDependencies": {},
+        "wiring": {},
+        "readme": "\n## CI\n\nGitHub Actions runs `npm run build` then `npm test` on every push/PR to `main` (`.github/workflows/ci.yml`). If you didn't pick a testing module, `npm test` is a harmless no-op — add real tests any time and it starts running them automatically.\n"
+      },
+      "nest-ts": {
+        "dependencies": {},
+        "devDependencies": {},
+        "wiring": {},
+        "readme": "\n## CI\n\nGitHub Actions runs `npm run build` then `npm test` on every push/PR to `main` (`.github/workflows/ci.yml`). If you didn't pick a testing module, `npm test` is a harmless no-op — add real tests any time and it starts running them automatically.\n"
+      }
+    },
+    {
       "key": "db-mongoose",
       "name": "MongoDB + Mongoose",
       "dimension": "database",
@@ -465,6 +502,43 @@
           }
         },
         "readme": "\n## Database\n\nMongoDB via `@nestjs/mongoose`. Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Registered in `AppModule` via `MongooseModule.forRootAsync(...)` (async so tests can override `MONGO_URI` before the connection is opened); feature modules register their own schemas with `MongooseModule.forFeature(...)`. Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+      }
+    },
+    {
+      "key": "docker",
+      "name": "Docker",
+      "dimension": "docker",
+      "dependsOn": [],
+      "framework": "any",
+      "languages": [
+        "esm",
+        "cjs",
+        "ts",
+        "nest-ts"
+      ],
+      "esm": {
+        "dependencies": {},
+        "devDependencies": {},
+        "wiring": {},
+        "readme": "\n## Docker\n\n```bash\ndocker build -t your-app-name .\ndocker run --env-file .env -p 4000:4000 your-app-name\n```\n"
+      },
+      "cjs": {
+        "dependencies": {},
+        "devDependencies": {},
+        "wiring": {},
+        "readme": "\n## Docker\n\n```bash\ndocker build -t your-app-name .\ndocker run --env-file .env -p 4000:4000 your-app-name\n```\n"
+      },
+      "ts": {
+        "dependencies": {},
+        "devDependencies": {},
+        "wiring": {},
+        "readme": "\n## Docker\n\nMulti-stage build (compiles with `tsc`, then runs the compiled output only):\n\n```bash\ndocker build -t your-app-name .\ndocker run --env-file .env -p 4000:4000 your-app-name\n```\n"
+      },
+      "nest-ts": {
+        "dependencies": {},
+        "devDependencies": {},
+        "wiring": {},
+        "readme": "\n## Docker\n\nMulti-stage build (compiles with `nest build`, then runs the compiled output only):\n\n```bash\ndocker build -t your-app-name .\ndocker run --env-file .env -p 4000:4000 your-app-name\n```\n"
       }
     },
     {
