@@ -11,6 +11,11 @@ import { applyGlobalPrefix } from "./common/utils/configure-app";
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   applyGlobalPrefix(app);
+  // credentials: true (+ a specific origin, never "*") is required for the
+  // browser to accept the httpOnly refresh-token cookie on a cross-origin
+  // request. Nest has no CORS enabled at all by default, which would
+  // otherwise silently block every cross-origin request outright.
+  app.enableCors({ origin: process.env.CORS_ORIGIN || "http://localhost:5173", credentials: true });
   // __COMPOSER_MIDDLEWARE__
   // __COMPOSER_STARTUP__
   const port = Number(process.env.PORT || 4000);

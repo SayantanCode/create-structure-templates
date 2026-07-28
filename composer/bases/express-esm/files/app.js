@@ -17,7 +17,12 @@ export function createServer() {
 
   // Core middleware
   app.use(helmet());
-  app.use(cors());
+  // credentials: true (+ a specific origin, never "*") is required for the
+  // browser to accept the httpOnly refresh-token cookie on a cross-origin
+  // request — the default cors() config allows any origin but not
+  // credentials, which silently breaks a separate-origin frontend's fetch
+  // calls that use `credentials: "include"`.
+  app.use(cors({ origin: process.env.CORS_ORIGIN || "http://localhost:5173", credentials: true }));
   app.use(compression());
   app.use(express.json({ limit: "1mb" }));
   app.use(express.urlencoded({ extended: true }));

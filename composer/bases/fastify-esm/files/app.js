@@ -12,7 +12,15 @@ import { notFound, errorHandler } from "./middlewares/error.js";
 export function createServer() {
   const fastify = Fastify({ logger: true });
 
-  fastify.register(cors);
+  // credentials: true (+ a specific origin, never "*") is required for the
+  // browser to accept the httpOnly refresh-token cookie on a cross-origin
+  // request — the default cors registration allows any origin but not
+  // credentials, which silently breaks a separate-origin frontend's fetch
+  // calls that use `credentials: "include"`.
+  fastify.register(cors, {
+    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+    credentials: true,
+  });
   // __COMPOSER_MIDDLEWARE__
 
   // Health check endpoint
