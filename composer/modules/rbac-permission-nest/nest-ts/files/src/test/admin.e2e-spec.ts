@@ -19,24 +19,25 @@ describe("Admin-only route (permission RBAC)", () => {
     await app.close();
   });
 
-  async function loginAs(email: string, password: string) {
+  beforeEach(async () => {
+    await mongoose.connection.collection("users").deleteMany({});
+  });
+
+  // Registers through the real endpoint (so the password is hashed exactly
+  // like production), then promotes to admin with a direct write — avoids
+  // depending on @nestjs/mongoose's internal model/connection identity from
+  // outside the DI container, which auth.e2e-spec.ts sidesteps the same way.
+  async function registerAndLogin(email: string, password: string, role: "user" | "admin") {
+    await request(app.getHttpServer()).post("/api/v1/auth/register").send({ name: role, email, password });
+    if (role === "admin") {
+      await mongoose.connection.collection("users").updateOne({ email }, { $set: { role: "admin" } });
+    }
     const res = await request(app.getHttpServer()).post("/api/v1/auth/login").send({ email, password });
     return res.body.data.accessToken;
   }
 
-  beforeEach(async () => {
-    // @nestjs/mongoose registers feature schemas on the Connection object
-    // (via connection.model(...)), not on the global mongoose.model(...)
-    // registry, even though it's the same default connection — so look it
-    // up through mongoose.connection, not the top-level mongoose.model().
-    const UserModel = mongoose.connection.model("User");
-    await UserModel.deleteMany({});
-    await UserModel.create({ name: "Admin", email: "admin@example.com", password: "password123", role: "admin" });
-    await UserModel.create({ name: "Regular", email: "user@example.com", password: "password123", role: "user" });
-  });
-
   it("allows a user whose role grants admin:access", async () => {
-    const token = await loginAs("admin@example.com", "password123");
+    const token = await registerAndLogin("admin@example.com", "password123", "admin");
     const res = await request(app.getHttpServer())
       .get("/api/v1/admin-check")
       .set("Authorization", `Bearer ${token}`);
@@ -45,7 +46,7 @@ describe("Admin-only route (permission RBAC)", () => {
   });
 
   it("rejects a user whose role doesn't grant admin:access", async () => {
-    const token = await loginAs("user@example.com", "password123");
+    const token = await registerAndLogin("user@example.com", "password123", "user");
     const res = await request(app.getHttpServer())
       .get("/api/v1/admin-check")
       .set("Authorization", `Bearer ${token}`);
