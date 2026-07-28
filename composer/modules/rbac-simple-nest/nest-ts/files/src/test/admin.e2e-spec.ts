@@ -3,6 +3,7 @@ import { Test } from "@nestjs/testing";
 import request from "supertest";
 import mongoose from "mongoose";
 import { AppModule } from "../app.module";
+import { applyGlobalPrefix } from "../common/utils/configure-app";
 
 describe("Admin-only route (simple RBAC)", () => {
   let app: INestApplication;
@@ -10,6 +11,7 @@ describe("Admin-only route (simple RBAC)", () => {
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({ imports: [AppModule] }).compile();
     app = moduleRef.createNestApplication();
+    applyGlobalPrefix(app);
     await app.init();
   });
 
