@@ -91,9 +91,9 @@
       "app.module": {
         "imports": [
           "import { MongooseModule } from \"@nestjs/mongoose\";",
-          "import { mongoUri } from \"./config/mongoose.config\";"
+          "import { getMongoUri } from \"./config/mongoose.config\";"
         ],
-        "moduleImports": ["MongooseModule.forRoot(mongoUri),"]
+        "moduleImports": ["MongooseModule.forRootAsync({ useFactory: () => ({ uri: getMongoUri() }) }),"]
       },
       "test/setup": {
         "imports": [
@@ -110,6 +110,6 @@
         "afterAll": ["await mongoose.disconnect();", "await mongoServer.stop();"]
       }
     },
-    "readme": "\n## Database\n\nMongoDB via `@nestjs/mongoose`. Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Registered in `AppModule` via `MongooseModule.forRoot(...)`; feature modules register their own schemas with `MongooseModule.forFeature(...)`. Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+    "readme": "\n## Database\n\nMongoDB via `@nestjs/mongoose`. Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Registered in `AppModule` via `MongooseModule.forRootAsync(...)` (async so tests can override `MONGO_URI` before the connection is opened); feature modules register their own schemas with `MongooseModule.forFeature(...)`. Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
   }
 }
