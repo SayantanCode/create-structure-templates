@@ -26,6 +26,11 @@
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 0.95rem;
+  /* Without explicit colors, `color-scheme: light dark` on :root (see
+     index.css) lets the browser apply native dark-mode form-control
+     styling here — a jarring black box in a dark-mode browser. */
+  background-color: white;
+  color: #111;
 }
 .input:focus {
   outline: 2px solid #646cff;
