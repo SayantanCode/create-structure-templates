@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom/vitest";
+import { beforeAll, afterAll } from "vitest";
 // __COMPOSER_TEST_ENV__
 // __COMPOSER_TEST_IMPORTS__
 
