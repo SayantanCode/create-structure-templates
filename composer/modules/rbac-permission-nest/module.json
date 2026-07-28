@@ -1,0 +1,19 @@
+{
+  "key": "rbac-permission-nest",
+  "name": "RBAC (Permission-based)",
+  "dimension": "rbac",
+  "dependsOn": ["auth-jwt-nest"],
+  "framework": "nestjs",
+  "languages": ["nest-ts"],
+  "nest-ts": {
+    "dependencies": {},
+    "devDependencies": {},
+    "wiring": {
+      "app.module": {
+        "imports": ["import { AdminModule } from \"./admin/admin.module\";"],
+        "moduleImports": ["AdminModule,"]
+      }
+    },
+    "readme": "\n## RBAC (Permission-based)\n\nA role maps to a list of permissions in `src/config/permissions.ts`, and routes declare which permission they need:\n\n```ts\n@UseGuards(JwtAuthGuard, PermissionsGuard)\n@RequirePermissions(\"admin:access\")\n```\n\nAdd a new role, or change what an existing role can do, by editing `src/config/permissions.ts` only. See `src/admin/admin.controller.ts` for a working example (`GET /api/v1/admin-check`).\n"
+  }
+}

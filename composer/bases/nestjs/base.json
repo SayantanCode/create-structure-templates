@@ -1,0 +1,6 @@
+{
+  "key": "nestjs",
+  "name": "NestJS (TypeScript)",
+  "language": "nest-ts",
+  "framework": "nestjs"
+}

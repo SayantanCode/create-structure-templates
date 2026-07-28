@@ -1,0 +1,19 @@
+{
+  "key": "rbac-simple-nest",
+  "name": "RBAC (Simple)",
+  "dimension": "rbac",
+  "dependsOn": ["auth-jwt-nest"],
+  "framework": "nestjs",
+  "languages": ["nest-ts"],
+  "nest-ts": {
+    "dependencies": {},
+    "devDependencies": {},
+    "wiring": {
+      "app.module": {
+        "imports": ["import { AdminModule } from \"./admin/admin.module\";"],
+        "moduleImports": ["AdminModule,"]
+      }
+    },
+    "readme": "\n## RBAC (Simple)\n\nEach user has one `role`: `\"user\"` or `\"admin\"`. Protect a route with:\n\n```ts\n@UseGuards(JwtAuthGuard, RolesGuard)\n@Roles(\"admin\")\n```\n\nSee `src/admin/admin.controller.ts` for a working example (`GET /api/v1/admin-check`).\n"
+  }
+}

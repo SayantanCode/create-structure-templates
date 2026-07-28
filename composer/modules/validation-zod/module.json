@@ -4,7 +4,7 @@
   "dimension": "validation",
   "dependsOn": [],
   "framework": "any",
-  "languages": ["esm", "ts", "cjs"],
+  "languages": ["esm", "ts", "cjs", "nest-ts"],
   "esm": {
     "dependencies": { "zod": "^3.23.8" },
     "devDependencies": {},
@@ -22,5 +22,11 @@
     "devDependencies": {},
     "wiring": {},
     "readme": "\n## Validation\n\nRequest bodies are validated with [Zod](https://zod.dev). See `validators/example.validator.js` for the pattern, and `middlewares/validate.js` for the `validateWith(schema)` middleware.\n"
+  },
+  "nest-ts": {
+    "dependencies": { "zod": "^3.23.8" },
+    "devDependencies": {},
+    "wiring": {},
+    "readme": "\n## Validation\n\nRequest bodies are validated with [Zod](https://zod.dev). See `src/common/dto/example.dto.ts` for the pattern, and `src/common/pipes/zod-validation.pipe.ts` for the `ZodValidationPipe`, applied per-route with `@UsePipes(new ZodValidationPipe(schema))`.\n"
   }
 }

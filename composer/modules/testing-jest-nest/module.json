@@ -1,0 +1,33 @@
+{
+  "key": "testing-jest-nest",
+  "name": "Jest",
+  "dimension": "testing",
+  "dependsOn": [],
+  "framework": "nestjs",
+  "languages": ["nest-ts"],
+  "nest-ts": {
+    "dependencies": {},
+    "devDependencies": {
+      "jest": "^29.7.0",
+      "ts-jest": "^29.1.5",
+      "supertest": "^7.0.0",
+      "@types/jest": "^29.5.12",
+      "@types/supertest": "^6.0.2",
+      "@nestjs/testing": "^11.1.28"
+    },
+    "scripts": {
+      "test": "jest"
+    },
+    "packageJsonExtra": {
+      "jest": {
+        "preset": "ts-jest",
+        "testEnvironment": "node",
+        "rootDir": "src",
+        "testRegex": ".e2e-spec.ts$",
+        "setupFilesAfterEnv": ["<rootDir>/test/setup.ts"]
+      }
+    },
+    "wiring": {},
+    "readme": "\n## Testing\n\n```bash\nnpm test\n```\n\nUses `@nestjs/testing`'s `Test.createTestingModule` + supertest against `app.getHttpServer()` — see `src/test/*.e2e-spec.ts`.\n"
+  }
+}

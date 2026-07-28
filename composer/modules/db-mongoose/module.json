@@ -4,7 +4,7 @@
   "dimension": "database",
   "dependsOn": [],
   "framework": "any",
-  "languages": ["esm", "ts", "cjs"],
+  "languages": ["esm", "ts", "cjs", "nest-ts"],
   "esm": {
     "dependencies": { "mongoose": "^8.4.1" },
     "devDependencies": { "mongodb-memory-server": "^10.0.0" },
@@ -82,5 +82,34 @@
       }
     },
     "readme": "\n## Database\n\nMongoDB via Mongoose. Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+  },
+  "nest-ts": {
+    "dependencies": { "@nestjs/mongoose": "^11.0.4", "mongoose": "^8.4.1" },
+    "devDependencies": { "mongodb-memory-server": "^10.0.0" },
+    "envExample": ["MONGO_URI=mongodb://127.0.0.1:27017/{{projectName}}"],
+    "wiring": {
+      "app.module": {
+        "imports": [
+          "import { MongooseModule } from \"@nestjs/mongoose\";",
+          "import { mongoUri } from \"./config/mongoose.config\";"
+        ],
+        "moduleImports": ["MongooseModule.forRoot(mongoUri),"]
+      },
+      "test/setup": {
+        "imports": [
+          "import mongoose from \"mongoose\";",
+          "import { MongoMemoryServer } from \"mongodb-memory-server\";"
+        ],
+        "state": ["let mongoServer: MongoMemoryServer;"],
+        "beforeAll": [
+          "mongoServer = await MongoMemoryServer.create();",
+          "const mongoUri = mongoServer.getUri();",
+          "process.env.MONGO_URI = mongoUri;",
+          "await mongoose.connect(mongoUri);"
+        ],
+        "afterAll": ["await mongoose.disconnect();", "await mongoServer.stop();"]
+      }
+    },
+    "readme": "\n## Database\n\nMongoDB via `@nestjs/mongoose`. Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Registered in `AppModule` via `MongooseModule.forRoot(...)`; feature modules register their own schemas with `MongooseModule.forFeature(...)`. Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
   }
 }
