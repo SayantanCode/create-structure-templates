@@ -301,6 +301,61 @@
       }
     },
     {
+      "key": "auth-react",
+      "name": "Auth (JWT)",
+      "dimension": "auth",
+      "dependsOn": [],
+      "framework": "react",
+      "languages": [
+        "jsx",
+        "tsx"
+      ],
+      "jsx": {
+        "dependencies": {},
+        "devDependencies": {},
+        "wiring": {
+          "app": {
+            "imports": [
+              "import { AuthProvider } from \"./auth/AuthContext\";",
+              "import { AuthStatus } from \"./components/AuthStatus\";"
+            ],
+            "providersOpen": [
+              "<AuthProvider>"
+            ],
+            "providersClose": [
+              "</AuthProvider>"
+            ],
+            "content": [
+              "<AuthStatus />"
+            ]
+          }
+        },
+        "readme": "\n## Auth\n\n`useAuth()` (from `src/auth/AuthContext.jsx`) talks to the exact JWT contract the backend composer's `auth-jwt*` modules expose: `POST /auth/{register,login,refresh,logout}`, `GET /auth/me`. The access token is kept in memory only; the refresh token is an httpOnly cookie the browser sends automatically (`credentials: \"include\"` in `src/auth/authApi.js`). `LoginForm` / `RegisterForm` / `AuthStatus` in `src/components/` are ready to drop into any page.\n\nSet `VITE_API_URL` in `.env` to point at your backend (defaults to `http://localhost:4000/api/v1`, matching the backend composer's default).\n"
+      },
+      "tsx": {
+        "dependencies": {},
+        "devDependencies": {},
+        "wiring": {
+          "app": {
+            "imports": [
+              "import { AuthProvider } from \"./auth/AuthContext\";",
+              "import { AuthStatus } from \"./components/AuthStatus\";"
+            ],
+            "providersOpen": [
+              "<AuthProvider>"
+            ],
+            "providersClose": [
+              "</AuthProvider>"
+            ],
+            "content": [
+              "<AuthStatus />"
+            ]
+          }
+        },
+        "readme": "\n## Auth\n\n`useAuth()` (from `src/auth/AuthContext.tsx`) talks to the exact JWT contract the backend composer's `auth-jwt*` modules expose: `POST /auth/{register,login,refresh,logout}`, `GET /auth/me`. The access token is kept in memory only; the refresh token is an httpOnly cookie the browser sends automatically (`credentials: \"include\"` in `src/auth/authApi.ts`). `LoginForm` / `RegisterForm` / `AuthStatus` in `src/components/` are ready to drop into any page.\n\nSet `VITE_API_URL` in `.env` to point at your backend (defaults to `http://localhost:4000/api/v1`, matching the backend composer's default).\n"
+      }
+    },
+    {
       "key": "ci",
       "name": "GitHub Actions",
       "dimension": "ci",
@@ -780,6 +835,155 @@
       }
     },
     {
+      "key": "router-react",
+      "name": "React Router",
+      "dimension": "routing",
+      "dependsOn": [],
+      "framework": "react",
+      "languages": [
+        "jsx",
+        "tsx"
+      ],
+      "jsx": {
+        "dependencies": {
+          "react-router-dom": "^6.28.1"
+        },
+        "devDependencies": {},
+        "wiring": {
+          "app": {
+            "imports": [
+              "import { BrowserRouter, Routes, Route, Link } from \"react-router-dom\";",
+              "import { Home } from \"./pages/Home\";",
+              "import { NotFound } from \"./pages/NotFound\";"
+            ],
+            "providersOpen": [
+              "<BrowserRouter>"
+            ],
+            "providersClose": [
+              "</BrowserRouter>"
+            ],
+            "content": [
+              "<nav>",
+              "  <Link to=\"/\">Home</Link>",
+              "</nav>",
+              "<Routes>",
+              "  <Route path=\"/\" element={<Home />} />",
+              "  <Route path=\"*\" element={<NotFound />} />",
+              "</Routes>"
+            ]
+          }
+        },
+        "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) is wired up in `src/App.jsx`. Pages live in `src/pages/`; add a new `<Route>` there for each one.\n"
+      },
+      "tsx": {
+        "dependencies": {
+          "react-router-dom": "^6.28.1"
+        },
+        "devDependencies": {},
+        "wiring": {
+          "app": {
+            "imports": [
+              "import { BrowserRouter, Routes, Route, Link } from \"react-router-dom\";",
+              "import { Home } from \"./pages/Home\";",
+              "import { NotFound } from \"./pages/NotFound\";"
+            ],
+            "providersOpen": [
+              "<BrowserRouter>"
+            ],
+            "providersClose": [
+              "</BrowserRouter>"
+            ],
+            "content": [
+              "<nav>",
+              "  <Link to=\"/\">Home</Link>",
+              "</nav>",
+              "<Routes>",
+              "  <Route path=\"/\" element={<Home />} />",
+              "  <Route path=\"*\" element={<NotFound />} />",
+              "</Routes>"
+            ]
+          }
+        },
+        "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) is wired up in `src/App.tsx`. Pages live in `src/pages/`; add a new `<Route>` there for each one.\n"
+      }
+    },
+    {
+      "key": "state-zustand",
+      "name": "Zustand",
+      "dimension": "state",
+      "dependsOn": [],
+      "framework": "react",
+      "languages": [
+        "jsx",
+        "tsx"
+      ],
+      "jsx": {
+        "dependencies": {
+          "zustand": "^4.5.4"
+        },
+        "devDependencies": {},
+        "wiring": {
+          "app": {
+            "imports": [
+              "import { CounterDemo } from \"./components/CounterDemo\";"
+            ],
+            "content": [
+              "<CounterDemo />"
+            ]
+          }
+        },
+        "readme": "\n## State\n\n[Zustand](https://github.com/pmndrs/zustand) example store at `src/store/useStore.js` (demoed by `src/components/CounterDemo.jsx`). Copy the pattern for your own state: one `create()` call per slice.\n"
+      },
+      "tsx": {
+        "dependencies": {
+          "zustand": "^4.5.4"
+        },
+        "devDependencies": {},
+        "wiring": {
+          "app": {
+            "imports": [
+              "import { CounterDemo } from \"./components/CounterDemo\";"
+            ],
+            "content": [
+              "<CounterDemo />"
+            ]
+          }
+        },
+        "readme": "\n## State\n\n[Zustand](https://github.com/pmndrs/zustand) example store at `src/store/useStore.ts` (demoed by `src/components/CounterDemo.tsx`). Copy the pattern for your own state: one `create()` call per slice.\n"
+      }
+    },
+    {
+      "key": "styling-tailwind",
+      "name": "Tailwind CSS",
+      "dimension": "styling",
+      "dependsOn": [],
+      "framework": "react",
+      "languages": [
+        "jsx",
+        "tsx"
+      ],
+      "jsx": {
+        "dependencies": {},
+        "devDependencies": {
+          "tailwindcss": "^3.4.14",
+          "postcss": "^8.4.47",
+          "autoprefixer": "^10.4.20"
+        },
+        "wiring": {},
+        "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. Existing components keep their plain CSS classes (see `src/components.css`) — restyle them with Tailwind utility classes any time.\n"
+      },
+      "tsx": {
+        "dependencies": {},
+        "devDependencies": {
+          "tailwindcss": "^3.4.14",
+          "postcss": "^8.4.47",
+          "autoprefixer": "^10.4.20"
+        },
+        "wiring": {},
+        "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. Existing components keep their plain CSS classes (see `src/components.css`) — restyle them with Tailwind utility classes any time.\n"
+      }
+    },
+    {
       "key": "testing-jest",
       "name": "Jest",
       "dimension": "testing",
@@ -938,6 +1142,46 @@
         },
         "wiring": {},
         "readme": "\n## Testing\n\n```bash\nnpm test\n```\n\nUses `@nestjs/testing`'s `Test.createTestingModule` + supertest against `app.getHttpServer()` — see `src/test/*.e2e-spec.ts`.\n"
+      }
+    },
+    {
+      "key": "testing-vitest",
+      "name": "Vitest",
+      "dimension": "testing",
+      "dependsOn": [],
+      "framework": "react",
+      "languages": [
+        "jsx",
+        "tsx"
+      ],
+      "jsx": {
+        "dependencies": {},
+        "devDependencies": {
+          "vitest": "^3.0.5",
+          "@testing-library/react": "^16.0.1",
+          "@testing-library/jest-dom": "^6.4.8",
+          "jsdom": "^25.0.1"
+        },
+        "scripts": {
+          "test": "vitest run"
+        },
+        "wiring": {},
+        "readme": "\n## Testing\n\n```bash\nnpm test\n```\n\n[Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/react), configured in `vitest.config.js` (a separate config from `vite.config.js` — Vitest supports its own). See `src/test/Button.test.jsx` for the pattern.\n"
+      },
+      "tsx": {
+        "dependencies": {},
+        "devDependencies": {
+          "vitest": "^3.0.5",
+          "@testing-library/react": "^16.0.1",
+          "@testing-library/jest-dom": "^6.4.8",
+          "jsdom": "^25.0.1",
+          "@types/node": "^20.14.2"
+        },
+        "scripts": {
+          "test": "vitest run"
+        },
+        "wiring": {},
+        "readme": "\n## Testing\n\n```bash\nnpm test\n```\n\n[Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/react), configured in `vitest.config.ts` (a separate config from `vite.config.ts` — Vitest supports its own). See `src/test/Button.test.tsx` for the pattern.\n"
       }
     },
     {

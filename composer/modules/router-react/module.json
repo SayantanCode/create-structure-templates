@@ -1,0 +1,58 @@
+{
+  "key": "router-react",
+  "name": "React Router",
+  "dimension": "routing",
+  "dependsOn": [],
+  "framework": "react",
+  "languages": ["jsx", "tsx"],
+  "jsx": {
+    "dependencies": { "react-router-dom": "^6.28.1" },
+    "devDependencies": {},
+    "wiring": {
+      "app": {
+        "imports": [
+          "import { BrowserRouter, Routes, Route, Link } from \"react-router-dom\";",
+          "import { Home } from \"./pages/Home\";",
+          "import { NotFound } from \"./pages/NotFound\";"
+        ],
+        "providersOpen": ["<BrowserRouter>"],
+        "providersClose": ["</BrowserRouter>"],
+        "content": [
+          "<nav>",
+          "  <Link to=\"/\">Home</Link>",
+          "</nav>",
+          "<Routes>",
+          "  <Route path=\"/\" element={<Home />} />",
+          "  <Route path=\"*\" element={<NotFound />} />",
+          "</Routes>"
+        ]
+      }
+    },
+    "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) is wired up in `src/App.jsx`. Pages live in `src/pages/`; add a new `<Route>` there for each one.\n"
+  },
+  "tsx": {
+    "dependencies": { "react-router-dom": "^6.28.1" },
+    "devDependencies": {},
+    "wiring": {
+      "app": {
+        "imports": [
+          "import { BrowserRouter, Routes, Route, Link } from \"react-router-dom\";",
+          "import { Home } from \"./pages/Home\";",
+          "import { NotFound } from \"./pages/NotFound\";"
+        ],
+        "providersOpen": ["<BrowserRouter>"],
+        "providersClose": ["</BrowserRouter>"],
+        "content": [
+          "<nav>",
+          "  <Link to=\"/\">Home</Link>",
+          "</nav>",
+          "<Routes>",
+          "  <Route path=\"/\" element={<Home />} />",
+          "  <Route path=\"*\" element={<NotFound />} />",
+          "</Routes>"
+        ]
+      }
+    },
+    "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) is wired up in `src/App.tsx`. Pages live in `src/pages/`; add a new `<Route>` there for each one.\n"
+  }
+}

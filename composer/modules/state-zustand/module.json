@@ -1,0 +1,30 @@
+{
+  "key": "state-zustand",
+  "name": "Zustand",
+  "dimension": "state",
+  "dependsOn": [],
+  "framework": "react",
+  "languages": ["jsx", "tsx"],
+  "jsx": {
+    "dependencies": { "zustand": "^4.5.4" },
+    "devDependencies": {},
+    "wiring": {
+      "app": {
+        "imports": ["import { CounterDemo } from \"./components/CounterDemo\";"],
+        "content": ["<CounterDemo />"]
+      }
+    },
+    "readme": "\n## State\n\n[Zustand](https://github.com/pmndrs/zustand) example store at `src/store/useStore.js` (demoed by `src/components/CounterDemo.jsx`). Copy the pattern for your own state: one `create()` call per slice.\n"
+  },
+  "tsx": {
+    "dependencies": { "zustand": "^4.5.4" },
+    "devDependencies": {},
+    "wiring": {
+      "app": {
+        "imports": ["import { CounterDemo } from \"./components/CounterDemo\";"],
+        "content": ["<CounterDemo />"]
+      }
+    },
+    "readme": "\n## State\n\n[Zustand](https://github.com/pmndrs/zustand) example store at `src/store/useStore.ts` (demoed by `src/components/CounterDemo.tsx`). Copy the pattern for your own state: one `create()` call per slice.\n"
+  }
+}

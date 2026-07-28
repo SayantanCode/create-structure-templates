@@ -1,0 +1,37 @@
+{
+  "key": "testing-vitest",
+  "name": "Vitest",
+  "dimension": "testing",
+  "dependsOn": [],
+  "framework": "react",
+  "languages": ["jsx", "tsx"],
+  "jsx": {
+    "dependencies": {},
+    "devDependencies": {
+      "vitest": "^3.0.5",
+      "@testing-library/react": "^16.0.1",
+      "@testing-library/jest-dom": "^6.4.8",
+      "jsdom": "^25.0.1"
+    },
+    "scripts": {
+      "test": "vitest run"
+    },
+    "wiring": {},
+    "readme": "\n## Testing\n\n```bash\nnpm test\n```\n\n[Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/react), configured in `vitest.config.js` (a separate config from `vite.config.js` — Vitest supports its own). See `src/test/Button.test.jsx` for the pattern.\n"
+  },
+  "tsx": {
+    "dependencies": {},
+    "devDependencies": {
+      "vitest": "^3.0.5",
+      "@testing-library/react": "^16.0.1",
+      "@testing-library/jest-dom": "^6.4.8",
+      "jsdom": "^25.0.1",
+      "@types/node": "^20.14.2"
+    },
+    "scripts": {
+      "test": "vitest run"
+    },
+    "wiring": {},
+    "readme": "\n## Testing\n\n```bash\nnpm test\n```\n\n[Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/react), configured in `vitest.config.ts` (a separate config from `vite.config.ts` — Vitest supports its own). See `src/test/Button.test.tsx` for the pattern.\n"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "key": "styling-tailwind",
+  "name": "Tailwind CSS",
+  "dimension": "styling",
+  "dependsOn": [],
+  "framework": "react",
+  "languages": ["jsx", "tsx"],
+  "jsx": {
+    "dependencies": {},
+    "devDependencies": {
+      "tailwindcss": "^3.4.14",
+      "postcss": "^8.4.47",
+      "autoprefixer": "^10.4.20"
+    },
+    "wiring": {},
+    "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. Existing components keep their plain CSS classes (see `src/components.css`) — restyle them with Tailwind utility classes any time.\n"
+  },
+  "tsx": {
+    "dependencies": {},
+    "devDependencies": {
+      "tailwindcss": "^3.4.14",
+      "postcss": "^8.4.47",
+      "autoprefixer": "^10.4.20"
+    },
+    "wiring": {},
+    "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. Existing components keep their plain CSS classes (see `src/components.css`) — restyle them with Tailwind utility classes any time.\n"
+  }
+}
