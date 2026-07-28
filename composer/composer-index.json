@@ -264,7 +264,7 @@
         "wiring": {
           "main": {
             "imports": [
-              "import * as cookieParser from \"cookie-parser\";"
+              "import cookieParser from \"cookie-parser\";"
             ],
             "middleware": [
               "app.use(cookieParser());"
