@@ -1,14 +1,13 @@
-import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 
 export function Spinner({ label = "Loading..." }) {
   return (
-    <Stack direction="row" spacing={1} alignItems="center" role="status">
+    <span role="status" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
       <CircularProgress size={18} />
-      <Typography variant="body2" color="text.secondary">
+      <Typography variant="body2" color="text.secondary" component="span">
         {label}
       </Typography>
-    </Stack>
+    </span>
   );
 }
