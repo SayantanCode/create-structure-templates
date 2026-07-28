@@ -29,6 +29,18 @@
       "name": "NestJS (TypeScript)",
       "language": "nest-ts",
       "framework": "nestjs"
+    },
+    {
+      "key": "react-vite-jsx",
+      "name": "React + Vite (JavaScript)",
+      "language": "jsx",
+      "framework": "react"
+    },
+    {
+      "key": "react-vite-tsx",
+      "name": "React + Vite (TypeScript)",
+      "language": "tsx",
+      "framework": "react"
     }
   ],
   "modules": [
