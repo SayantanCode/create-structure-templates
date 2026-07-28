@@ -330,7 +330,7 @@
             ]
           }
         },
-        "readme": "\n## Auth\n\n`useAuth()` (from `src/auth/AuthContext.jsx`) talks to the exact JWT contract the backend composer's `auth-jwt*` modules expose: `POST /auth/{register,login,refresh,logout}`, `GET /auth/me`. The access token is kept in memory only; the refresh token is an httpOnly cookie the browser sends automatically (`credentials: \"include\"` in `src/auth/authApi.js`). `LoginForm` / `RegisterForm` / `AuthStatus` in `src/components/` are ready to drop into any page.\n\nSet `VITE_API_URL` in `.env` to point at your backend (defaults to `http://localhost:4000/api/v1`, matching the backend composer's default).\n"
+        "readme": "\n## Auth\n\n`useAuth()` (from `src/auth/AuthContext.jsx`) talks to the exact JWT contract the backend composer's `auth-jwt*` modules expose: `POST /auth/{register,login,refresh,logout}`, `GET /auth/me`. The access token is kept in memory only; the refresh token is an httpOnly cookie the browser sends automatically (`credentials: \"include\"` in `src/auth/authApi.js`) — a page reload silently re-authenticates via that cookie, nothing is ever put in localStorage.\n\n```jsx\nimport { useAuth } from \"./auth/AuthContext\";\nimport { Button } from \"./components/Button\";\nimport { Spinner } from \"./components/Spinner\";\nimport { LoginForm } from \"./components/LoginForm\";\n\nfunction Profile() {\n  const { user, loading, logout } = useAuth();\n  if (loading) return <Spinner />;\n  if (!user) return <LoginForm />;\n  return (\n    <>\n      <p>Signed in as {user.email}</p>\n      <Button onClick={logout}>Log out</Button>\n    </>\n  );\n}\n```\n\n`LoginForm` / `RegisterForm` / `AuthStatus` in `src/components/` are ready-made — `AuthStatus` is the pattern above, already wired together, and is what's dropped into `src/App.jsx` by default.\n\nSet `VITE_API_URL` in `.env` to point at your backend (defaults to `http://localhost:4000/api/v1`, matching the backend composer's default). If your backend runs on a different origin than this frontend's dev server, also set `CORS_ORIGIN` on the *backend* to match this app's URL — the backend composer's CORS setup only allows one specific origin plus credentials, by design (a wildcard origin can't be paired with credentialed requests at all).\n"
       },
       "tsx": {
         "dependencies": {},
@@ -352,7 +352,7 @@
             ]
           }
         },
-        "readme": "\n## Auth\n\n`useAuth()` (from `src/auth/AuthContext.tsx`) talks to the exact JWT contract the backend composer's `auth-jwt*` modules expose: `POST /auth/{register,login,refresh,logout}`, `GET /auth/me`. The access token is kept in memory only; the refresh token is an httpOnly cookie the browser sends automatically (`credentials: \"include\"` in `src/auth/authApi.ts`). `LoginForm` / `RegisterForm` / `AuthStatus` in `src/components/` are ready to drop into any page.\n\nSet `VITE_API_URL` in `.env` to point at your backend (defaults to `http://localhost:4000/api/v1`, matching the backend composer's default).\n"
+        "readme": "\n## Auth\n\n`useAuth()` (from `src/auth/AuthContext.tsx`) talks to the exact JWT contract the backend composer's `auth-jwt*` modules expose: `POST /auth/{register,login,refresh,logout}`, `GET /auth/me`. The access token is kept in memory only; the refresh token is an httpOnly cookie the browser sends automatically (`credentials: \"include\"` in `src/auth/authApi.ts`) — a page reload silently re-authenticates via that cookie, nothing is ever put in localStorage.\n\n```tsx\nimport { useAuth } from \"./auth/AuthContext\";\nimport { Button } from \"./components/Button\";\nimport { Spinner } from \"./components/Spinner\";\nimport { LoginForm } from \"./components/LoginForm\";\n\nfunction Profile() {\n  const { user, loading, logout } = useAuth();\n  if (loading) return <Spinner />;\n  if (!user) return <LoginForm />;\n  return (\n    <>\n      <p>Signed in as {user.email}</p>\n      <Button onClick={logout}>Log out</Button>\n    </>\n  );\n}\n```\n\n`LoginForm` / `RegisterForm` / `AuthStatus` in `src/components/` are ready-made — `AuthStatus` is the pattern above, already wired together, and is what's dropped into `src/App.tsx` by default.\n\nSet `VITE_API_URL` in `.env` to point at your backend (defaults to `http://localhost:4000/api/v1`, matching the backend composer's default). If your backend runs on a different origin than this frontend's dev server, also set `CORS_ORIGIN` on the *backend* to match this app's URL — the backend composer's CORS setup only allows one specific origin plus credentials, by design (a wildcard origin can't be paired with credentialed requests at all).\n"
       }
     },
     {
@@ -873,7 +873,7 @@
             ]
           }
         },
-        "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) is wired up in `src/App.jsx`. Pages live in `src/pages/`; add a new `<Route>` there for each one.\n\n`npm audit` will flag a moderate open-redirect advisory in this version (fixed only in v7, which currently has its own higher-severity advisory in the data-router/actions APIs this starter doesn't use) — it requires passing untrusted, attacker-controlled input into a `<Link>`/`useNavigate` target, which none of the code here does. Worth re-checking before you add anything that builds a redirect URL from user input.\n"
+        "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) v6 is wired up in `src/App.jsx` (wraps the tree in `<BrowserRouter>`, mounts `<Routes>` in the content area). Pages live in `src/pages/`.\n\nAdd a new page:\n\n```jsx\n// src/pages/About.jsx\nexport function About() {\n  return <h2>About</h2>;\n}\n```\n\n```jsx\n// src/App.jsx — add inside the existing <Routes>\nimport { About } from \"./pages/About\";\n// ...\n<Route path=\"/about\" element={<About />} />\n```\n\n`npm audit` will flag a moderate open-redirect advisory in this version (fixed only in v7, which currently has its own higher-severity advisory in the data-router/actions APIs this starter doesn't use) — it requires passing untrusted, attacker-controlled input into a `<Link>`/`useNavigate` target, which none of the code here does. Worth re-checking before you add anything that builds a redirect URL from user input.\n"
       },
       "tsx": {
         "dependencies": {
@@ -904,7 +904,7 @@
             ]
           }
         },
-        "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) is wired up in `src/App.tsx`. Pages live in `src/pages/`; add a new `<Route>` there for each one.\n\n`npm audit` will flag a moderate open-redirect advisory in this version (fixed only in v7, which currently has its own higher-severity advisory in the data-router/actions APIs this starter doesn't use) — it requires passing untrusted, attacker-controlled input into a `<Link>`/`useNavigate` target, which none of the code here does. Worth re-checking before you add anything that builds a redirect URL from user input.\n"
+        "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) v6 is wired up in `src/App.tsx` (wraps the tree in `<BrowserRouter>`, mounts `<Routes>` in the content area). Pages live in `src/pages/`.\n\nAdd a new page:\n\n```tsx\n// src/pages/About.tsx\nexport function About() {\n  return <h2>About</h2>;\n}\n```\n\n```tsx\n// src/App.tsx — add inside the existing <Routes>\nimport { About } from \"./pages/About\";\n// ...\n<Route path=\"/about\" element={<About />} />\n```\n\n`npm audit` will flag a moderate open-redirect advisory in this version (fixed only in v7, which currently has its own higher-severity advisory in the data-router/actions APIs this starter doesn't use) — it requires passing untrusted, attacker-controlled input into a `<Link>`/`useNavigate` target, which none of the code here does. Worth re-checking before you add anything that builds a redirect URL from user input.\n"
       }
     },
     {
@@ -932,7 +932,7 @@
             ]
           }
         },
-        "readme": "\n## State\n\n[Zustand](https://github.com/pmndrs/zustand) example store at `src/store/useStore.js` (demoed by `src/components/CounterDemo.jsx`). Copy the pattern for your own state: one `create()` call per slice.\n"
+        "readme": "\n## State\n\n[Zustand](https://github.com/pmndrs/zustand) example store at `src/store/useStore.js` (demoed by `src/components/CounterDemo.jsx`). Add your own state as a new store, one `create()` call per slice:\n\n```js\n// src/store/useUserPrefs.js\nimport { create } from \"zustand\";\n\nexport const useUserPrefs = create((set) => ({\n  theme: \"light\",\n  setTheme: (theme) => set({ theme }),\n}));\n```\n\n```jsx\nconst { theme, setTheme } = useUserPrefs();\n```\n\nNo provider needed — Zustand stores work standalone, just import the hook wherever you need it.\n"
       },
       "tsx": {
         "dependencies": {
@@ -949,7 +949,65 @@
             ]
           }
         },
-        "readme": "\n## State\n\n[Zustand](https://github.com/pmndrs/zustand) example store at `src/store/useStore.ts` (demoed by `src/components/CounterDemo.tsx`). Copy the pattern for your own state: one `create()` call per slice.\n"
+        "readme": "\n## State\n\n[Zustand](https://github.com/pmndrs/zustand) example store at `src/store/useStore.ts` (demoed by `src/components/CounterDemo.tsx`). Add your own state as a new store, one `create()` call per slice:\n\n```ts\n// src/store/useUserPrefs.ts\nimport { create } from \"zustand\";\n\ninterface UserPrefsState {\n  theme: \"light\" | \"dark\";\n  setTheme: (theme: \"light\" | \"dark\") => void;\n}\n\nexport const useUserPrefs = create<UserPrefsState>((set) => ({\n  theme: \"light\",\n  setTheme: (theme) => set({ theme }),\n}));\n```\n\n```tsx\nconst { theme, setTheme } = useUserPrefs();\n```\n\nNo provider needed — Zustand stores work standalone, just import the hook wherever you need it.\n"
+      }
+    },
+    {
+      "key": "styling-antd",
+      "name": "Ant Design",
+      "dimension": "styling",
+      "dependsOn": [],
+      "framework": "react",
+      "languages": [
+        "jsx",
+        "tsx"
+      ],
+      "jsx": {
+        "dependencies": {
+          "antd": "^6.5.2"
+        },
+        "devDependencies": {},
+        "wiring": {},
+        "readme": "\n## Styling\n\n[Ant Design](https://ant.design) backs `src/components/{Button,Input,Modal,Spinner}.jsx` — `Button`/`Input`/`Modal`/`Spinner` wrap antd's own. Note antd's `Button` `type` prop means style variant, not HTML button type, so the wrapper maps our `type` to antd's `htmlType` for you. Every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked — this is the one place Ant Design is actually wired in.\n\nNo `ConfigProvider`/`<App>` is set up by default; add one in `src/App.jsx` if you want custom theming or antd's context-aware `message`/`notification` APIs.\n"
+      },
+      "tsx": {
+        "dependencies": {
+          "antd": "^6.5.2"
+        },
+        "devDependencies": {},
+        "wiring": {},
+        "readme": "\n## Styling\n\n[Ant Design](https://ant.design) backs `src/components/{Button,Input,Modal,Spinner}.tsx` — `Button`/`Input`/`Modal`/`Spinner` wrap antd's own. Note antd's `Button` `type` prop means style variant, not HTML button type, so the wrapper maps our `type` to antd's `htmlType` for you. Every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked — this is the one place Ant Design is actually wired in.\n\nNo `ConfigProvider`/`<App>` is set up by default; add one in `src/App.tsx` if you want custom theming or antd's context-aware `message`/`notification` APIs.\n"
+      }
+    },
+    {
+      "key": "styling-mui",
+      "name": "MUI",
+      "dimension": "styling",
+      "dependsOn": [],
+      "framework": "react",
+      "languages": [
+        "jsx",
+        "tsx"
+      ],
+      "jsx": {
+        "dependencies": {
+          "@mui/material": "^9.2.0",
+          "@emotion/react": "^11.14.0",
+          "@emotion/styled": "^11.14.1"
+        },
+        "devDependencies": {},
+        "wiring": {},
+        "readme": "\n## Styling\n\n[MUI](https://mui.com) backs `src/components/{Button,Input,Modal,Spinner}.jsx` — `Button` wraps MUI's `Button`, `Input` wraps `TextField`, `Modal` wraps `Dialog`, `Spinner` wraps `CircularProgress`. Every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked — this is the one place MUI is actually wired in.\n\nNo `ThemeProvider`/`CssBaseline` is set up by default; add one in `src/App.jsx` if you want custom theming or MUI's opinionated CSS reset.\n"
+      },
+      "tsx": {
+        "dependencies": {
+          "@mui/material": "^9.2.0",
+          "@emotion/react": "^11.14.0",
+          "@emotion/styled": "^11.14.1"
+        },
+        "devDependencies": {},
+        "wiring": {},
+        "readme": "\n## Styling\n\n[MUI](https://mui.com) backs `src/components/{Button,Input,Modal,Spinner}.tsx` — `Button` wraps MUI's `Button`, `Input` wraps `TextField`, `Modal` wraps `Dialog`, `Spinner` wraps `CircularProgress`. Every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked — this is the one place MUI is actually wired in.\n\nNo `ThemeProvider`/`CssBaseline` is set up by default; add one in `src/App.tsx` if you want custom theming or MUI's opinionated CSS reset.\n"
       }
     },
     {
@@ -970,7 +1028,7 @@
           "autoprefixer": "^10.4.20"
         },
         "wiring": {},
-        "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. Existing components keep their plain CSS classes (see `src/components.css`) — restyle them with Tailwind utility classes any time.\n"
+        "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. `src/components/{Button,Input,Modal,Spinner}.jsx` are styled with Tailwind utility classes — every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked. Restyle any of them further any time; the plain `components.css` from the base is no longer used once Tailwind is selected.\n"
       },
       "tsx": {
         "dependencies": {},
@@ -980,7 +1038,7 @@
           "autoprefixer": "^10.4.20"
         },
         "wiring": {},
-        "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. Existing components keep their plain CSS classes (see `src/components.css`) — restyle them with Tailwind utility classes any time.\n"
+        "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. `src/components/{Button,Input,Modal,Spinner}.tsx` are styled with Tailwind utility classes — every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked. Restyle any of them further any time; the plain `components.css` from the base is no longer used once Tailwind is selected.\n"
       }
     },
     {
@@ -1166,7 +1224,7 @@
           "test": "vitest run"
         },
         "wiring": {},
-        "readme": "\n## Testing\n\n```bash\nnpm test\n```\n\n[Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/react), configured in `vitest.config.js` (a separate config from `vite.config.js` — Vitest supports its own). See `src/test/Button.test.jsx` for the pattern.\n"
+        "readme": "\n## Testing\n\n```bash\nnpm test\n```\n\n[Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/react), configured in `vitest.config.js` (a separate config from `vite.config.js` — Vitest supports its own, nothing to merge). `src/test/setup.js` registers `@testing-library/jest-dom`'s matchers (`toBeInTheDocument()`, etc.) globally for every test.\n\n```jsx\n// src/test/Button.test.jsx — the existing example\nimport { render, screen, fireEvent } from \"@testing-library/react\";\nimport { describe, it, expect, vi } from \"vitest\";\nimport { Button } from \"../components/Button\";\n\nit(\"handles clicks\", () => {\n  const onClick = vi.fn();\n  render(<Button onClick={onClick}>Click me</Button>);\n  fireEvent.click(screen.getByRole(\"button\", { name: \"Click me\" }));\n  expect(onClick).toHaveBeenCalledTimes(1);\n});\n```\n\nAdd new tests anywhere under `src/` named `*.test.{js,jsx}` — Vitest picks them up automatically.\n"
       },
       "tsx": {
         "dependencies": {},
@@ -1181,7 +1239,7 @@
           "test": "vitest run"
         },
         "wiring": {},
-        "readme": "\n## Testing\n\n```bash\nnpm test\n```\n\n[Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/react), configured in `vitest.config.ts` (a separate config from `vite.config.ts` — Vitest supports its own). See `src/test/Button.test.tsx` for the pattern.\n"
+        "readme": "\n## Testing\n\n```bash\nnpm test\n```\n\n[Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/react), configured in `vitest.config.ts` (a separate config from `vite.config.ts` — Vitest supports its own, nothing to merge). `src/test/setup.ts` registers `@testing-library/jest-dom`'s matchers (`toBeInTheDocument()`, etc.) globally for every test.\n\n```tsx\n// src/test/Button.test.tsx — the existing example\nimport { render, screen, fireEvent } from \"@testing-library/react\";\nimport { describe, it, expect, vi } from \"vitest\";\nimport { Button } from \"../components/Button\";\n\nit(\"handles clicks\", () => {\n  const onClick = vi.fn();\n  render(<Button onClick={onClick}>Click me</Button>);\n  fireEvent.click(screen.getByRole(\"button\", { name: \"Click me\" }));\n  expect(onClick).toHaveBeenCalledTimes(1);\n});\n```\n\nAdd new tests anywhere under `src/` named `*.test.{ts,tsx}` — Vitest picks them up automatically.\n"
       }
     },
     {

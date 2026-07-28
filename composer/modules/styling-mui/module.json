@@ -1,0 +1,28 @@
+{
+  "key": "styling-mui",
+  "name": "MUI",
+  "dimension": "styling",
+  "dependsOn": [],
+  "framework": "react",
+  "languages": ["jsx", "tsx"],
+  "jsx": {
+    "dependencies": {
+      "@mui/material": "^9.2.0",
+      "@emotion/react": "^11.14.0",
+      "@emotion/styled": "^11.14.1"
+    },
+    "devDependencies": {},
+    "wiring": {},
+    "readme": "\n## Styling\n\n[MUI](https://mui.com) backs `src/components/{Button,Input,Modal,Spinner}.jsx` — `Button` wraps MUI's `Button`, `Input` wraps `TextField`, `Modal` wraps `Dialog`, `Spinner` wraps `CircularProgress`. Every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked — this is the one place MUI is actually wired in.\n\nNo `ThemeProvider`/`CssBaseline` is set up by default; add one in `src/App.jsx` if you want custom theming or MUI's opinionated CSS reset.\n"
+  },
+  "tsx": {
+    "dependencies": {
+      "@mui/material": "^9.2.0",
+      "@emotion/react": "^11.14.0",
+      "@emotion/styled": "^11.14.1"
+    },
+    "devDependencies": {},
+    "wiring": {},
+    "readme": "\n## Styling\n\n[MUI](https://mui.com) backs `src/components/{Button,Input,Modal,Spinner}.tsx` — `Button` wraps MUI's `Button`, `Input` wraps `TextField`, `Modal` wraps `Dialog`, `Spinner` wraps `CircularProgress`. Every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked — this is the one place MUI is actually wired in.\n\nNo `ThemeProvider`/`CssBaseline` is set up by default; add one in `src/App.tsx` if you want custom theming or MUI's opinionated CSS reset.\n"
+  }
+}

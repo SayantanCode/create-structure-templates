@@ -1,0 +1,20 @@
+{
+  "key": "styling-antd",
+  "name": "Ant Design",
+  "dimension": "styling",
+  "dependsOn": [],
+  "framework": "react",
+  "languages": ["jsx", "tsx"],
+  "jsx": {
+    "dependencies": { "antd": "^6.5.2" },
+    "devDependencies": {},
+    "wiring": {},
+    "readme": "\n## Styling\n\n[Ant Design](https://ant.design) backs `src/components/{Button,Input,Modal,Spinner}.jsx` — `Button`/`Input`/`Modal`/`Spinner` wrap antd's own. Note antd's `Button` `type` prop means style variant, not HTML button type, so the wrapper maps our `type` to antd's `htmlType` for you. Every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked — this is the one place Ant Design is actually wired in.\n\nNo `ConfigProvider`/`<App>` is set up by default; add one in `src/App.jsx` if you want custom theming or antd's context-aware `message`/`notification` APIs.\n"
+  },
+  "tsx": {
+    "dependencies": { "antd": "^6.5.2" },
+    "devDependencies": {},
+    "wiring": {},
+    "readme": "\n## Styling\n\n[Ant Design](https://ant.design) backs `src/components/{Button,Input,Modal,Spinner}.tsx` — `Button`/`Input`/`Modal`/`Spinner` wrap antd's own. Note antd's `Button` `type` prop means style variant, not HTML button type, so the wrapper maps our `type` to antd's `htmlType` for you. Every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked — this is the one place Ant Design is actually wired in.\n\nNo `ConfigProvider`/`<App>` is set up by default; add one in `src/App.tsx` if you want custom theming or antd's context-aware `message`/`notification` APIs.\n"
+  }
+}

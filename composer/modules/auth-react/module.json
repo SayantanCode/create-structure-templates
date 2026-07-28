@@ -4,7 +4,10 @@
   "dimension": "auth",
   "dependsOn": [],
   "framework": "react",
-  "languages": ["jsx", "tsx"],
+  "languages": [
+    "jsx",
+    "tsx"
+  ],
   "jsx": {
     "dependencies": {},
     "devDependencies": {},
@@ -14,12 +17,18 @@
           "import { AuthProvider } from \"./auth/AuthContext\";",
           "import { AuthStatus } from \"./components/AuthStatus\";"
         ],
-        "providersOpen": ["<AuthProvider>"],
-        "providersClose": ["</AuthProvider>"],
-        "content": ["<AuthStatus />"]
+        "providersOpen": [
+          "<AuthProvider>"
+        ],
+        "providersClose": [
+          "</AuthProvider>"
+        ],
+        "content": [
+          "<AuthStatus />"
+        ]
       }
     },
-    "readme": "\n## Auth\n\n`useAuth()` (from `src/auth/AuthContext.jsx`) talks to the exact JWT contract the backend composer's `auth-jwt*` modules expose: `POST /auth/{register,login,refresh,logout}`, `GET /auth/me`. The access token is kept in memory only; the refresh token is an httpOnly cookie the browser sends automatically (`credentials: \"include\"` in `src/auth/authApi.js`). `LoginForm` / `RegisterForm` / `AuthStatus` in `src/components/` are ready to drop into any page.\n\nSet `VITE_API_URL` in `.env` to point at your backend (defaults to `http://localhost:4000/api/v1`, matching the backend composer's default).\n"
+    "readme": "\n## Auth\n\n`useAuth()` (from `src/auth/AuthContext.jsx`) talks to the exact JWT contract the backend composer's `auth-jwt*` modules expose: `POST /auth/{register,login,refresh,logout}`, `GET /auth/me`. The access token is kept in memory only; the refresh token is an httpOnly cookie the browser sends automatically (`credentials: \"include\"` in `src/auth/authApi.js`) — a page reload silently re-authenticates via that cookie, nothing is ever put in localStorage.\n\n```jsx\nimport { useAuth } from \"./auth/AuthContext\";\nimport { Button } from \"./components/Button\";\nimport { Spinner } from \"./components/Spinner\";\nimport { LoginForm } from \"./components/LoginForm\";\n\nfunction Profile() {\n  const { user, loading, logout } = useAuth();\n  if (loading) return <Spinner />;\n  if (!user) return <LoginForm />;\n  return (\n    <>\n      <p>Signed in as {user.email}</p>\n      <Button onClick={logout}>Log out</Button>\n    </>\n  );\n}\n```\n\n`LoginForm` / `RegisterForm` / `AuthStatus` in `src/components/` are ready-made — `AuthStatus` is the pattern above, already wired together, and is what's dropped into `src/App.jsx` by default.\n\nSet `VITE_API_URL` in `.env` to point at your backend (defaults to `http://localhost:4000/api/v1`, matching the backend composer's default). If your backend runs on a different origin than this frontend's dev server, also set `CORS_ORIGIN` on the *backend* to match this app's URL — the backend composer's CORS setup only allows one specific origin plus credentials, by design (a wildcard origin can't be paired with credentialed requests at all).\n"
   },
   "tsx": {
     "dependencies": {},
@@ -30,11 +39,17 @@
           "import { AuthProvider } from \"./auth/AuthContext\";",
           "import { AuthStatus } from \"./components/AuthStatus\";"
         ],
-        "providersOpen": ["<AuthProvider>"],
-        "providersClose": ["</AuthProvider>"],
-        "content": ["<AuthStatus />"]
+        "providersOpen": [
+          "<AuthProvider>"
+        ],
+        "providersClose": [
+          "</AuthProvider>"
+        ],
+        "content": [
+          "<AuthStatus />"
+        ]
       }
     },
-    "readme": "\n## Auth\n\n`useAuth()` (from `src/auth/AuthContext.tsx`) talks to the exact JWT contract the backend composer's `auth-jwt*` modules expose: `POST /auth/{register,login,refresh,logout}`, `GET /auth/me`. The access token is kept in memory only; the refresh token is an httpOnly cookie the browser sends automatically (`credentials: \"include\"` in `src/auth/authApi.ts`). `LoginForm` / `RegisterForm` / `AuthStatus` in `src/components/` are ready to drop into any page.\n\nSet `VITE_API_URL` in `.env` to point at your backend (defaults to `http://localhost:4000/api/v1`, matching the backend composer's default).\n"
+    "readme": "\n## Auth\n\n`useAuth()` (from `src/auth/AuthContext.tsx`) talks to the exact JWT contract the backend composer's `auth-jwt*` modules expose: `POST /auth/{register,login,refresh,logout}`, `GET /auth/me`. The access token is kept in memory only; the refresh token is an httpOnly cookie the browser sends automatically (`credentials: \"include\"` in `src/auth/authApi.ts`) — a page reload silently re-authenticates via that cookie, nothing is ever put in localStorage.\n\n```tsx\nimport { useAuth } from \"./auth/AuthContext\";\nimport { Button } from \"./components/Button\";\nimport { Spinner } from \"./components/Spinner\";\nimport { LoginForm } from \"./components/LoginForm\";\n\nfunction Profile() {\n  const { user, loading, logout } = useAuth();\n  if (loading) return <Spinner />;\n  if (!user) return <LoginForm />;\n  return (\n    <>\n      <p>Signed in as {user.email}</p>\n      <Button onClick={logout}>Log out</Button>\n    </>\n  );\n}\n```\n\n`LoginForm` / `RegisterForm` / `AuthStatus` in `src/components/` are ready-made — `AuthStatus` is the pattern above, already wired together, and is what's dropped into `src/App.tsx` by default.\n\nSet `VITE_API_URL` in `.env` to point at your backend (defaults to `http://localhost:4000/api/v1`, matching the backend composer's default). If your backend runs on a different origin than this frontend's dev server, also set `CORS_ORIGIN` on the *backend* to match this app's URL — the backend composer's CORS setup only allows one specific origin plus credentials, by design (a wildcard origin can't be paired with credentialed requests at all).\n"
   }
 }

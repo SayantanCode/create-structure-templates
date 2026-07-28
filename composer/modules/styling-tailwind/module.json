@@ -13,7 +13,7 @@
       "autoprefixer": "^10.4.20"
     },
     "wiring": {},
-    "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. Existing components keep their plain CSS classes (see `src/components.css`) — restyle them with Tailwind utility classes any time.\n"
+    "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. `src/components/{Button,Input,Modal,Spinner}.jsx` are styled with Tailwind utility classes — every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked. Restyle any of them further any time; the plain `components.css` from the base is no longer used once Tailwind is selected.\n"
   },
   "tsx": {
     "dependencies": {},
@@ -23,6 +23,6 @@
       "autoprefixer": "^10.4.20"
     },
     "wiring": {},
-    "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. Existing components keep their plain CSS classes (see `src/components.css`) — restyle them with Tailwind utility classes any time.\n"
+    "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. `src/components/{Button,Input,Modal,Spinner}.tsx` are styled with Tailwind utility classes — every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked. Restyle any of them further any time; the plain `components.css` from the base is no longer used once Tailwind is selected.\n"
   }
 }

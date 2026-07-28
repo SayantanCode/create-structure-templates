@@ -4,7 +4,10 @@
   "dimension": "testing",
   "dependsOn": [],
   "framework": "react",
-  "languages": ["jsx", "tsx"],
+  "languages": [
+    "jsx",
+    "tsx"
+  ],
   "jsx": {
     "dependencies": {},
     "devDependencies": {
@@ -17,7 +20,7 @@
       "test": "vitest run"
     },
     "wiring": {},
-    "readme": "\n## Testing\n\n```bash\nnpm test\n```\n\n[Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/react), configured in `vitest.config.js` (a separate config from `vite.config.js` — Vitest supports its own). See `src/test/Button.test.jsx` for the pattern.\n"
+    "readme": "\n## Testing\n\n```bash\nnpm test\n```\n\n[Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/react), configured in `vitest.config.js` (a separate config from `vite.config.js` — Vitest supports its own, nothing to merge). `src/test/setup.js` registers `@testing-library/jest-dom`'s matchers (`toBeInTheDocument()`, etc.) globally for every test.\n\n```jsx\n// src/test/Button.test.jsx — the existing example\nimport { render, screen, fireEvent } from \"@testing-library/react\";\nimport { describe, it, expect, vi } from \"vitest\";\nimport { Button } from \"../components/Button\";\n\nit(\"handles clicks\", () => {\n  const onClick = vi.fn();\n  render(<Button onClick={onClick}>Click me</Button>);\n  fireEvent.click(screen.getByRole(\"button\", { name: \"Click me\" }));\n  expect(onClick).toHaveBeenCalledTimes(1);\n});\n```\n\nAdd new tests anywhere under `src/` named `*.test.{js,jsx}` — Vitest picks them up automatically.\n"
   },
   "tsx": {
     "dependencies": {},
@@ -32,6 +35,6 @@
       "test": "vitest run"
     },
     "wiring": {},
-    "readme": "\n## Testing\n\n```bash\nnpm test\n```\n\n[Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/react), configured in `vitest.config.ts` (a separate config from `vite.config.ts` — Vitest supports its own). See `src/test/Button.test.tsx` for the pattern.\n"
+    "readme": "\n## Testing\n\n```bash\nnpm test\n```\n\n[Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/react), configured in `vitest.config.ts` (a separate config from `vite.config.ts` — Vitest supports its own, nothing to merge). `src/test/setup.ts` registers `@testing-library/jest-dom`'s matchers (`toBeInTheDocument()`, etc.) globally for every test.\n\n```tsx\n// src/test/Button.test.tsx — the existing example\nimport { render, screen, fireEvent } from \"@testing-library/react\";\nimport { describe, it, expect, vi } from \"vitest\";\nimport { Button } from \"../components/Button\";\n\nit(\"handles clicks\", () => {\n  const onClick = vi.fn();\n  render(<Button onClick={onClick}>Click me</Button>);\n  fireEvent.click(screen.getByRole(\"button\", { name: \"Click me\" }));\n  expect(onClick).toHaveBeenCalledTimes(1);\n});\n```\n\nAdd new tests anywhere under `src/` named `*.test.{ts,tsx}` — Vitest picks them up automatically.\n"
   }
 }

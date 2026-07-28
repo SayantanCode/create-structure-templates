@@ -4,27 +4,42 @@
   "dimension": "state",
   "dependsOn": [],
   "framework": "react",
-  "languages": ["jsx", "tsx"],
+  "languages": [
+    "jsx",
+    "tsx"
+  ],
   "jsx": {
-    "dependencies": { "zustand": "^4.5.4" },
+    "dependencies": {
+      "zustand": "^4.5.4"
+    },
     "devDependencies": {},
     "wiring": {
       "app": {
-        "imports": ["import { CounterDemo } from \"./components/CounterDemo\";"],
-        "content": ["<CounterDemo />"]
+        "imports": [
+          "import { CounterDemo } from \"./components/CounterDemo\";"
+        ],
+        "content": [
+          "<CounterDemo />"
+        ]
       }
     },
-    "readme": "\n## State\n\n[Zustand](https://github.com/pmndrs/zustand) example store at `src/store/useStore.js` (demoed by `src/components/CounterDemo.jsx`). Copy the pattern for your own state: one `create()` call per slice.\n"
+    "readme": "\n## State\n\n[Zustand](https://github.com/pmndrs/zustand) example store at `src/store/useStore.js` (demoed by `src/components/CounterDemo.jsx`). Add your own state as a new store, one `create()` call per slice:\n\n```js\n// src/store/useUserPrefs.js\nimport { create } from \"zustand\";\n\nexport const useUserPrefs = create((set) => ({\n  theme: \"light\",\n  setTheme: (theme) => set({ theme }),\n}));\n```\n\n```jsx\nconst { theme, setTheme } = useUserPrefs();\n```\n\nNo provider needed — Zustand stores work standalone, just import the hook wherever you need it.\n"
   },
   "tsx": {
-    "dependencies": { "zustand": "^4.5.4" },
+    "dependencies": {
+      "zustand": "^4.5.4"
+    },
     "devDependencies": {},
     "wiring": {
       "app": {
-        "imports": ["import { CounterDemo } from \"./components/CounterDemo\";"],
-        "content": ["<CounterDemo />"]
+        "imports": [
+          "import { CounterDemo } from \"./components/CounterDemo\";"
+        ],
+        "content": [
+          "<CounterDemo />"
+        ]
       }
     },
-    "readme": "\n## State\n\n[Zustand](https://github.com/pmndrs/zustand) example store at `src/store/useStore.ts` (demoed by `src/components/CounterDemo.tsx`). Copy the pattern for your own state: one `create()` call per slice.\n"
+    "readme": "\n## State\n\n[Zustand](https://github.com/pmndrs/zustand) example store at `src/store/useStore.ts` (demoed by `src/components/CounterDemo.tsx`). Add your own state as a new store, one `create()` call per slice:\n\n```ts\n// src/store/useUserPrefs.ts\nimport { create } from \"zustand\";\n\ninterface UserPrefsState {\n  theme: \"light\" | \"dark\";\n  setTheme: (theme: \"light\" | \"dark\") => void;\n}\n\nexport const useUserPrefs = create<UserPrefsState>((set) => ({\n  theme: \"light\",\n  setTheme: (theme) => set({ theme }),\n}));\n```\n\n```tsx\nconst { theme, setTheme } = useUserPrefs();\n```\n\nNo provider needed — Zustand stores work standalone, just import the hook wherever you need it.\n"
   }
 }
