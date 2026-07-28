@@ -846,7 +846,7 @@
       ],
       "jsx": {
         "dependencies": {
-          "react-router-dom": "^6.28.1"
+          "react-router-dom": "^6.30.4"
         },
         "devDependencies": {},
         "wiring": {
@@ -873,11 +873,11 @@
             ]
           }
         },
-        "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) is wired up in `src/App.jsx`. Pages live in `src/pages/`; add a new `<Route>` there for each one.\n"
+        "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) is wired up in `src/App.jsx`. Pages live in `src/pages/`; add a new `<Route>` there for each one.\n\n`npm audit` will flag a moderate open-redirect advisory in this version (fixed only in v7, which currently has its own higher-severity advisory in the data-router/actions APIs this starter doesn't use) — it requires passing untrusted, attacker-controlled input into a `<Link>`/`useNavigate` target, which none of the code here does. Worth re-checking before you add anything that builds a redirect URL from user input.\n"
       },
       "tsx": {
         "dependencies": {
-          "react-router-dom": "^6.28.1"
+          "react-router-dom": "^6.30.4"
         },
         "devDependencies": {},
         "wiring": {
@@ -904,7 +904,7 @@
             ]
           }
         },
-        "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) is wired up in `src/App.tsx`. Pages live in `src/pages/`; add a new `<Route>` there for each one.\n"
+        "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) is wired up in `src/App.tsx`. Pages live in `src/pages/`; add a new `<Route>` there for each one.\n\n`npm audit` will flag a moderate open-redirect advisory in this version (fixed only in v7, which currently has its own higher-severity advisory in the data-router/actions APIs this starter doesn't use) — it requires passing untrusted, attacker-controlled input into a `<Link>`/`useNavigate` target, which none of the code here does. Worth re-checking before you add anything that builds a redirect URL from user input.\n"
       }
     },
     {
