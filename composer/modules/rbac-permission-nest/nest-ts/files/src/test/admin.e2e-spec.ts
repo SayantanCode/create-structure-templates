@@ -25,7 +25,11 @@ describe("Admin-only route (permission RBAC)", () => {
   }
 
   beforeEach(async () => {
-    const UserModel = mongoose.model("User");
+    // @nestjs/mongoose registers feature schemas on the Connection object
+    // (via connection.model(...)), not on the global mongoose.model(...)
+    // registry, even though it's the same default connection — so look it
+    // up through mongoose.connection, not the top-level mongoose.model().
+    const UserModel = mongoose.connection.model("User");
     await UserModel.deleteMany({});
     await UserModel.create({ name: "Admin", email: "admin@example.com", password: "password123", role: "admin" });
     await UserModel.create({ name: "Regular", email: "user@example.com", password: "password123", role: "user" });
