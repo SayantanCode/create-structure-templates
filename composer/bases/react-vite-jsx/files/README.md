@@ -49,6 +49,16 @@ import { Input } from "./components/Input";
 
 Want to switch styling libraries later? Re-run the composer, or hand-replace these files with your own implementation — nothing else in the project needs to change. The component showcase on the home page (`src/App.jsx`) exercises all four — a real, working example of each, not just an import you have to trust.
 
+## Linting & formatting
+
+ESLint (flat config, `eslint.config.js`) and Prettier are set up out of the box, matching what `npm create vite` ships:
+
+```bash
+npm run lint          # eslint .
+npm run format        # prettier --write .
+npm run format:check  # prettier --check . (CI-friendly, no writes)
+```
+
 ## Error handling
 
 `ErrorBoundary` (wrapping `<App/>` in `main.jsx`) catches any render-time error below it in the tree and shows a fallback instead of a blank white screen. Extend `componentDidCatch` in `src/components/ErrorBoundary.jsx` to report errors to a real service (Sentry, etc.) in production.
