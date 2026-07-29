@@ -4,7 +4,10 @@
   "dimension": "styling",
   "dependsOn": [],
   "framework": "react",
-  "languages": ["jsx", "tsx"],
+  "languages": [
+    "jsx",
+    "tsx"
+  ],
   "jsx": {
     "dependencies": {},
     "devDependencies": {
@@ -13,7 +16,7 @@
       "autoprefixer": "^10.4.20"
     },
     "wiring": {},
-    "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. `src/components/{Button,Input,Modal,Spinner}.jsx` are styled with Tailwind utility classes — every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked. Restyle any of them further any time; the plain `components.css` from the base is no longer used once Tailwind is selected.\n"
+    "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. `src/components/{Button,Input,Modal,Spinner}.jsx` are styled with Tailwind utility classes (including `dark:` variants) — every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked. Restyle any of them further any time; the plain `components.css` from the base is no longer used once Tailwind is selected.\n\n`tailwind.config.js` sets `darkMode: \"class\"`, and this module's own `src/theme/ThemeContext.jsx` toggles that `dark` class on `<html>` alongside the shared `data-theme` attribute — so the base's light/dark/system `ThemeToggle` also drives any `dark:` utility classes you add yourself, not just the ones already here.\n"
   },
   "tsx": {
     "dependencies": {},
@@ -23,6 +26,6 @@
       "autoprefixer": "^10.4.20"
     },
     "wiring": {},
-    "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. `src/components/{Button,Input,Modal,Spinner}.tsx` are styled with Tailwind utility classes — every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked. Restyle any of them further any time; the plain `components.css` from the base is no longer used once Tailwind is selected.\n"
+    "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. `src/components/{Button,Input,Modal,Spinner}.tsx` are styled with Tailwind utility classes (including `dark:` variants) — every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked. Restyle any of them further any time; the plain `components.css` from the base is no longer used once Tailwind is selected.\n\n`tailwind.config.js` sets `darkMode: \"class\"`, and this module's own `src/theme/ThemeContext.tsx` toggles that `dark` class on `<html>` alongside the shared `data-theme` attribute — so the base's light/dark/system `ThemeToggle` also drives any `dark:` utility classes you add yourself, not just the ones already here.\n"
   }
 }

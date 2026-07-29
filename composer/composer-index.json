@@ -964,19 +964,21 @@
       ],
       "jsx": {
         "dependencies": {
-          "antd": "^6.5.2"
+          "antd": "^6.5.2",
+          "@ant-design/icons": "^6.3.2"
         },
         "devDependencies": {},
         "wiring": {},
-        "readme": "\n## Styling\n\n[Ant Design](https://ant.design) backs `src/components/{Button,Input,Modal,Spinner}.jsx` — `Button`/`Input`/`Modal`/`Spinner` wrap antd's own. Note antd's `Button` `type` prop means style variant, not HTML button type, so the wrapper maps our `type` to antd's `htmlType` for you. Every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked — this is the one place Ant Design is actually wired in.\n\nNo `ConfigProvider`/`<App>` is set up by default; add one in `src/App.jsx` if you want custom theming or antd's context-aware `message`/`notification` APIs.\n"
+        "readme": "\n## Styling\n\n[Ant Design](https://ant.design) backs `src/components/{Button,Input,Modal,Spinner}.jsx` — `Button`/`Input`/`Modal`/`Spinner` wrap antd's own. Note antd's `Button` `type` prop means style variant, not HTML button type, so the wrapper maps our `type` to antd's `htmlType` for you. Every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked — this is the one place Ant Design is actually wired in.\n\nA real `ConfigProvider` (`theme: { algorithm: darkAlgorithm | defaultAlgorithm }`) lives in `src/theme/ThemeContext.jsx`, driven by the same light/dark/system `ThemeToggle` (antd's own `Segmented` + `@ant-design/icons`) every styling option ships.\n"
       },
       "tsx": {
         "dependencies": {
-          "antd": "^6.5.2"
+          "antd": "^6.5.2",
+          "@ant-design/icons": "^6.3.2"
         },
         "devDependencies": {},
         "wiring": {},
-        "readme": "\n## Styling\n\n[Ant Design](https://ant.design) backs `src/components/{Button,Input,Modal,Spinner}.tsx` — `Button`/`Input`/`Modal`/`Spinner` wrap antd's own. Note antd's `Button` `type` prop means style variant, not HTML button type, so the wrapper maps our `type` to antd's `htmlType` for you. Every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked — this is the one place Ant Design is actually wired in.\n\nNo `ConfigProvider`/`<App>` is set up by default; add one in `src/App.tsx` if you want custom theming or antd's context-aware `message`/`notification` APIs.\n"
+        "readme": "\n## Styling\n\n[Ant Design](https://ant.design) backs `src/components/{Button,Input,Modal,Spinner}.tsx` — `Button`/`Input`/`Modal`/`Spinner` wrap antd's own. Note antd's `Button` `type` prop means style variant, not HTML button type, so the wrapper maps our `type` to antd's `htmlType` for you. Every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked — this is the one place Ant Design is actually wired in.\n\nA real `ConfigProvider` (`theme: { algorithm: darkAlgorithm | defaultAlgorithm }`) lives in `src/theme/ThemeContext.tsx`, driven by the same light/dark/system `ThemeToggle` (antd's own `Segmented` + `@ant-design/icons`) every styling option ships.\n"
       }
     },
     {
@@ -992,22 +994,24 @@
       "jsx": {
         "dependencies": {
           "@mui/material": "^9.2.0",
+          "@mui/icons-material": "^9.2.0",
           "@emotion/react": "^11.14.0",
           "@emotion/styled": "^11.14.1"
         },
         "devDependencies": {},
         "wiring": {},
-        "readme": "\n## Styling\n\n[MUI](https://mui.com) backs `src/components/{Button,Input,Modal,Spinner}.jsx` — `Button` wraps MUI's `Button`, `Input` wraps `TextField`, `Modal` wraps `Dialog`, `Spinner` wraps `CircularProgress`. Every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked — this is the one place MUI is actually wired in.\n\nNo `ThemeProvider`/`CssBaseline` is set up by default; add one in `src/App.jsx` if you want custom theming or MUI's opinionated CSS reset.\n"
+        "readme": "\n## Styling\n\n[MUI](https://mui.com) backs `src/components/{Button,Input,Modal,Spinner}.jsx` — `Button` wraps MUI's `Button`, `Input` wraps `TextField`, `Modal` wraps `Dialog`, `Spinner` wraps `CircularProgress`. Every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked — this is the one place MUI is actually wired in.\n\nA real `ThemeProvider` + `createTheme({ palette: { mode } })` lives in `src/theme/ThemeContext.jsx`, driven by the same light/dark/system `ThemeToggle` (styled with MUI's own `ToggleButtonGroup` + `@mui/icons-material`) every styling option ships. It deliberately skips `CssBaseline` — that would overwrite the gradient hero background from `index.css` with MUI's own flat background color.\n"
       },
       "tsx": {
         "dependencies": {
           "@mui/material": "^9.2.0",
+          "@mui/icons-material": "^9.2.0",
           "@emotion/react": "^11.14.0",
           "@emotion/styled": "^11.14.1"
         },
         "devDependencies": {},
         "wiring": {},
-        "readme": "\n## Styling\n\n[MUI](https://mui.com) backs `src/components/{Button,Input,Modal,Spinner}.tsx` — `Button` wraps MUI's `Button`, `Input` wraps `TextField`, `Modal` wraps `Dialog`, `Spinner` wraps `CircularProgress`. Every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked — this is the one place MUI is actually wired in.\n\nNo `ThemeProvider`/`CssBaseline` is set up by default; add one in `src/App.tsx` if you want custom theming or MUI's opinionated CSS reset.\n"
+        "readme": "\n## Styling\n\n[MUI](https://mui.com) backs `src/components/{Button,Input,Modal,Spinner}.tsx` — `Button` wraps MUI's `Button`, `Input` wraps `TextField`, `Modal` wraps `Dialog`, `Spinner` wraps `CircularProgress`. Every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked — this is the one place MUI is actually wired in.\n\nA real `ThemeProvider` + `createTheme({ palette: { mode } })` lives in `src/theme/ThemeContext.tsx`, driven by the same light/dark/system `ThemeToggle` (styled with MUI's own `ToggleButtonGroup` + `@mui/icons-material`) every styling option ships. It deliberately skips `CssBaseline` — that would overwrite the gradient hero background from `index.css` with MUI's own flat background color.\n"
       }
     },
     {
@@ -1028,7 +1032,7 @@
           "autoprefixer": "^10.4.20"
         },
         "wiring": {},
-        "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. `src/components/{Button,Input,Modal,Spinner}.jsx` are styled with Tailwind utility classes — every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked. Restyle any of them further any time; the plain `components.css` from the base is no longer used once Tailwind is selected.\n"
+        "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. `src/components/{Button,Input,Modal,Spinner}.jsx` are styled with Tailwind utility classes (including `dark:` variants) — every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked. Restyle any of them further any time; the plain `components.css` from the base is no longer used once Tailwind is selected.\n\n`tailwind.config.js` sets `darkMode: \"class\"`, and this module's own `src/theme/ThemeContext.jsx` toggles that `dark` class on `<html>` alongside the shared `data-theme` attribute — so the base's light/dark/system `ThemeToggle` also drives any `dark:` utility classes you add yourself, not just the ones already here.\n"
       },
       "tsx": {
         "dependencies": {},
@@ -1038,7 +1042,7 @@
           "autoprefixer": "^10.4.20"
         },
         "wiring": {},
-        "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. `src/components/{Button,Input,Modal,Spinner}.tsx` are styled with Tailwind utility classes — every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked. Restyle any of them further any time; the plain `components.css` from the base is no longer used once Tailwind is selected.\n"
+        "readme": "\n## Styling\n\n[Tailwind CSS](https://tailwindcss.com) is set up via `tailwind.config.js` / `postcss.config.js`, with the `@tailwind` directives in `src/index.css`. `src/components/{Button,Input,Modal,Spinner}.tsx` are styled with Tailwind utility classes (including `dark:` variants) — every other module (`auth-react`, `router-react`, `state-zustand`, ...) only ever imports from `./components/*`, so it works unchanged no matter which styling library is picked. Restyle any of them further any time; the plain `components.css` from the base is no longer used once Tailwind is selected.\n\n`tailwind.config.js` sets `darkMode: \"class\"`, and this module's own `src/theme/ThemeContext.tsx` toggles that `dark` class on `<html>` alongside the shared `data-theme` attribute — so the base's light/dark/system `ThemeToggle` also drives any `dark:` utility classes you add yourself, not just the ones already here.\n"
       }
     },
     {
