@@ -59,6 +59,8 @@ npm run format        # prettier --write .
 npm run format:check  # prettier --check . (CI-friendly, no writes)
 ```
 
+Content merged in at scaffold time (this README, `App.tsx`'s wired-up sections, test setup files) isn't guaranteed to match Prettier's exact formatting the moment it's composed — run `npm run format` once right after `npm install` and `format:check` stays clean for anything you edit yourself from then on.
+
 ## Error handling
 
 `ErrorBoundary` (wrapping `<App/>` in `main.tsx`) catches any render-time error below it in the tree and shows a fallback instead of a blank white screen. Extend `componentDidCatch` in `src/components/ErrorBoundary.tsx` to report errors to a real service (Sentry, etc.) in production.
@@ -70,5 +72,6 @@ npm run format:check  # prettier --check . (CI-friendly, no writes)
 ```bash
 cp .env.example .env
 npm install
+npm run format
 npm run dev
 ```
