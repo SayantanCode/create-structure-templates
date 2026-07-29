@@ -3,6 +3,31 @@
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
+
+  --bg: #ffffff;
+  --bg-gradient: radial-gradient(circle at 20% -10%, rgba(129, 140, 248, 0.25), transparent 40%),
+    radial-gradient(circle at 80% 0%, rgba(168, 85, 247, 0.2), transparent 40%);
+  --fg: #111827;
+  --muted: #6b7280;
+  --card-bg: #ffffff;
+  --border: #e5e7eb;
+  --accent: #6366f1;
+  --accent-2: #a855f7;
+}
+
+/* Adding a new theme: copy this block, give it a new [data-theme="x"]
+   selector, and add a matching option to src/components/ThemeToggle.tsx —
+   nothing else needs to change. */
+[data-theme="dark"] {
+  --bg: #0b0b12;
+  --bg-gradient: radial-gradient(circle at 20% -10%, rgba(99, 102, 241, 0.25), transparent 40%),
+    radial-gradient(circle at 80% 0%, rgba(168, 85, 247, 0.18), transparent 40%);
+  --fg: #f3f4f6;
+  --muted: #9ca3af;
+  --card-bg: #14141f;
+  --border: #262636;
+  --accent: #818cf8;
+  --accent-2: #c084fc;
 }
 
 * {
@@ -13,4 +38,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background: var(--bg-gradient), var(--bg);
+  color: var(--fg);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }

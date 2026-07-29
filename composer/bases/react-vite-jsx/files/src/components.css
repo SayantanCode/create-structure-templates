@@ -3,19 +3,19 @@
   align-items: center;
   justify-content: center;
   padding: 0.5rem 1.25rem;
-  border-radius: 6px;
-  border: 1px solid #646cff;
-  background: #646cff;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
   color: white;
   font-size: 0.95rem;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: opacity 0.15s ease;
 }
 .btn:hover {
-  background: #535bf2;
+  opacity: 0.9;
 }
 .btn:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
@@ -23,17 +23,20 @@
   display: block;
   width: 100%;
   padding: 0.5rem 0.75rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  border-radius: 8px;
+  border: 1px solid var(--border);
   font-size: 0.95rem;
-  /* Without explicit colors, `color-scheme: light dark` on :root (see
-     index.css) lets the browser apply native dark-mode form-control
-     styling here — a jarring black box in a dark-mode browser. */
-  background-color: white;
-  color: #111;
+  /* Explicit theme-aware colors — without them, `color-scheme: light dark`
+     on :root lets the browser apply its own native dark-mode form-control
+     styling here regardless of our own theme, which looked broken. */
+  background-color: var(--card-bg);
+  color: var(--fg);
+}
+.input::placeholder {
+  color: var(--muted);
 }
 .input:focus {
-  outline: 2px solid #646cff;
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
@@ -47,9 +50,10 @@
   z-index: 50;
 }
 .modal {
-  background: white;
-  color: #111;
-  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
   padding: 1.5rem;
   max-width: 480px;
   width: 90%;
@@ -59,8 +63,8 @@
   display: inline-block;
   width: 1.5rem;
   height: 1.5rem;
-  border: 3px solid rgba(100, 108, 255, 0.25);
-  border-top-color: #646cff;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
 }

@@ -1,6 +1,101 @@
 .app {
   max-width: 720px;
   margin: 0 auto;
-  padding: 2rem 1.5rem;
+  padding: 4rem 1.5rem 2rem;
   text-align: center;
+}
+
+.hero {
+  margin-bottom: 2.5rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+
+.gradient-text {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 800;
+  margin: 0 0 0.75rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 1.05rem;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.showcase {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.1rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.showcase h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.showcase-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  z-index: 100;
+}
+
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.theme-toggle-btn:hover {
+  color: var(--fg);
+}
+
+.theme-toggle-btn.active {
+  background: var(--accent);
+  color: white;
 }
