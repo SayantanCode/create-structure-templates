@@ -65,6 +65,49 @@
   flex-wrap: wrap;
 }
 
+/* Whichever routing/state/auth modules were picked render their demo
+   content here; the composer strips this to nothing when none were
+   picked, so :empty hides the card instead of showing a blank box. */
+.demo:empty {
+  display: none;
+}
+
+.demo nav {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.demo nav a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.demo nav a:hover {
+  text-decoration: underline;
+}
+
+.not-found {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.not-found-code {
+  font-size: clamp(3rem, 12vw, 6rem);
+  font-weight: 800;
+  margin: 0;
+  line-height: 1;
+}
+
+.not-found h2 {
+  margin: 0.5rem 0 0.25rem;
+}
+
+.not-found .subtitle {
+  margin: 0 auto 1.25rem;
+}
+
 .theme-toggle {
   position: fixed;
   top: 1rem;

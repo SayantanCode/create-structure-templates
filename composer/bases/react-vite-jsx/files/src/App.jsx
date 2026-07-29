@@ -38,7 +38,9 @@ function App() {
           </Modal>
         </section>
 
-        {/* __COMPOSER_CONTENT__ */}
+        <section className="showcase demo">
+          {/* __COMPOSER_CONTENT__ */}
+        </section>
       </div>
       {/* __COMPOSER_PROVIDERS_CLOSE__ */}
     </ThemeProvider>
