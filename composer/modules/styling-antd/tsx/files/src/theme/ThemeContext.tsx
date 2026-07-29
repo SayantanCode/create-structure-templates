@@ -49,7 +49,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   return (
     <ThemeContext.Provider value={{ mode, setMode }}>
       <ConfigProvider
-        theme={{ algorithm: effective === "dark" ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm }}
+        theme={{
+          algorithm: effective === "dark" ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
+        }}
       >
         {children}
       </ConfigProvider>

@@ -19,7 +19,9 @@ function App() {
         <div className="hero">
           <span className="badge">⚡ Built with create-structure</span>
           <h1 className="gradient-text">{{projectName}}</h1>
-          <p className="subtitle">Composed from the pieces you picked when scaffolding — swap any of them any time.</p>
+          <p className="subtitle">
+            Composed from the pieces you picked when scaffolding — swap any of them any time.
+          </p>
         </div>
 
         <section className="showcase">
@@ -38,9 +40,7 @@ function App() {
           </Modal>
         </section>
 
-        <section className="showcase demo">
-          {/* __COMPOSER_CONTENT__ */}
-        </section>
+        <section className="showcase demo">{/* __COMPOSER_CONTENT__ */}</section>
       </div>
       {/* __COMPOSER_PROVIDERS_CLOSE__ */}
     </ThemeProvider>

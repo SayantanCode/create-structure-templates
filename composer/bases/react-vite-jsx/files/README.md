@@ -37,7 +37,7 @@ If you picked MUI or Ant Design, their own theming API (`ThemeProvider`/`createT
 
 ## The `components/` contract
 
-`Button` / `Input` / `Modal` / `Spinner` / `ThemeToggle` are the one place every other module (auth forms, router pages, the state demo, ...) depends on — and the *only* thing that changes based on which styling library you picked at scaffold time (Tailwind / MUI / Ant Design / plain CSS). Whichever one you chose owns these files; everything else in the project imports them the same way regardless of which library is actually behind them:
+`Button` / `Input` / `Modal` / `Spinner` / `ThemeToggle` are the one place every other module (auth forms, router pages, the state demo, ...) depends on — and the _only_ thing that changes based on which styling library you picked at scaffold time (Tailwind / MUI / Ant Design / plain CSS). Whichever one you chose owns these files; everything else in the project imports them the same way regardless of which library is actually behind them:
 
 ```jsx
 import { Button } from "./components/Button";

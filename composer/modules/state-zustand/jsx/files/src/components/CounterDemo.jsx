@@ -8,8 +8,7 @@ export function CounterDemo() {
   return (
     <div>
       <p>Count: {count}</p>
-      <Button onClick={increment}>Increment</Button>{" "}
-      <Button onClick={reset}>Reset</Button>
+      <Button onClick={increment}>Increment</Button> <Button onClick={reset}>Reset</Button>
     </div>
   );
 }

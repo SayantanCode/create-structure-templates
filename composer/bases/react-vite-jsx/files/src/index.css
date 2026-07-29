@@ -5,7 +5,8 @@
   color-scheme: light dark;
 
   --bg: #ffffff;
-  --bg-gradient: radial-gradient(circle at 15% -10%, rgba(99, 102, 241, 0.4), transparent 45%),
+  --bg-gradient:
+    radial-gradient(circle at 15% -10%, rgba(99, 102, 241, 0.4), transparent 45%),
     radial-gradient(circle at 85% 5%, rgba(168, 85, 247, 0.35), transparent 45%),
     radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.12), transparent 60%);
   --fg: #111827;
@@ -21,7 +22,8 @@
    nothing else needs to change. */
 [data-theme="dark"] {
   --bg: #0b0b12;
-  --bg-gradient: radial-gradient(circle at 20% -10%, rgba(99, 102, 241, 0.25), transparent 40%),
+  --bg-gradient:
+    radial-gradient(circle at 20% -10%, rgba(99, 102, 241, 0.25), transparent 40%),
     radial-gradient(circle at 80% 0%, rgba(168, 85, 247, 0.18), transparent 40%);
   --fg: #f3f4f6;
   --muted: #9ca3af;
@@ -41,5 +43,7 @@ body {
   min-height: 100vh;
   background: var(--bg-gradient), var(--bg);
   color: var(--fg);
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
