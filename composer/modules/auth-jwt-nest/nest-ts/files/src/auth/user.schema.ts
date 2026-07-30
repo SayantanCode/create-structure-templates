@@ -39,10 +39,11 @@ function stripSensitiveFields(_doc: unknown, ret: any) {
 UserSchema.set("toJSON", { transform: stripSensitiveFields });
 UserSchema.set("toObject", { transform: stripSensitiveFields });
 
-UserSchema.pre("save", async function hashPassword(next) {
-  if (!this.isModified("password")) return next();
+// Mongoose 9 dropped the next() callback from pre hooks — an async
+// function (or one returning a promise) is now the only supported form.
+UserSchema.pre("save", async function hashPassword() {
+  if (!this.isModified("password")) return;
   this.password = await bcrypt.hash(this.password, 10);
-  next();
 });
 
 UserSchema.methods.comparePassword = function comparePassword(candidate: string) {

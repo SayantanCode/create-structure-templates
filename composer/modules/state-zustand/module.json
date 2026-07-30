@@ -10,7 +10,7 @@
   ],
   "jsx": {
     "dependencies": {
-      "zustand": "^4.5.4"
+      "zustand": "^5.0.14"
     },
     "devDependencies": {},
     "wiring": {
@@ -27,7 +27,7 @@
   },
   "tsx": {
     "dependencies": {
-      "zustand": "^4.5.4"
+      "zustand": "^5.0.14"
     },
     "devDependencies": {},
     "wiring": {

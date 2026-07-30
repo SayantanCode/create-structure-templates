@@ -25,10 +25,11 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.pre("save", async function hashPassword(next) {
-  if (!this.isModified("password")) return next();
+// Mongoose 9 dropped the next() callback from pre hooks — an async
+// function (or one returning a promise) is now the only supported form.
+userSchema.pre("save", async function hashPassword() {
+  if (!this.isModified("password")) return;
   this.password = await bcrypt.hash(this.password, 10);
-  next();
 });
 
 userSchema.methods.comparePassword = function comparePassword(candidate) {
