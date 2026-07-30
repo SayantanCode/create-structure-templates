@@ -406,10 +406,15 @@
       ],
       "esm": {
         "dependencies": {
-          "mongoose": "^8.4.1"
+          "mongoose": "^9.9.0"
         },
         "devDependencies": {
           "mongodb-memory-server": "^10.0.0"
+        },
+        "packageJsonExtra": {
+          "engines": {
+            "node": ">=20.19.0"
+          }
         },
         "envExample": [
           "MONGO_URI=mongodb://127.0.0.1:27017/{{projectName}}"
@@ -443,14 +448,19 @@
             ]
           }
         },
-        "readme": "\n## Database\n\nMongoDB via Mongoose. Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+        "readme": "\n## Database\n\nMongoDB via Mongoose. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
       },
       "ts": {
         "dependencies": {
-          "mongoose": "^8.4.1"
+          "mongoose": "^9.9.0"
         },
         "devDependencies": {
           "mongodb-memory-server": "^10.0.0"
+        },
+        "packageJsonExtra": {
+          "engines": {
+            "node": ">=20.19.0"
+          }
         },
         "envExample": [
           "MONGO_URI=mongodb://127.0.0.1:27017/{{projectName}}"
@@ -484,14 +494,19 @@
             ]
           }
         },
-        "readme": "\n## Database\n\nMongoDB via Mongoose. Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+        "readme": "\n## Database\n\nMongoDB via Mongoose. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
       },
       "cjs": {
         "dependencies": {
-          "mongoose": "^8.4.1"
+          "mongoose": "^9.9.0"
         },
         "devDependencies": {
           "mongodb-memory-server": "^10.0.0"
+        },
+        "packageJsonExtra": {
+          "engines": {
+            "node": ">=20.19.0"
+          }
         },
         "envExample": [
           "MONGO_URI=mongodb://127.0.0.1:27017/{{projectName}}"
@@ -525,15 +540,20 @@
             ]
           }
         },
-        "readme": "\n## Database\n\nMongoDB via Mongoose. Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+        "readme": "\n## Database\n\nMongoDB via Mongoose. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
       },
       "nest-ts": {
         "dependencies": {
           "@nestjs/mongoose": "^11.0.4",
-          "mongoose": "^8.4.1"
+          "mongoose": "^9.9.0"
         },
         "devDependencies": {
           "mongodb-memory-server": "^10.0.0"
+        },
+        "packageJsonExtra": {
+          "engines": {
+            "node": ">=20.19.0"
+          }
         },
         "envExample": [
           "MONGO_URI=mongodb://127.0.0.1:27017/{{projectName}}"
@@ -568,7 +588,7 @@
             ]
           }
         },
-        "readme": "\n## Database\n\nMongoDB via `@nestjs/mongoose`. Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Registered in `AppModule` via `MongooseModule.forRootAsync(...)` (async so tests can override `MONGO_URI` before the connection is opened); feature modules register their own schemas with `MongooseModule.forFeature(...)`. Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+        "readme": "\n## Database\n\nMongoDB via `@nestjs/mongoose`. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Registered in `AppModule` via `MongooseModule.forRootAsync(...)` (async so tests can override `MONGO_URI` before the connection is opened); feature modules register their own schemas with `MongooseModule.forFeature(...)`. Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
       }
     },
     {
@@ -919,7 +939,7 @@
       ],
       "jsx": {
         "dependencies": {
-          "zustand": "^4.5.4"
+          "zustand": "^5.0.14"
         },
         "devDependencies": {},
         "wiring": {
@@ -936,7 +956,7 @@
       },
       "tsx": {
         "dependencies": {
-          "zustand": "^4.5.4"
+          "zustand": "^5.0.14"
         },
         "devDependencies": {},
         "wiring": {
@@ -1219,10 +1239,10 @@
       "jsx": {
         "dependencies": {},
         "devDependencies": {
-          "vitest": "^3.0.5",
+          "vitest": "^4.1.10",
           "@testing-library/react": "^16.0.1",
           "@testing-library/jest-dom": "^6.4.8",
-          "jsdom": "^25.0.1"
+          "jsdom": "^29.0.0"
         },
         "scripts": {
           "test": "vitest run"
@@ -1233,10 +1253,10 @@
       "tsx": {
         "dependencies": {},
         "devDependencies": {
-          "vitest": "^3.0.5",
+          "vitest": "^4.1.10",
           "@testing-library/react": "^16.0.1",
           "@testing-library/jest-dom": "^6.4.8",
-          "jsdom": "^25.0.1",
+          "jsdom": "^29.0.0",
           "@types/node": "^20.14.2"
         },
         "scripts": {

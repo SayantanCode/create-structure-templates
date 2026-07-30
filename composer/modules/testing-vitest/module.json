@@ -11,10 +11,10 @@
   "jsx": {
     "dependencies": {},
     "devDependencies": {
-      "vitest": "^3.0.5",
+      "vitest": "^4.1.10",
       "@testing-library/react": "^16.0.1",
       "@testing-library/jest-dom": "^6.4.8",
-      "jsdom": "^25.0.1"
+      "jsdom": "^29.0.0"
     },
     "scripts": {
       "test": "vitest run"
@@ -25,10 +25,10 @@
   "tsx": {
     "dependencies": {},
     "devDependencies": {
-      "vitest": "^3.0.5",
+      "vitest": "^4.1.10",
       "@testing-library/react": "^16.0.1",
       "@testing-library/jest-dom": "^6.4.8",
-      "jsdom": "^25.0.1",
+      "jsdom": "^29.0.0",
       "@types/node": "^20.14.2"
     },
     "scripts": {
