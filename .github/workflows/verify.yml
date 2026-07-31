@@ -32,6 +32,8 @@ jobs:
             modules: "db-mongoose,validation-zod,auth-jwt,rbac-permission,testing-jest,docker,ci"
           - base: express-ts
             modules: "db-mongoose,validation-zod,auth-jwt,rbac-simple,testing-jest,docker,ci"
+          - base: express-ts
+            modules: "db-prisma-postgres,auth-jwt-prisma,validation-zod,testing-jest,docker,ci"
           - base: fastify-esm
             modules: "db-mongoose,validation-zod,auth-jwt-fastify,rbac-simple-fastify,testing-jest-fastify,docker,ci"
           - base: nestjs
