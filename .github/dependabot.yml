@@ -1,0 +1,20 @@
+version: 2
+updates:
+  # Every base's and built-in template's package.json — 18+ scattered
+  # directories, not a real monorepo. Grouped so one dependency bump
+  # doesn't turn into 18 separate PRs.
+  - package-ecosystem: "npm"
+    directories:
+      - "/composer/bases/*/files"
+      - "/templates/*/files"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 15
+    groups:
+      by-dependency:
+        group-by: "dependency-name"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
