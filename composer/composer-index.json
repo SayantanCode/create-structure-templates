@@ -966,6 +966,139 @@
       }
     },
     {
+      "key": "realtime-react",
+      "name": "Real-time (Socket.IO)",
+      "dimension": "realtime",
+      "dependsOn": [
+        "auth-react"
+      ],
+      "framework": "react",
+      "languages": [
+        "jsx",
+        "tsx"
+      ],
+      "jsx": {
+        "dependencies": {
+          "socket.io-client": "^4.8.3"
+        },
+        "devDependencies": {},
+        "envExample": [
+          "VITE_SOCKET_URL=http://localhost:4000"
+        ],
+        "wiring": {
+          "app": {
+            "imports": [
+              "import { RealtimeProvider } from \"./realtime/RealtimeContext\";",
+              "import { PresenceList } from \"./components/PresenceList\";"
+            ],
+            "providersOpen": [
+              "<RealtimeProvider>"
+            ],
+            "providersClose": [
+              "</RealtimeProvider>"
+            ],
+            "content": [
+              "<PresenceList />"
+            ]
+          }
+        },
+        "readme": "\n## Real-time (Socket.IO)\n\n`useRealtime()` (from `src/realtime/RealtimeContext.jsx`) connects to the backend composer's `realtime-socketio*` module and shows a live \"who's online\" list — pair the two and it works out of the box, same as the Auth module.\n\n- The socket only opens once `useAuth()` has an `accessToken` — Socket.IO's handshake carries it as `auth: { token }`, matching the backend's expectation, and closes automatically on logout.\n- `presence:update` events (broadcast whenever anyone joins/leaves) update `online`, an array of `{ id, name }` for everyone currently connected — `PresenceList` in `src/components/` renders it, and is what's dropped into `src/App.jsx` by default.\n\nSet `VITE_SOCKET_URL` in `.env` to your backend's *origin* (no path — defaults to `http://localhost:4000`, matching the backend composer's default port). This is deliberately separate from `VITE_API_URL` (which includes `/api/v1`): Socket.IO connects directly to the server origin and does its own path-based routing (`/socket.io/`) underneath.\n"
+      },
+      "tsx": {
+        "dependencies": {
+          "socket.io-client": "^4.8.3"
+        },
+        "devDependencies": {},
+        "envExample": [
+          "VITE_SOCKET_URL=http://localhost:4000"
+        ],
+        "wiring": {
+          "app": {
+            "imports": [
+              "import { RealtimeProvider } from \"./realtime/RealtimeContext\";",
+              "import { PresenceList } from \"./components/PresenceList\";"
+            ],
+            "providersOpen": [
+              "<RealtimeProvider>"
+            ],
+            "providersClose": [
+              "</RealtimeProvider>"
+            ],
+            "content": [
+              "<PresenceList />"
+            ]
+          }
+        },
+        "readme": "\n## Real-time (Socket.IO)\n\n`useRealtime()` (from `src/realtime/RealtimeContext.tsx`) connects to the backend composer's `realtime-socketio*` module and shows a live \"who's online\" list — pair the two and it works out of the box, same as the Auth module.\n\n- The socket only opens once `useAuth()` has an `accessToken` — Socket.IO's handshake carries it as `auth: { token }`, matching the backend's expectation, and closes automatically on logout.\n- `presence:update` events (broadcast whenever anyone joins/leaves) update `online`, an array of `{ id, name }` for everyone currently connected — `PresenceList` in `src/components/` renders it, and is what's dropped into `src/App.tsx` by default.\n\nSet `VITE_SOCKET_URL` in `.env` to your backend's *origin* (no path — defaults to `http://localhost:4000`, matching the backend composer's default port). This is deliberately separate from `VITE_API_URL` (which includes `/api/v1`): Socket.IO connects directly to the server origin and does its own path-based routing (`/socket.io/`) underneath.\n"
+      }
+    },
+    {
+      "key": "realtime-socketio",
+      "name": "Real-time (Socket.IO)",
+      "dimension": "realtime",
+      "dependsOn": [
+        "auth-jwt"
+      ],
+      "framework": "express",
+      "languages": [
+        "esm",
+        "ts",
+        "cjs"
+      ],
+      "esm": {
+        "dependencies": {
+          "socket.io": "^4.8.3"
+        },
+        "devDependencies": {
+          "socket.io-client": "^4.8.3"
+        },
+        "wiring": {},
+        "readme": "\n## Real-time (Socket.IO)\n\nA live \"who's online\" presence demo, authenticated with the exact same JWT the HTTP API uses.\n\n- The client connects with `io(url, { auth: { token: accessToken } })` — Socket.IO's handshake has no header the client can set before the WebSocket upgrade, so the access token travels as a handshake auth payload instead of an `Authorization` header.\n- `sockets/index.js`'s `io.use(...)` middleware verifies that token with the same `verifyAccessToken` the HTTP `requireAuth` middleware uses, and rejects the connection (`connect_error`) if it's missing or invalid.\n- On a successful connection, the socket joins a shared `lobby` room and the server broadcasts `presence:update` with the current list of connected users to everyone in that room — try opening two browser tabs logged in as different users.\n- Presence is tracked in memory (a `Map`), so it resets on server restart and doesn't scale past one server process — swap in a Redis adapter (`@socket.io/redis-adapter`) if you need multiple server instances.\n"
+      },
+      "ts": {
+        "dependencies": {
+          "socket.io": "^4.8.3"
+        },
+        "devDependencies": {
+          "socket.io-client": "^4.8.3"
+        },
+        "wiring": {},
+        "readme": "\n## Real-time (Socket.IO)\n\nA live \"who's online\" presence demo, authenticated with the exact same JWT the HTTP API uses.\n\n- The client connects with `io(url, { auth: { token: accessToken } })` — Socket.IO's handshake has no header the client can set before the WebSocket upgrade, so the access token travels as a handshake auth payload instead of an `Authorization` header.\n- `src/sockets/index.ts`'s `io.use(...)` middleware verifies that token with the same `verifyAccessToken` the HTTP `requireAuth` middleware uses, and rejects the connection (`connect_error`) if it's missing or invalid.\n- On a successful connection, the socket joins a shared `lobby` room and the server broadcasts `presence:update` with the current list of connected users to everyone in that room — try opening two browser tabs logged in as different users.\n- Presence is tracked in memory (a `Map`), so it resets on server restart and doesn't scale past one server process — swap in a Redis adapter (`@socket.io/redis-adapter`) if you need multiple server instances.\n"
+      },
+      "cjs": {
+        "dependencies": {
+          "socket.io": "^4.8.3"
+        },
+        "devDependencies": {
+          "socket.io-client": "^4.8.3"
+        },
+        "wiring": {},
+        "readme": "\n## Real-time (Socket.IO)\n\nA live \"who's online\" presence demo, authenticated with the exact same JWT the HTTP API uses.\n\n- The client connects with `io(url, { auth: { token: accessToken } })` — Socket.IO's handshake has no header the client can set before the WebSocket upgrade, so the access token travels as a handshake auth payload instead of an `Authorization` header.\n- `sockets/index.js`'s `io.use(...)` middleware verifies that token with the same `verifyAccessToken` the HTTP `requireAuth` middleware uses, and rejects the connection (`connect_error`) if it's missing or invalid.\n- On a successful connection, the socket joins a shared `lobby` room and the server broadcasts `presence:update` with the current list of connected users to everyone in that room — try opening two browser tabs logged in as different users.\n- Presence is tracked in memory (a `Map`), so it resets on server restart and doesn't scale past one server process — swap in a Redis adapter (`@socket.io/redis-adapter`) if you need multiple server instances.\n"
+      }
+    },
+    {
+      "key": "realtime-socketio-fastify",
+      "name": "Real-time (Socket.IO)",
+      "dimension": "realtime",
+      "dependsOn": [
+        "auth-jwt-fastify"
+      ],
+      "framework": "fastify",
+      "languages": [
+        "esm"
+      ],
+      "esm": {
+        "dependencies": {
+          "socket.io": "^4.8.3"
+        },
+        "devDependencies": {
+          "socket.io-client": "^4.8.3"
+        },
+        "wiring": {},
+        "readme": "\n## Real-time (Socket.IO)\n\nA live \"who's online\" presence demo, authenticated with the exact same JWT the HTTP API uses.\n\n- The client connects with `io(url, { auth: { token: accessToken } })` — Socket.IO's handshake has no header the client can set before the WebSocket upgrade, so the access token travels as a handshake auth payload instead of an `Authorization` header.\n- `sockets/index.js`'s `io.use(...)` middleware verifies that token with the same `verifyAccessToken` the HTTP `requireAuth` preHandler uses, and rejects the connection (`connect_error`) if it's missing or invalid.\n- On a successful connection, the socket joins a shared `lobby` room and the server broadcasts `presence:update` with the current list of connected users to everyone in that room — try opening two browser tabs logged in as different users.\n- Socket.IO attaches to Fastify's underlying `httpServer` (via `app.server`) rather than Fastify's own routing, since Socket.IO needs the raw `http.Server` to intercept the WebSocket upgrade.\n- Presence is tracked in memory (a `Map`), so it resets on server restart and doesn't scale past one server process — swap in a Redis adapter (`@socket.io/redis-adapter`) if you need multiple server instances.\n"
+      }
+    },
+    {
       "key": "router-react",
       "name": "React Router",
       "dimension": "routing",

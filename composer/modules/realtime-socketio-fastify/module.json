@@ -1,0 +1,14 @@
+{
+  "key": "realtime-socketio-fastify",
+  "name": "Real-time (Socket.IO)",
+  "dimension": "realtime",
+  "dependsOn": ["auth-jwt-fastify"],
+  "framework": "fastify",
+  "languages": ["esm"],
+  "esm": {
+    "dependencies": { "socket.io": "^4.8.3" },
+    "devDependencies": { "socket.io-client": "^4.8.3" },
+    "wiring": {},
+    "readme": "\n## Real-time (Socket.IO)\n\nA live \"who's online\" presence demo, authenticated with the exact same JWT the HTTP API uses.\n\n- The client connects with `io(url, { auth: { token: accessToken } })` — Socket.IO's handshake has no header the client can set before the WebSocket upgrade, so the access token travels as a handshake auth payload instead of an `Authorization` header.\n- `sockets/index.js`'s `io.use(...)` middleware verifies that token with the same `verifyAccessToken` the HTTP `requireAuth` preHandler uses, and rejects the connection (`connect_error`) if it's missing or invalid.\n- On a successful connection, the socket joins a shared `lobby` room and the server broadcasts `presence:update` with the current list of connected users to everyone in that room — try opening two browser tabs logged in as different users.\n- Socket.IO attaches to Fastify's underlying `httpServer` (via `app.server`) rather than Fastify's own routing, since Socket.IO needs the raw `http.Server` to intercept the WebSocket upgrade.\n- Presence is tracked in memory (a `Map`), so it resets on server restart and doesn't scale past one server process — swap in a Redis adapter (`@socket.io/redis-adapter`) if you need multiple server instances.\n"
+  }
+}

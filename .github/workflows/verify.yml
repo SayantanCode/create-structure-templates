@@ -27,25 +27,25 @@ jobs:
       matrix:
         include:
           - base: express-cjs
-            modules: "db-mongoose,validation-zod,auth-jwt,rbac-simple,testing-jest,docker,ci"
+            modules: "db-mongoose,validation-zod,auth-jwt,rbac-simple,realtime-socketio,testing-jest,docker,ci"
           - base: express-esm
-            modules: "db-mongoose,validation-zod,auth-jwt,rbac-permission,testing-jest,docker,ci"
+            modules: "db-mongoose,validation-zod,auth-jwt,rbac-permission,realtime-socketio,testing-jest,docker,ci"
           - base: express-ts
-            modules: "db-mongoose,validation-zod,auth-jwt,rbac-simple,testing-jest,docker,ci"
+            modules: "db-mongoose,validation-zod,auth-jwt,rbac-simple,realtime-socketio,testing-jest,docker,ci"
           - base: express-ts
             modules: "db-prisma-postgres,auth-jwt-prisma,validation-zod,testing-jest,docker,ci"
           - base: fastify-esm
-            modules: "db-mongoose,validation-zod,auth-jwt-fastify,rbac-simple-fastify,testing-jest-fastify,docker,ci"
+            modules: "db-mongoose,validation-zod,auth-jwt-fastify,rbac-simple-fastify,realtime-socketio-fastify,testing-jest-fastify,docker,ci"
           - base: nestjs
             modules: "db-mongoose,validation-zod,auth-jwt-nest,rbac-simple-nest,testing-jest-nest,docker,ci"
           - base: react-vite-tsx
-            modules: "router-react,styling-tailwind,state-zustand,auth-react,testing-vitest"
+            modules: "router-react,styling-tailwind,state-zustand,auth-react,realtime-react,testing-vitest"
           - base: react-vite-tsx
             modules: "router-react,styling-mui,state-zustand,auth-react,testing-vitest"
           - base: react-vite-tsx
             modules: "router-react,styling-antd,state-zustand,auth-react,testing-vitest"
           - base: react-vite-jsx
-            modules: "router-react,styling-tailwind,state-zustand,auth-react,testing-vitest"
+            modules: "router-react,styling-tailwind,state-zustand,auth-react,realtime-react,testing-vitest"
     steps:
       - name: Checkout templates (this ref)
         uses: actions/checkout@v4
