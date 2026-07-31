@@ -9,14 +9,15 @@ export function notFound(req, _res, next) {
 // Centralized error handler — every error, whether a known ApiError or an
 // unexpected one, goes through here and comes out as the same
 // { success: false, error: { message, code } } envelope.
-export function errorHandler(err, _req, res, _next) {
+export function errorHandler(err, req, res, _next) {
   if (err instanceof ApiError) {
     return apiResponse.error(res, err.message, err.statusCode, err.code);
   }
 
   // Unexpected error: never leak internals to the client, but log the
-  // real stack server-side.
-  console.error(err);
+  // real stack server-side — req.log (from pino-http) ties this to the
+  // same request id the access log line for this request already has.
+  req.log.error(err);
   apiResponse.error(
     res,
     "Internal server error",

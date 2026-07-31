@@ -2,18 +2,20 @@ import "dotenv/config";
 import { createServer } from "./app.js";
 import { Server } from "socket.io";
 import { registerSocketHandlers } from "./sockets/index.js";
+import { logger } from "./utils/logger.js";
+import { env } from "./config/env.js";
 // __COMPOSER_IMPORTS__
 
 async function bootstrap() {
   // __COMPOSER_STARTUP__
   const app = createServer();
-  const port = Number(process.env.PORT || 4000);
+  const port = env.PORT;
   const httpServer = app.listen(port, () => {
-    console.log(`🚀 Server ready at http://localhost:${port}`);
+    logger.info(`🚀 Server ready at http://localhost:${port}`);
   });
 
   const io = new Server(httpServer, {
-    cors: { origin: process.env.CORS_ORIGIN || "http://localhost:5173", credentials: true },
+    cors: { origin: env.CORS_ORIGIN, credentials: true },
   });
   registerSocketHandlers(io);
 
@@ -21,9 +23,9 @@ async function bootstrap() {
   async function shutdown(signal: string) {
     if (shuttingDown) return;
     shuttingDown = true;
-    console.log(`\n${signal} received, shutting down gracefully...`);
+    logger.info(`${signal} received, shutting down gracefully...`);
     io.close();
-    httpServer.close(() => console.log("HTTP server closed"));
+    httpServer.close(() => logger.info("HTTP server closed"));
     // __COMPOSER_SHUTDOWN__
     process.exit(0);
   }
@@ -32,6 +34,6 @@ async function bootstrap() {
 }
 
 bootstrap().catch((err) => {
-  console.error("Fatal bootstrap error:", err);
+  logger.fatal(err, "Fatal bootstrap error");
   process.exit(1);
 });

@@ -14,6 +14,7 @@
       "express-rate-limit": "^8.6.1"
     },
     "devDependencies": {},
+    "scripts": { "seed": "node scripts/seed.js" },
     "envExample": [
       "",
       "# Use long, random values in production (e.g. `openssl rand -hex 32`)",
@@ -38,7 +39,7 @@
         ]
       }
     },
-    "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n\n`register`/`login` are rate-limited (20 requests per 15 minutes per IP by default — see `middlewares/rateLimiter.js`) to blunt brute-force/mass-registration attempts.\n"
+    "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n\n`register`/`login` are rate-limited (20 requests per 15 minutes per IP by default — see `middlewares/rateLimiter.js`) to blunt brute-force/mass-registration attempts.\n\n`npm run seed` creates two test accounts (`admin@example.com` / `user@example.com`, both password `password123`) if they don't already exist, so `npm run dev` doesn't start against a totally empty database.\n"
   },
   "ts": {
     "dependencies": {
@@ -51,8 +52,10 @@
     "devDependencies": {
       "@types/jsonwebtoken": "^9.0.6",
       "@types/bcryptjs": "^2.4.6",
-      "@types/cookie-parser": "^1.4.7"
+      "@types/cookie-parser": "^1.4.7",
+      "tsx": "^4.23.1"
     },
+    "scripts": { "seed": "tsx src/scripts/seed.ts" },
     "envExample": [
       "",
       "# Use long, random values in production (e.g. `openssl rand -hex 32`)",
@@ -77,7 +80,7 @@
         ]
       }
     },
-    "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n\n`register`/`login` are rate-limited (20 requests per 15 minutes per IP by default — see `middlewares/rateLimiter.js`) to blunt brute-force/mass-registration attempts.\n"
+    "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n\n`register`/`login` are rate-limited (20 requests per 15 minutes per IP by default — see `middlewares/rateLimiter.js`) to blunt brute-force/mass-registration attempts.\n\n`npm run seed` creates two test accounts (`admin@example.com` / `user@example.com`, both password `password123`) if they don't already exist, so `npm run dev` doesn't start against a totally empty database. Run via `tsx` rather than `ts-node` — quicker, and sidesteps `ts-node --esm`'s loader issues on some setups.\n"
   },
   "cjs": {
     "dependencies": {
@@ -88,6 +91,7 @@
       "express-rate-limit": "^8.6.1"
     },
     "devDependencies": {},
+    "scripts": { "seed": "node scripts/seed.js" },
     "envExample": [
       "",
       "# Use long, random values in production (e.g. `openssl rand -hex 32`)",
@@ -112,6 +116,6 @@
         ]
       }
     },
-    "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n\n`register`/`login` are rate-limited (20 requests per 15 minutes per IP by default — see `middlewares/rateLimiter.js`) to blunt brute-force/mass-registration attempts.\n"
+    "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n\n`register`/`login` are rate-limited (20 requests per 15 minutes per IP by default — see `middlewares/rateLimiter.js`) to blunt brute-force/mass-registration attempts.\n\n`npm run seed` creates two test accounts (`admin@example.com` / `user@example.com`, both password `password123`) if they don't already exist, so `npm run dev` doesn't start against a totally empty database.\n"
   }
 }

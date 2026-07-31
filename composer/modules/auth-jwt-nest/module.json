@@ -18,6 +18,7 @@
       "@types/bcryptjs": "^2.4.6",
       "@types/cookie-parser": "^1.4.7"
     },
+    "scripts": { "seed": "ts-node src/scripts/seed.ts" },
     "envExample": [
       "",
       "# Use long, random values in production (e.g. `openssl rand -hex 32`)",
@@ -50,6 +51,6 @@
         ]
       }
     },
-    "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie via `cookie-parser`).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n\n`@nestjs/throttler` is registered app-wide (100 req/min default, in `AppModule`) via `APP_GUARD`; `register`/`login` override it with a tighter 20-per-15-minutes limit via `@Throttle(...)` (see `auth.controller.ts`) to blunt brute-force/mass-registration attempts.\n"
+    "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie via `cookie-parser`).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n\n`@nestjs/throttler` is registered app-wide (100 req/min default, in `AppModule`) via `APP_GUARD`; `register`/`login` override it with a tighter 20-per-15-minutes limit via `@Throttle(...)` (see `auth.controller.ts`) to blunt brute-force/mass-registration attempts.\n\n`npm run seed` creates two test accounts (`admin@example.com` / `user@example.com`, both password `password123`) if they don't already exist, so `npm run dev` doesn't start against a totally empty database — connects directly via mongoose rather than bootstrapping the whole Nest app.\n"
   }
 }
