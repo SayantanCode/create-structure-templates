@@ -23,8 +23,26 @@ export function createServer() {
   });
   // __COMPOSER_MIDDLEWARE__
 
-  // Health check endpoint
+  // Liveness: the process is up and handling requests. Doesn't check
+  // dependencies — that's what /healthz is for.
   fastify.get("/health", async () => ({ status: "ok" }));
+
+  // Readiness: is this instance actually able to serve real traffic right
+  // now? Each database module contributes its own connectivity check —
+  // an empty list here (no database module selected) is vacuously "ok".
+  fastify.get("/healthz", async (_req, reply) => {
+    const checks = [
+      // __COMPOSER_READINESS__
+    ];
+    const results = await Promise.all(
+      checks.map(async (c) => ({ name: c.name, ok: await c.check() }))
+    );
+    const allOk = results.every((r) => r.ok);
+    reply.code(allOk ? 200 : 503).send({
+      status: allOk ? "ok" : "unavailable",
+      checks: Object.fromEntries(results.map((r) => [r.name, r.ok])),
+    });
+  });
 
   // Routes
   fastify.register(routes, { prefix: "/api/v1" });

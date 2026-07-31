@@ -62,7 +62,8 @@
           "jsonwebtoken": "^9.0.2",
           "bcryptjs": "^2.4.3",
           "cookie-parser": "^1.4.6",
-          "zod": "^3.23.8"
+          "zod": "^3.23.8",
+          "express-rate-limit": "^8.6.1"
         },
         "devDependencies": {},
         "envExample": [
@@ -97,14 +98,15 @@
             ]
           }
         },
-        "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n"
+        "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n\n`register`/`login` are rate-limited (20 requests per 15 minutes per IP by default — see `middlewares/rateLimiter.js`) to blunt brute-force/mass-registration attempts.\n"
       },
       "ts": {
         "dependencies": {
           "jsonwebtoken": "^9.0.2",
           "bcryptjs": "^2.4.3",
           "cookie-parser": "^1.4.6",
-          "zod": "^3.23.8"
+          "zod": "^3.23.8",
+          "express-rate-limit": "^8.6.1"
         },
         "devDependencies": {
           "@types/jsonwebtoken": "^9.0.6",
@@ -143,14 +145,15 @@
             ]
           }
         },
-        "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n"
+        "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n\n`register`/`login` are rate-limited (20 requests per 15 minutes per IP by default — see `middlewares/rateLimiter.js`) to blunt brute-force/mass-registration attempts.\n"
       },
       "cjs": {
         "dependencies": {
           "jsonwebtoken": "^9.0.2",
           "bcryptjs": "^2.4.3",
           "cookie-parser": "^1.4.6",
-          "zod": "^3.23.8"
+          "zod": "^3.23.8",
+          "express-rate-limit": "^8.6.1"
         },
         "devDependencies": {},
         "envExample": [
@@ -185,7 +188,7 @@
             ]
           }
         },
-        "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n"
+        "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n\n`register`/`login` are rate-limited (20 requests per 15 minutes per IP by default — see `middlewares/rateLimiter.js`) to blunt brute-force/mass-registration attempts.\n"
       }
     },
     {
@@ -204,6 +207,7 @@
           "jsonwebtoken": "^9.0.2",
           "bcryptjs": "^2.4.3",
           "@fastify/cookie": "^11.1.2",
+          "@fastify/rate-limit": "^11.2.0",
           "zod": "^3.23.8"
         },
         "devDependencies": {},
@@ -218,10 +222,12 @@
         "wiring": {
           "app": {
             "imports": [
-              "import cookie from \"@fastify/cookie\";"
+              "import cookie from \"@fastify/cookie\";",
+              "import rateLimit from \"@fastify/rate-limit\";"
             ],
             "middleware": [
-              "fastify.register(cookie);"
+              "fastify.register(cookie);",
+              "fastify.register(rateLimit, { global: false });"
             ]
           },
           "routes/index": {
@@ -239,7 +245,7 @@
             ]
           }
         },
-        "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie via `@fastify/cookie`).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n"
+        "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie via `@fastify/cookie`).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n\n`register`/`login` are rate-limited (20 requests per 15 minutes per IP by default — `@fastify/rate-limit` is registered with `global: false`, so it only applies where a route opts in via `config.rateLimit`, see `routes/auth.routes.js`) to blunt brute-force/mass-registration attempts.\n"
       }
     },
     {
@@ -258,7 +264,8 @@
           "jsonwebtoken": "^9.0.2",
           "bcryptjs": "^2.4.3",
           "cookie-parser": "^1.4.7",
-          "zod": "^3.23.8"
+          "zod": "^3.23.8",
+          "@nestjs/throttler": "^6.5.0"
         },
         "devDependencies": {
           "@types/jsonwebtoken": "^9.0.6",
@@ -284,10 +291,16 @@
           },
           "app.module": {
             "imports": [
-              "import { AuthModule } from \"./auth/auth.module\";"
+              "import { AuthModule } from \"./auth/auth.module\";",
+              "import { ThrottlerModule, ThrottlerGuard } from \"@nestjs/throttler\";",
+              "import { APP_GUARD } from \"@nestjs/core\";"
             ],
             "moduleImports": [
-              "AuthModule,"
+              "AuthModule,",
+              "ThrottlerModule.forRoot([{ ttl: 60_000, limit: 100 }]),"
+            ],
+            "providers": [
+              "{ provide: APP_GUARD, useClass: ThrottlerGuard },"
             ]
           },
           "test/setup": {
@@ -297,7 +310,7 @@
             ]
           }
         },
-        "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie via `cookie-parser`).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n"
+        "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie via `cookie-parser`).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n\n`@nestjs/throttler` is registered app-wide (100 req/min default, in `AppModule`) via `APP_GUARD`; `register`/`login` override it with a tighter 20-per-15-minutes limit via `@Throttle(...)` (see `auth.controller.ts`) to blunt brute-force/mass-registration attempts.\n"
       }
     },
     {
@@ -316,7 +329,8 @@
           "jsonwebtoken": "^9.0.2",
           "bcryptjs": "^2.4.3",
           "cookie-parser": "^1.4.6",
-          "zod": "^3.23.8"
+          "zod": "^3.23.8",
+          "express-rate-limit": "^8.6.1"
         },
         "devDependencies": {
           "@types/jsonwebtoken": "^9.0.6",
@@ -355,7 +369,7 @@
             ]
           }
         },
-        "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie) — identical contract to the Mongoose-backed Auth module, just backed by Prisma/PostgreSQL instead. Password hashing happens explicitly in `auth.service.ts` (Prisma has no schema-level hooks the way Mongoose does, so there's no `pre(\"save\", ...)` equivalent to hook into).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n"
+        "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie) — identical contract to the Mongoose-backed Auth module, just backed by Prisma/PostgreSQL instead. Password hashing happens explicitly in `auth.service.ts` (Prisma has no schema-level hooks the way Mongoose does, so there's no `pre(\"save\", ...)` equivalent to hook into).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n\n`register`/`login` are rate-limited (20 requests per 15 minutes per IP by default — see `middlewares/rateLimiter.ts`) to blunt brute-force/mass-registration attempts.\n"
       }
     },
     {
@@ -478,12 +492,24 @@
           "MONGO_URI=mongodb://127.0.0.1:27017/{{projectName}}"
         ],
         "wiring": {
+          "app": {
+            "imports": [
+              "import mongoose from \"mongoose\";"
+            ],
+            "readiness": [
+              "{ name: \"mongodb\", check: () => mongoose.connection.readyState === 1 },"
+            ]
+          },
           "server": {
             "imports": [
-              "import { connectDB } from \"./config/db.js\";"
+              "import { connectDB } from \"./config/db.js\";",
+              "import mongoose from \"mongoose\";"
             ],
             "startup": [
               "await connectDB();"
+            ],
+            "shutdown": [
+              "await mongoose.connection.close();"
             ]
           },
           "test/setup": {
@@ -506,7 +532,7 @@
             ]
           }
         },
-        "readme": "\n## Database\n\nMongoDB via Mongoose. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+        "readme": "\n## Database\n\nMongoDB via Mongoose. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). `GET /healthz` reports live connectivity (`mongoose.connection.readyState`); graceful shutdown (SIGTERM/SIGINT) closes the connection before the process exits. Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
       },
       "ts": {
         "dependencies": {
@@ -524,12 +550,24 @@
           "MONGO_URI=mongodb://127.0.0.1:27017/{{projectName}}"
         ],
         "wiring": {
+          "app": {
+            "imports": [
+              "import mongoose from \"mongoose\";"
+            ],
+            "readiness": [
+              "{ name: \"mongodb\", check: () => mongoose.connection.readyState === 1 },"
+            ]
+          },
           "server": {
             "imports": [
-              "import { connectDB } from \"./config/db.js\";"
+              "import { connectDB } from \"./config/db.js\";",
+              "import mongoose from \"mongoose\";"
             ],
             "startup": [
               "await connectDB();"
+            ],
+            "shutdown": [
+              "await mongoose.connection.close();"
             ]
           },
           "test/setup": {
@@ -552,7 +590,7 @@
             ]
           }
         },
-        "readme": "\n## Database\n\nMongoDB via Mongoose. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+        "readme": "\n## Database\n\nMongoDB via Mongoose. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). `GET /healthz` reports live connectivity (`mongoose.connection.readyState`); graceful shutdown (SIGTERM/SIGINT) closes the connection before the process exits. Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
       },
       "cjs": {
         "dependencies": {
@@ -570,12 +608,24 @@
           "MONGO_URI=mongodb://127.0.0.1:27017/{{projectName}}"
         ],
         "wiring": {
+          "app": {
+            "imports": [
+              "const mongoose = require(\"mongoose\");"
+            ],
+            "readiness": [
+              "{ name: \"mongodb\", check: () => mongoose.connection.readyState === 1 },"
+            ]
+          },
           "server": {
             "imports": [
-              "const { connectDB } = require(\"./config/db.js\");"
+              "const { connectDB } = require(\"./config/db.js\");",
+              "const mongoose = require(\"mongoose\");"
             ],
             "startup": [
               "await connectDB();"
+            ],
+            "shutdown": [
+              "await mongoose.connection.close();"
             ]
           },
           "test/setup": {
@@ -598,7 +648,7 @@
             ]
           }
         },
-        "readme": "\n## Database\n\nMongoDB via Mongoose. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+        "readme": "\n## Database\n\nMongoDB via Mongoose. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). `GET /healthz` reports live connectivity (`mongoose.connection.readyState`); graceful shutdown (SIGTERM/SIGINT) closes the connection before the process exits. Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
       },
       "nest-ts": {
         "dependencies": {
@@ -626,6 +676,18 @@
               "MongooseModule.forRootAsync({ useFactory: () => ({ uri: getMongoUri() }) }),"
             ]
           },
+          "app.controller": {
+            "imports": [
+              "import { InjectConnection } from \"@nestjs/mongoose\";",
+              "import { Connection } from \"mongoose\";"
+            ],
+            "constructorArgs": [
+              "@InjectConnection() private readonly mongoConnection: Connection,"
+            ],
+            "readiness": [
+              "{ name: \"mongodb\", check: () => this.mongoConnection.readyState === 1 },"
+            ]
+          },
           "test/setup": {
             "imports": [
               "import mongoose from \"mongoose\";",
@@ -646,7 +708,7 @@
             ]
           }
         },
-        "readme": "\n## Database\n\nMongoDB via `@nestjs/mongoose`. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Registered in `AppModule` via `MongooseModule.forRootAsync(...)` (async so tests can override `MONGO_URI` before the connection is opened); feature modules register their own schemas with `MongooseModule.forFeature(...)`. Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+        "readme": "\n## Database\n\nMongoDB via `@nestjs/mongoose`. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Registered in `AppModule` via `MongooseModule.forRootAsync(...)` (async so tests can override `MONGO_URI` before the connection is opened); feature modules register their own schemas with `MongooseModule.forFeature(...)`. `GET /healthz` reports live connectivity; `app.enableShutdownHooks()` (in `main.ts`) makes Nest close the connection automatically on SIGTERM/SIGINT, no extra wiring needed. Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
       }
     },
     {
@@ -690,16 +752,27 @@
           "DATABASE_URL=\"postgresql://postgres:postgres@localhost:5432/{{projectName}}?schema=public\""
         ],
         "wiring": {
+          "app": {
+            "imports": [
+              "import { prisma } from \"./config/db.js\";"
+            ],
+            "readiness": [
+              "{ name: \"postgres\", check: async () => { try { await prisma.$queryRaw`SELECT 1`; return true; } catch { return false; } } },"
+            ]
+          },
           "server": {
             "imports": [
-              "import { connectDB } from \"./config/db.js\";"
+              "import { connectDB, prisma } from \"./config/db.js\";"
             ],
             "startup": [
               "await connectDB();"
+            ],
+            "shutdown": [
+              "await prisma.$disconnect();"
             ]
           }
         },
-        "readme": "\n## Database\n\nPostgreSQL via [Prisma](https://prisma.io) 7 — schema-first, with a fully typed client generated from `prisma/schema.prisma`. Requires Node.js `>=20.19.0`.\n\n- `prisma/schema.prisma` — your data model. `predev`/`prebuild`/`pretest` all run `prisma generate` automatically, so the typed client stays in sync without a manual step.\n- `prisma.config.ts` — where the CLI (`db:push`, `db:migrate`, `db:studio`) reads `DATABASE_URL` from; separate from the runtime client's driver adapter in `src/config/db.ts` (Prisma 7 requires an explicit adapter — `@prisma/adapter-pg` here — it no longer connects using the schema's `datasource.url` directly).\n- Set `DATABASE_URL` in `.env` (defaults to a local Postgres on 5432). `npm run db:push` applies your schema to it without a full migration history — use `npm run db:migrate` instead once you want real, versioned migrations.\n- Tests spin up a real, disposable Postgres container via [testcontainers](https://testcontainers.com) — see `src/test/global-setup.ts`/`global-teardown.ts` (Jest's `globalSetup`/`globalTeardown`, not `beforeAll`/`afterAll` in the test files themselves — starting a Docker-backed container from inside ts-jest's per-file ESM sandbox crashes on `docker-modem`'s bundled `readable-stream`; `globalSetup`/`globalTeardown` run in Jest's main process instead, outside that sandbox). `npm audit` will report vulnerabilities in this devDependency's own transitive tree (via `dockerode`) — they don't affect the shipped app (`npm audit --omit=dev` is clean); a newer `@testcontainers/postgresql` fixes them but requires Node ≥22.19.\n"
+        "readme": "\n## Database\n\nPostgreSQL via [Prisma](https://prisma.io) 7 — schema-first, with a fully typed client generated from `prisma/schema.prisma`. Requires Node.js `>=20.19.0`.\n\n- `prisma/schema.prisma` — your data model. `predev`/`prebuild`/`pretest` all run `prisma generate` automatically, so the typed client stays in sync without a manual step.\n- `prisma.config.ts` — where the CLI (`db:push`, `db:migrate`, `db:studio`) reads `DATABASE_URL` from; separate from the runtime client's driver adapter in `src/config/db.ts` (Prisma 7 requires an explicit adapter — `@prisma/adapter-pg` here — it no longer connects using the schema's `datasource.url` directly).\n- Set `DATABASE_URL` in `.env` (defaults to a local Postgres on 5432). `npm run db:push` applies your schema to it without a full migration history — use `npm run db:migrate` instead once you want real, versioned migrations.\n- `GET /healthz` reports live connectivity via a real `SELECT 1`; graceful shutdown (SIGTERM/SIGINT) calls `prisma.$disconnect()` before the process exits.\n- Tests spin up a real, disposable Postgres container via [testcontainers](https://testcontainers.com) — see `src/test/global-setup.ts`/`global-teardown.ts` (Jest's `globalSetup`/`globalTeardown`, not `beforeAll`/`afterAll` in the test files themselves — starting a Docker-backed container from inside ts-jest's per-file ESM sandbox crashes on `docker-modem`'s bundled `readable-stream`; `globalSetup`/`globalTeardown` run in Jest's main process instead, outside that sandbox). `npm audit` will report vulnerabilities in this devDependency's own transitive tree (via `dockerode`) — they don't affect the shipped app (`npm audit --omit=dev` is clean); a newer `@testcontainers/postgresql` fixes them but requires Node ≥22.19.\n"
       }
     },
     {

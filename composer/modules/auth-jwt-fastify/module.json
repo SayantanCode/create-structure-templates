@@ -10,6 +10,7 @@
       "jsonwebtoken": "^9.0.2",
       "bcryptjs": "^2.4.3",
       "@fastify/cookie": "^11.1.2",
+      "@fastify/rate-limit": "^11.2.0",
       "zod": "^3.23.8"
     },
     "devDependencies": {},
@@ -23,8 +24,14 @@
     ],
     "wiring": {
       "app": {
-        "imports": ["import cookie from \"@fastify/cookie\";"],
-        "middleware": ["fastify.register(cookie);"]
+        "imports": [
+          "import cookie from \"@fastify/cookie\";",
+          "import rateLimit from \"@fastify/rate-limit\";"
+        ],
+        "middleware": [
+          "fastify.register(cookie);",
+          "fastify.register(rateLimit, { global: false });"
+        ]
       },
       "routes/index": {
         "imports": ["import authRoutes from \"../routes/auth.routes.js\";"],
@@ -37,6 +44,6 @@
         ]
       }
     },
-    "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie via `@fastify/cookie`).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n"
+    "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie via `@fastify/cookie`).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n\n`register`/`login` are rate-limited (20 requests per 15 minutes per IP by default — `@fastify/rate-limit` is registered with `global: false`, so it only applies where a route opts in via `config.rateLimit`, see `routes/auth.routes.js`) to blunt brute-force/mass-registration attempts.\n"
   }
 }

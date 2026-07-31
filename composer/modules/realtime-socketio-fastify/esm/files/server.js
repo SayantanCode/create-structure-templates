@@ -23,6 +23,20 @@ async function bootstrap() {
     app.log.error(err);
     process.exit(1);
   }
+
+  let shuttingDown = false;
+  async function shutdown(signal) {
+    if (shuttingDown) return;
+    shuttingDown = true;
+    app.log.info(`${signal} received, shutting down gracefully...`);
+    // fastify.close() also closes the underlying http.Server (which io is
+    // attached to) and runs any registered onClose hooks.
+    await app.close();
+    // __COMPOSER_SHUTDOWN__
+    process.exit(0);
+  }
+  process.on("SIGTERM", () => shutdown("SIGTERM"));
+  process.on("SIGINT", () => shutdown("SIGINT"));
 }
 
 bootstrap().catch((err) => {

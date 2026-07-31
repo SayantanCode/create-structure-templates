@@ -10,7 +10,8 @@
       "jsonwebtoken": "^9.0.2",
       "bcryptjs": "^2.4.3",
       "cookie-parser": "^1.4.7",
-      "zod": "^3.23.8"
+      "zod": "^3.23.8",
+      "@nestjs/throttler": "^6.5.0"
     },
     "devDependencies": {
       "@types/jsonwebtoken": "^9.0.6",
@@ -31,8 +32,16 @@
         "middleware": ["app.use(cookieParser());"]
       },
       "app.module": {
-        "imports": ["import { AuthModule } from \"./auth/auth.module\";"],
-        "moduleImports": ["AuthModule,"]
+        "imports": [
+          "import { AuthModule } from \"./auth/auth.module\";",
+          "import { ThrottlerModule, ThrottlerGuard } from \"@nestjs/throttler\";",
+          "import { APP_GUARD } from \"@nestjs/core\";"
+        ],
+        "moduleImports": [
+          "AuthModule,",
+          "ThrottlerModule.forRoot([{ ttl: 60_000, limit: 100 }]),"
+        ],
+        "providers": ["{ provide: APP_GUARD, useClass: ThrottlerGuard },"]
       },
       "test/setup": {
         "env": [
@@ -41,6 +50,6 @@
         ]
       }
     },
-    "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie via `cookie-parser`).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n"
+    "readme": "\n## Auth\n\nJWT access token (short-lived, returned in the response body) + refresh token (long-lived, httpOnly cookie via `cookie-parser`).\n\n- `POST /api/v1/auth/register` — create an account\n- `POST /api/v1/auth/login` — get a new access token + refresh cookie\n- `POST /api/v1/auth/refresh` — exchange the refresh cookie for a new access token\n- `POST /api/v1/auth/logout` — clears the refresh cookie\n- `GET /api/v1/auth/me` — current user (requires `Authorization: Bearer <accessToken>`)\n\n`@nestjs/throttler` is registered app-wide (100 req/min default, in `AppModule`) via `APP_GUARD`; `register`/`login` override it with a tighter 20-per-15-minutes limit via `@Throttle(...)` (see `auth.controller.ts`) to blunt brute-force/mass-registration attempts.\n"
   }
 }

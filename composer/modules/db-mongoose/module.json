@@ -11,9 +11,17 @@
     "packageJsonExtra": { "engines": { "node": ">=20.19.0" } },
     "envExample": ["MONGO_URI=mongodb://127.0.0.1:27017/{{projectName}}"],
     "wiring": {
+      "app": {
+        "imports": ["import mongoose from \"mongoose\";"],
+        "readiness": ["{ name: \"mongodb\", check: () => mongoose.connection.readyState === 1 },"]
+      },
       "server": {
-        "imports": ["import { connectDB } from \"./config/db.js\";"],
-        "startup": ["await connectDB();"]
+        "imports": [
+          "import { connectDB } from \"./config/db.js\";",
+          "import mongoose from \"mongoose\";"
+        ],
+        "startup": ["await connectDB();"],
+        "shutdown": ["await mongoose.connection.close();"]
       },
       "test/setup": {
         "imports": [
@@ -30,7 +38,7 @@
         "afterAll": ["await mongoose.disconnect();", "await mongoServer.stop();"]
       }
     },
-    "readme": "\n## Database\n\nMongoDB via Mongoose. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+    "readme": "\n## Database\n\nMongoDB via Mongoose. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). `GET /healthz` reports live connectivity (`mongoose.connection.readyState`); graceful shutdown (SIGTERM/SIGINT) closes the connection before the process exits. Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
   },
   "ts": {
     "dependencies": { "mongoose": "^9.9.0" },
@@ -38,9 +46,17 @@
     "packageJsonExtra": { "engines": { "node": ">=20.19.0" } },
     "envExample": ["MONGO_URI=mongodb://127.0.0.1:27017/{{projectName}}"],
     "wiring": {
+      "app": {
+        "imports": ["import mongoose from \"mongoose\";"],
+        "readiness": ["{ name: \"mongodb\", check: () => mongoose.connection.readyState === 1 },"]
+      },
       "server": {
-        "imports": ["import { connectDB } from \"./config/db.js\";"],
-        "startup": ["await connectDB();"]
+        "imports": [
+          "import { connectDB } from \"./config/db.js\";",
+          "import mongoose from \"mongoose\";"
+        ],
+        "startup": ["await connectDB();"],
+        "shutdown": ["await mongoose.connection.close();"]
       },
       "test/setup": {
         "imports": [
@@ -57,7 +73,7 @@
         "afterAll": ["await mongoose.disconnect();", "await mongoServer.stop();"]
       }
     },
-    "readme": "\n## Database\n\nMongoDB via Mongoose. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+    "readme": "\n## Database\n\nMongoDB via Mongoose. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). `GET /healthz` reports live connectivity (`mongoose.connection.readyState`); graceful shutdown (SIGTERM/SIGINT) closes the connection before the process exits. Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
   },
   "cjs": {
     "dependencies": { "mongoose": "^9.9.0" },
@@ -65,9 +81,17 @@
     "packageJsonExtra": { "engines": { "node": ">=20.19.0" } },
     "envExample": ["MONGO_URI=mongodb://127.0.0.1:27017/{{projectName}}"],
     "wiring": {
+      "app": {
+        "imports": ["const mongoose = require(\"mongoose\");"],
+        "readiness": ["{ name: \"mongodb\", check: () => mongoose.connection.readyState === 1 },"]
+      },
       "server": {
-        "imports": ["const { connectDB } = require(\"./config/db.js\");"],
-        "startup": ["await connectDB();"]
+        "imports": [
+          "const { connectDB } = require(\"./config/db.js\");",
+          "const mongoose = require(\"mongoose\");"
+        ],
+        "startup": ["await connectDB();"],
+        "shutdown": ["await mongoose.connection.close();"]
       },
       "test/setup": {
         "imports": [
@@ -84,7 +108,7 @@
         "afterAll": ["await mongoose.disconnect();", "await mongoServer.stop();"]
       }
     },
-    "readme": "\n## Database\n\nMongoDB via Mongoose. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+    "readme": "\n## Database\n\nMongoDB via Mongoose. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). `GET /healthz` reports live connectivity (`mongoose.connection.readyState`); graceful shutdown (SIGTERM/SIGINT) closes the connection before the process exits. Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
   },
   "nest-ts": {
     "dependencies": { "@nestjs/mongoose": "^11.0.4", "mongoose": "^9.9.0" },
@@ -98,6 +122,14 @@
           "import { getMongoUri } from \"./config/mongoose.config\";"
         ],
         "moduleImports": ["MongooseModule.forRootAsync({ useFactory: () => ({ uri: getMongoUri() }) }),"]
+      },
+      "app.controller": {
+        "imports": [
+          "import { InjectConnection } from \"@nestjs/mongoose\";",
+          "import { Connection } from \"mongoose\";"
+        ],
+        "constructorArgs": ["@InjectConnection() private readonly mongoConnection: Connection,"],
+        "readiness": ["{ name: \"mongodb\", check: () => this.mongoConnection.readyState === 1 },"]
       },
       "test/setup": {
         "imports": [
@@ -114,6 +146,6 @@
         "afterAll": ["await mongoose.disconnect();", "await mongoServer.stop();"]
       }
     },
-    "readme": "\n## Database\n\nMongoDB via `@nestjs/mongoose`. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Registered in `AppModule` via `MongooseModule.forRootAsync(...)` (async so tests can override `MONGO_URI` before the connection is opened); feature modules register their own schemas with `MongooseModule.forFeature(...)`. Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
+    "readme": "\n## Database\n\nMongoDB via `@nestjs/mongoose`. Requires Node.js >=20.19.0 (Mongoose 9). Set `MONGO_URI` in `.env` (defaults to a local instance on 27017). Registered in `AppModule` via `MongooseModule.forRootAsync(...)` (async so tests can override `MONGO_URI` before the connection is opened); feature modules register their own schemas with `MongooseModule.forFeature(...)`. `GET /healthz` reports live connectivity; `app.enableShutdownHooks()` (in `main.ts`) makes Nest close the connection automatically on SIGTERM/SIGINT, no extra wiring needed. Note: `mongodb-memory-server` is included so tests can run against a real in-memory MongoDB without a local install, whether or not you also picked the testing module.\n"
   }
 }

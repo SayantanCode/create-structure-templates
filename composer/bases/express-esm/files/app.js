@@ -29,8 +29,26 @@ export function createServer() {
   app.use(morgan("dev"));
   // __COMPOSER_MIDDLEWARE__
 
-  // Health check endpoint
+  // Liveness: the process is up and handling requests. Doesn't check
+  // dependencies — that's what /healthz is for.
   app.get("/health", (_req, res) => res.status(200).json({ status: "ok" }));
+
+  // Readiness: is this instance actually able to serve real traffic right
+  // now? Each database module contributes its own connectivity check —
+  // an empty list here (no database module selected) is vacuously "ok".
+  app.get("/healthz", async (_req, res) => {
+    const checks = [
+      // __COMPOSER_READINESS__
+    ];
+    const results = await Promise.all(
+      checks.map(async (c) => ({ name: c.name, ok: await c.check() }))
+    );
+    const allOk = results.every((r) => r.ok);
+    res.status(allOk ? 200 : 503).json({
+      status: allOk ? "ok" : "unavailable",
+      checks: Object.fromEntries(results.map((r) => [r.name, r.ok])),
+    });
+  });
 
   // Routes
   app.use("/api/v1", routes);

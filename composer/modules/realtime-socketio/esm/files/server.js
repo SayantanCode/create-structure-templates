@@ -16,6 +16,19 @@ async function bootstrap() {
     cors: { origin: process.env.CORS_ORIGIN || "http://localhost:5173", credentials: true },
   });
   registerSocketHandlers(io);
+
+  let shuttingDown = false;
+  async function shutdown(signal) {
+    if (shuttingDown) return;
+    shuttingDown = true;
+    console.log(`\n${signal} received, shutting down gracefully...`);
+    io.close();
+    httpServer.close(() => console.log("HTTP server closed"));
+    // __COMPOSER_SHUTDOWN__
+    process.exit(0);
+  }
+  process.on("SIGTERM", () => shutdown("SIGTERM"));
+  process.on("SIGINT", () => shutdown("SIGINT"));
 }
 
 bootstrap().catch((err) => {

@@ -7,5 +7,8 @@ import { INestApplication } from "@nestjs/common";
 // tests never call bootstrap(). Centralized here so those two call sites
 // can't drift out of sync.
 export function applyGlobalPrefix(app: INestApplication) {
-  app.setGlobalPrefix("api/v1", { exclude: ["health"] });
+  // Both stay unprefixed to match the other framework targets — load
+  // balancer/k8s probes hit a stable /health(z), independent of API
+  // versioning.
+  app.setGlobalPrefix("api/v1", { exclude: ["health", "healthz"] });
 }

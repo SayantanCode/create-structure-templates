@@ -16,7 +16,12 @@ async function bootstrap() {
   // request. Nest has no CORS enabled at all by default, which would
   // otherwise silently block every cross-origin request outright.
   app.enableCors({ origin: process.env.CORS_ORIGIN || "http://localhost:5173", credentials: true });
+  // Runs OnModuleDestroy/BeforeApplicationShutdown lifecycle hooks on
+  // SIGTERM/SIGINT — e.g. @nestjs/mongoose closes its connection this way
+  // automatically, with no per-module wiring needed here.
+  app.enableShutdownHooks();
   // __COMPOSER_MIDDLEWARE__
+  // __COMPOSER_SHUTDOWN__
   // __COMPOSER_STARTUP__
   const port = Number(process.env.PORT || 4000);
   await app.listen(port);

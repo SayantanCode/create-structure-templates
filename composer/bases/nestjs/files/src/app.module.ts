@@ -15,6 +15,7 @@ import { ResponseInterceptor } from "./common/interceptors/response.interceptor"
   providers: [
     { provide: APP_FILTER, useClass: HttpExceptionFilter },
     { provide: APP_INTERCEPTOR, useClass: ResponseInterceptor },
+    // __COMPOSER_PROVIDERS__
   ],
 })
 export class AppModule {}

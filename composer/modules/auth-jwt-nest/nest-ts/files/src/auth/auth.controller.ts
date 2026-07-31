@@ -1,10 +1,16 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, Res, UseGuards, UsePipes } from "@nestjs/common";
+import { Throttle } from "@nestjs/throttler";
 import type { Request, Response } from "express";
 import { AuthService } from "./auth.service";
 import { ZodValidationPipe } from "../common/pipes/zod-validation.pipe";
 import { registerSchema, loginSchema, RegisterDto, LoginDto } from "./dto/auth.dto";
 import { JwtAuthGuard } from "./guards/jwt-auth.guard";
 import { CurrentUser } from "./decorators/current-user.decorator";
+
+// Overrides the global default (100 req/min, set in AppModule) with a
+// tighter limit on the two endpoints most worth throttling — brute-forcing
+// passwords or mass-registering accounts.
+const AUTH_THROTTLE = { default: { limit: 20, ttl: 900_000 } };
 
 const REFRESH_COOKIE = "refreshToken";
 const REFRESH_COOKIE_OPTIONS = {
@@ -21,6 +27,7 @@ export class AuthController {
   // POST defaults to a 201 response in Nest, matching the register/login
   // split used across every other framework target in this generator.
   @Post("register")
+  @Throttle(AUTH_THROTTLE)
   @UsePipes(new ZodValidationPipe(registerSchema))
   async register(@Body() body: RegisterDto, @Res({ passthrough: true }) res: Response) {
     const { user, accessToken, refreshToken } = await this.authService.register(body);
@@ -30,6 +37,7 @@ export class AuthController {
 
   @Post("login")
   @HttpCode(HttpStatus.OK)
+  @Throttle(AUTH_THROTTLE)
   @UsePipes(new ZodValidationPipe(loginSchema))
   async login(@Body() body: LoginDto, @Res({ passthrough: true }) res: Response) {
     const { user, accessToken, refreshToken } = await this.authService.login(body);
