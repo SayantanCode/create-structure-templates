@@ -1,0 +1,23 @@
+// After changing this file:
+//   npx prisma generate               # regenerate the typed client
+//   npx prisma db push                # apply the schema to your database (dev)
+//   npx prisma migrate dev --name X   # or use real migrations instead of db push
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
