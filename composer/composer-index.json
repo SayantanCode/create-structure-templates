@@ -610,6 +610,90 @@
       }
     },
     {
+      "key": "cron-node",
+      "name": "node-cron",
+      "dimension": "cron",
+      "dependsOn": [],
+      "framework": "any",
+      "languages": [
+        "esm",
+        "ts",
+        "cjs"
+      ],
+      "esm": {
+        "dependencies": {
+          "node-cron": "^4.6.0"
+        },
+        "wiring": {
+          "loaders": {
+            "imports": [
+              "import { registerJobs } from \"../jobs/index.js\";"
+            ],
+            "steps": [
+              "registerJobs();"
+            ]
+          },
+          "server": {
+            "imports": [
+              "import { stopJobs } from \"./jobs/index.js\";"
+            ],
+            "shutdown": [
+              "stopJobs();"
+            ]
+          }
+        },
+        "readme": "\n## Scheduled jobs\n\n[node-cron](https://github.com/node-cron/node-cron). `jobs/heartbeat.job.js` is a worked example (logs once a minute) — add a real job by creating a file the same shape (`cronExpression` + `run()`) and listing it in `jobs/index.js`. Jobs start once everything else in `loaders/index.js` has finished connecting, and stop cleanly on shutdown.\n\n**Running more than one instance of this API?** node-cron runs in-process — N horizontally-scaled instances means the same job fires N times on the same schedule (duplicate emails, double-run cleanups, ...). This is a real, easy-to-miss gotcha, not a hypothetical: if that's a risk here, either pass `{ distributed: true }` to `schedule()` in `jobs/index.js` and wire up a coordinator (node-cron ships the `distributed` option and a pluggable `RunCoordinator` interface for exactly this — see https://nodecron.com/distributed-coordination), or use the `queue-bullmq` module's repeatable jobs instead, which coordinate through Redis by design and never double-fire across instances.\n\nNot using scheduled jobs yet? This module is safe to leave installed and unused, or delete `jobs/` and the `node-cron` dependency entirely.\n"
+      },
+      "ts": {
+        "dependencies": {
+          "node-cron": "^4.6.0"
+        },
+        "wiring": {
+          "loaders": {
+            "imports": [
+              "import { registerJobs } from \"../jobs/index.js\";"
+            ],
+            "steps": [
+              "registerJobs();"
+            ]
+          },
+          "server": {
+            "imports": [
+              "import { stopJobs } from \"./jobs/index.js\";"
+            ],
+            "shutdown": [
+              "stopJobs();"
+            ]
+          }
+        },
+        "readme": "\n## Scheduled jobs\n\n[node-cron](https://github.com/node-cron/node-cron) (ships its own TypeScript types). `src/jobs/heartbeat.job.ts` is a worked example (logs once a minute) — add a real job by creating a file the same shape (`cronExpression` + `run()`) and listing it in `src/jobs/index.ts`. Jobs start once everything else in `loaders/index.ts` has finished connecting, and stop cleanly on shutdown.\n\n**Running more than one instance of this API?** node-cron runs in-process — N horizontally-scaled instances means the same job fires N times on the same schedule (duplicate emails, double-run cleanups, ...). This is a real, easy-to-miss gotcha, not a hypothetical: if that's a risk here, either pass `{ distributed: true }` to `schedule()` in `src/jobs/index.ts` and wire up a coordinator (node-cron ships the `distributed` option and a pluggable `RunCoordinator` interface for exactly this — see https://nodecron.com/distributed-coordination), or use the `queue-bullmq` module's repeatable jobs instead, which coordinate through Redis by design and never double-fire across instances.\n\nNot using scheduled jobs yet? This module is safe to leave installed and unused, or delete `src/jobs/` and the `node-cron` dependency entirely.\n"
+      },
+      "cjs": {
+        "dependencies": {
+          "node-cron": "^4.6.0"
+        },
+        "wiring": {
+          "loaders": {
+            "imports": [
+              "const { registerJobs } = require(\"../jobs/index.js\");"
+            ],
+            "steps": [
+              "registerJobs();"
+            ]
+          },
+          "server": {
+            "imports": [
+              "const { stopJobs } = require(\"./jobs/index.js\");"
+            ],
+            "shutdown": [
+              "stopJobs();"
+            ]
+          }
+        },
+        "readme": "\n## Scheduled jobs\n\n[node-cron](https://github.com/node-cron/node-cron). `jobs/heartbeat.job.js` is a worked example (logs once a minute) — add a real job by creating a file the same shape (`cronExpression` + `run()`) and listing it in `jobs/index.js`. Jobs start once everything else in `loaders/index.js` has finished connecting, and stop cleanly on shutdown.\n\n**Running more than one instance of this API?** node-cron runs in-process — N horizontally-scaled instances means the same job fires N times on the same schedule (duplicate emails, double-run cleanups, ...). This is a real, easy-to-miss gotcha, not a hypothetical: if that's a risk here, either pass `{ distributed: true }` to `schedule()` in `jobs/index.js` and wire up a coordinator (node-cron ships the `distributed` option and a pluggable `RunCoordinator` interface for exactly this — see https://nodecron.com/distributed-coordination), or use the `queue-bullmq` module's repeatable jobs instead, which coordinate through Redis by design and never double-fire across instances.\n\nNot using scheduled jobs yet? This module is safe to leave installed and unused, or delete `jobs/` and the `node-cron` dependency entirely.\n"
+      }
+    },
+    {
       "key": "db-mongoose",
       "name": "MongoDB + Mongoose",
       "dimension": "database",
