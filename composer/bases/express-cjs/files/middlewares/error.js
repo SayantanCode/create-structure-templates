@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 const { apiResponse } = require("../utils/apiResponse.js");
 const { ApiError } = require("../utils/ApiError.js");
+const { logger } = require("../utils/logger.js");
 
 function notFound(req, _res, next) {
   next(ApiError.notFound(`Route not found: ${req.method} ${req.originalUrl}`));
@@ -15,9 +16,11 @@ function errorHandler(err, req, res, _next) {
   }
 
   // Unexpected error: never leak internals to the client, but log the
-  // real stack server-side — req.log (from pino-http) ties this to the
-  // same request id the access log line for this request already has.
-  req.log.error(err);
+  // real stack server-side. Deliberately uses `logger` directly rather
+  // than `req.log` — whether req.log even exists (and what it looks
+  // like) depends on which logging library you picked, if any, and this
+  // handler needs to work the same regardless.
+  logger.error(err);
   apiResponse.error(
     res,
     "Internal server error",

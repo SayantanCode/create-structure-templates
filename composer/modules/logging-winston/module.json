@@ -7,17 +7,32 @@
   "languages": ["esm", "ts", "cjs"],
   "esm": {
     "dependencies": { "winston": "^3.19.0" },
-    "wiring": {},
-    "readme": "\n## Logging\n\nWinston, instead of the Pino default. `utils/logger.js` exports the same `logger.info/warn/error/fatal/debug` calls every other module in this project already uses, so nothing else needed to change when you picked this. `middlewares/requestLogger.js` replaces `pino-http` with an equivalent hand-rolled middleware (attaches `req.log`, logs one line per finished request). Note: `pino`/`pino-http`/`pino-pretty` stay listed in `package.json` since they're baked into the base template — they're unused here and safe to remove by hand if you want a leaner `node_modules`.\n"
+    "wiring": {
+      "app": {
+        "imports": ["import { requestLogger } from \"./middlewares/requestLogger.js\";"],
+        "requestLogger": ["app.use(requestLogger);"]
+      }
+    },
+    "readme": "\n## Logging\n\nWinston — an alternative to the Pino default in the \"logging\" dimension. `utils/logger.js` exports the same `logger.info/warn/error/fatal/debug` calls every other module in this project already uses, so nothing else needed to change when you picked this. `middlewares/requestLogger.js` is a small hand-rolled request-logging middleware (attaches `req.log`, logs one line per finished request) wired into `app.js` in place of `pino-http`.\n"
   },
   "ts": {
     "dependencies": { "winston": "^3.19.0" },
-    "wiring": {},
-    "readme": "\n## Logging\n\nWinston, instead of the Pino default. `src/utils/logger.ts` exports the same `logger.info/warn/error/fatal/debug` calls every other module in this project already uses, so nothing else needed to change when you picked this. `src/middlewares/requestLogger.ts` replaces `pino-http` with an equivalent hand-rolled middleware (attaches `req.log`, logs one line per finished request). Note: `pino`/`pino-http`/`pino-pretty` stay listed in `package.json` since they're baked into the base template — they're unused here and safe to remove by hand if you want a leaner `node_modules`.\n"
+    "wiring": {
+      "app": {
+        "imports": ["import { requestLogger } from \"./middlewares/requestLogger.js\";"],
+        "requestLogger": ["app.use(requestLogger);"]
+      }
+    },
+    "readme": "\n## Logging\n\nWinston — an alternative to the Pino default in the \"logging\" dimension. `src/utils/logger.ts` exports the same `logger.info/warn/error/fatal/debug` calls every other module in this project already uses, so nothing else needed to change when you picked this. `src/middlewares/requestLogger.ts` is a small hand-rolled request-logging middleware (attaches `req.log`, logs one line per finished request) wired into `app.ts` in place of `pino-http`.\n"
   },
   "cjs": {
     "dependencies": { "winston": "^3.19.0" },
-    "wiring": {},
-    "readme": "\n## Logging\n\nWinston, instead of the Pino default. `utils/logger.js` exports the same `logger.info/warn/error/fatal/debug` calls every other module in this project already uses, so nothing else needed to change when you picked this. `middlewares/requestLogger.js` replaces `pino-http` with an equivalent hand-rolled middleware (attaches `req.log`, logs one line per finished request). Note: `pino`/`pino-http`/`pino-pretty` stay listed in `package.json` since they're baked into the base template — they're unused here and safe to remove by hand if you want a leaner `node_modules`.\n"
+    "wiring": {
+      "app": {
+        "imports": ["const { requestLogger } = require(\"./middlewares/requestLogger.js\");"],
+        "requestLogger": ["app.use(requestLogger);"]
+      }
+    },
+    "readme": "\n## Logging\n\nWinston — an alternative to the Pino default in the \"logging\" dimension. `utils/logger.js` exports the same `logger.info/warn/error/fatal/debug` calls every other module in this project already uses, so nothing else needed to change when you picked this. `middlewares/requestLogger.js` is a small hand-rolled request-logging middleware (attaches `req.log`, logs one line per finished request) wired into `app.js` in place of `pino-http`.\n"
   }
 }

@@ -1,0 +1,50 @@
+{
+  "key": "logging-pino",
+  "name": "Pino",
+  "dimension": "logging",
+  "dependsOn": [],
+  "framework": "express",
+  "languages": ["esm", "ts", "cjs"],
+  "esm": {
+    "dependencies": { "pino": "^10.3.1", "pino-http": "^11.0.0" },
+    "devDependencies": { "pino-pretty": "^13.1.3" },
+    "wiring": {
+      "app": {
+        "imports": [
+          "import { pinoHttp } from \"pino-http\";",
+          "import { logger } from \"./utils/logger.js\";"
+        ],
+        "requestLogger": ["app.use(pinoHttp({ logger }));"]
+      }
+    },
+    "readme": "\n## Logging\n\n[Pino](https://getpino.io) — the default choice in the \"logging\" dimension (Winston is the alternative; skip both for a bare, dependency-free console logger). `utils/logger.js` exports `logger.info/warn/error/fatal/debug`, used the same way throughout this project regardless of which logging library you picked. `pino-http` (wired into `app.js`) attaches a request-scoped `req.log` and logs one line per request. Pretty, colorized output in development; plain structured JSON in production — what log aggregators (Datadog, CloudWatch, ...) actually want to ingest.\n"
+  },
+  "ts": {
+    "dependencies": { "pino": "^10.3.1", "pino-http": "^11.0.0" },
+    "devDependencies": { "pino-pretty": "^13.1.3" },
+    "wiring": {
+      "app": {
+        "imports": [
+          "import { pinoHttp } from \"pino-http\";",
+          "import { logger } from \"./utils/logger.js\";"
+        ],
+        "requestLogger": ["app.use(pinoHttp({ logger }));"]
+      }
+    },
+    "readme": "\n## Logging\n\n[Pino](https://getpino.io) — the default choice in the \"logging\" dimension (Winston is the alternative; skip both for a bare, dependency-free console logger). `src/utils/logger.ts` exports `logger.info/warn/error/fatal/debug`, used the same way throughout this project regardless of which logging library you picked. `pino-http` (wired into `app.ts`) attaches a request-scoped `req.log` and logs one line per request. Pretty, colorized output in development; plain structured JSON in production — what log aggregators (Datadog, CloudWatch, ...) actually want to ingest.\n"
+  },
+  "cjs": {
+    "dependencies": { "pino": "^10.3.1", "pino-http": "^11.0.0" },
+    "devDependencies": { "pino-pretty": "^13.1.3" },
+    "wiring": {
+      "app": {
+        "imports": [
+          "const pinoHttp = require(\"pino-http\");",
+          "const { logger } = require(\"./utils/logger.js\");"
+        ],
+        "requestLogger": ["app.use(pinoHttp({ logger }));"]
+      }
+    },
+    "readme": "\n## Logging\n\n[Pino](https://getpino.io) — the default choice in the \"logging\" dimension (Winston is the alternative; skip both for a bare, dependency-free console logger). `utils/logger.js` exports `logger.info/warn/error/fatal/debug`, used the same way throughout this project regardless of which logging library you picked. `pino-http` (wired into `app.js`) attaches a request-scoped `req.log` and logs one line per request. Pretty, colorized output in development; plain structured JSON in production — what log aggregators (Datadog, CloudWatch, ...) actually want to ingest.\n"
+  }
+}
