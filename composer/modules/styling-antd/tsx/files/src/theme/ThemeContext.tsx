@@ -51,6 +51,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       <ConfigProvider
         theme={{
           algorithm: effective === "dark" ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
+          // A stock antd colorPrimary is antd's default blue, completely
+          // disconnected from the indigo/purple accent the hero, badge, and
+          // the other styling picks (Tailwind, MUI) all use — this keeps
+          // the brand color consistent regardless of which styling library
+          // is picked, even though the underlying widget shapes stay
+          // library-native.
+          token: { colorPrimary: effective === "dark" ? "#818cf8" : "#6366f1" },
         }}
       >
         {children}

@@ -42,7 +42,21 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     document.documentElement.setAttribute("data-theme", effective);
   }, [effective]);
 
-  const theme = useMemo(() => createTheme({ palette: { mode: effective } }), [effective]);
+  // A stock MUI palette.primary is MUI's default blue, completely
+  // disconnected from the indigo/purple accent the hero, badge, and the
+  // other styling picks (Tailwind, Ant Design) all use — this keeps the
+  // brand color consistent regardless of which styling library is picked,
+  // even though the underlying widget shapes stay library-native.
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: effective,
+          primary: { main: effective === "dark" ? "#818cf8" : "#6366f1" },
+        },
+      }),
+    [effective]
+  );
 
   function setMode(next: ThemeMode) {
     localStorage.setItem(STORAGE_KEY, next);

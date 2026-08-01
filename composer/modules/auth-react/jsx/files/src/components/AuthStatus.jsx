@@ -11,24 +11,35 @@ export function AuthStatus() {
   const { user, loading, logout } = useAuth();
   const [showRegister, setShowRegister] = useState(false);
 
-  if (loading) return <Spinner label="Checking session..." />;
+  if (loading) {
+    return (
+      <div className="demo-card auth-card">
+        <Spinner label="Checking session..." />
+      </div>
+    );
+  }
 
   if (user) {
     return (
-      <div>
-        <p>Signed in as {user.email}</p>
+      <div className="demo-card auth-card">
+        <h2>Auth</h2>
+        <p>
+          Signed in as <strong>{user.email}</strong>
+        </p>
         <Button onClick={logout}>Log out</Button>
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="demo-card auth-card">
+      <h2>{showRegister ? "Create an account" : "Log in"}</h2>
       {showRegister ? <RegisterForm /> : <LoginForm />}
-      <p>
-        <Button className="link" onClick={() => setShowRegister((v) => !v)}>
-          {showRegister ? "Have an account? Log in" : "Need an account? Register"}
-        </Button>
+      <p className="form-switch">
+        {showRegister ? "Have an account?" : "Need an account?"}{" "}
+        <button type="button" className="form-switch-link" onClick={() => setShowRegister((v) => !v)}>
+          {showRegister ? "Log in" : "Register"}
+        </button>
       </p>
     </div>
   );

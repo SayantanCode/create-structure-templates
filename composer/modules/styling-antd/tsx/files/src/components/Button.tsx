@@ -13,6 +13,7 @@ interface ButtonProps {
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
   className?: string;
+  "aria-label"?: string;
 }
 
 export function Button({ children, type, ...props }: ButtonProps) {

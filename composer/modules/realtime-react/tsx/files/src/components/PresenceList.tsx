@@ -9,11 +9,21 @@ export function PresenceList() {
   const { user } = useAuth();
   const { online, connected } = useRealtime();
 
-  if (!user) return <p>Log in to see who else is online.</p>;
+  if (!user) {
+    return (
+      <div className="demo-card">
+        <h2>Presence</h2>
+        <p>Log in to see who else is online.</p>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <p>{connected ? "🟢 Live" : "⚪ Connecting..."} — online now ({online.length}):</p>
+    <div className="demo-card">
+      <h2>Presence</h2>
+      <p>
+        {connected ? "🟢 Live" : "⚪ Connecting..."} — online now ({online.length}):
+      </p>
       <ul>
         {online.map((u, i) => (
           <li key={`${u.id}-${i}`}>{u.name}</li>

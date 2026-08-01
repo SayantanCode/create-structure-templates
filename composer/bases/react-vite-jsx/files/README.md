@@ -7,17 +7,23 @@ React + Vite frontend, composed from the pieces you chose when scaffolding.
 ```
 src/
   main.jsx               — mounts <App/> inside an ErrorBoundary
-  App.jsx                — hero + component showcase + root component; any selected
-                           providers (router, auth, ...) wrap the tree here
+  App.jsx                — root component: ThemeProvider + Navbar + Home (or, with
+                           router-react, BrowserRouter + Routes for Home/404). Any
+                           selected providers (auth, ...) wrap the tree here
+  pages/
+    Home.jsx              — hero + component showcase (a grid of demo cards); any
+                           selected module's demo (auth, state, realtime, ...) renders
+                           here as its own card
   index.css              — global styles, CSS reset, theme custom properties
   theme/
     ThemeContext.jsx     — useTheme()/ThemeProvider — light/dark/system
   components/
+    Navbar.jsx            — floating top nav (brand + Home link + ThemeToggle)
     Button.jsx           — reusable button (implementation depends on which styling library you picked)
     Input.jsx             — reusable text input
     Modal.jsx             — reusable dialog
     Spinner.jsx           — reusable loading indicator
-    ThemeToggle.jsx        — the light/dark/system switcher, fixed top-right
+    ThemeToggle.jsx        — the light/dark/system switcher, lives in Navbar
     ErrorBoundary.jsx     — catches render errors, shows a fallback instead of a blank screen
 ```
 
@@ -47,7 +53,7 @@ import { Input } from "./components/Input";
 <Button onClick={handleSubmit}>Submit</Button>
 ```
 
-Want to switch styling libraries later? Re-run the composer, or hand-replace these files with your own implementation — nothing else in the project needs to change. The component showcase on the home page (`src/App.jsx`) exercises all four — a real, working example of each, not just an import you have to trust.
+Want to switch styling libraries later? Re-run the composer, or hand-replace these files with your own implementation — nothing else in the project needs to change. The component showcase on the home page (`src/pages/Home.jsx`) exercises all four — a real, working example of each, not just an import you have to trust. If you picked MUI or Ant Design, their own `createTheme`/`ConfigProvider` primary color is pinned to the same indigo/purple accent the hero and Tailwind's own `Button` use, so the brand stays consistent regardless of which styling library is behind the widgets.
 
 ## Linting & formatting
 
@@ -59,7 +65,7 @@ npm run format        # prettier --write .
 npm run format:check  # prettier --check . (CI-friendly, no writes)
 ```
 
-Content merged in at scaffold time (this README, `App.jsx`'s wired-up sections, test setup files) isn't guaranteed to match Prettier's exact formatting the moment it's composed — run `npm run format` once right after `npm install` and `format:check` stays clean for anything you edit yourself from then on.
+Content merged in at scaffold time (this README, `App.jsx`/`Home.jsx`'s wired-up sections, test setup files) isn't guaranteed to match Prettier's exact formatting the moment it's composed — run `npm run format` once right after `npm install` and `format:check` stays clean for anything you edit yourself from then on.
 
 ## Error handling
 

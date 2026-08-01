@@ -14,9 +14,9 @@
     },
     "devDependencies": {},
     "wiring": {
-      "app": {
+      "home": {
         "imports": [
-          "import { CounterDemo } from \"./components/CounterDemo\";"
+          "import { CounterDemo } from \"../components/CounterDemo\";"
         ],
         "content": [
           "<CounterDemo />"
@@ -31,9 +31,9 @@
     },
     "devDependencies": {},
     "wiring": {
-      "app": {
+      "home": {
         "imports": [
-          "import { CounterDemo } from \"./components/CounterDemo\";"
+          "import { CounterDemo } from \"../components/CounterDemo\";"
         ],
         "content": [
           "<CounterDemo />"

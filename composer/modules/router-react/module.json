@@ -13,61 +13,15 @@
       "react-router-dom": "^6.30.4"
     },
     "devDependencies": {},
-    "wiring": {
-      "app": {
-        "imports": [
-          "import { BrowserRouter, Routes, Route, Link } from \"react-router-dom\";",
-          "import { Home } from \"./pages/Home\";",
-          "import { NotFound } from \"./pages/NotFound\";"
-        ],
-        "providersOpen": [
-          "<BrowserRouter>"
-        ],
-        "providersClose": [
-          "</BrowserRouter>"
-        ],
-        "content": [
-          "<nav>",
-          "  <Link to=\"/\">Home</Link>",
-          "</nav>",
-          "<Routes>",
-          "  <Route path=\"/\" element={<Home />} />",
-          "  <Route path=\"*\" element={<NotFound />} />",
-          "</Routes>"
-        ]
-      }
-    },
-    "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) v6 is wired up in `src/App.jsx` (wraps the tree in `<BrowserRouter>`, mounts `<Routes>` in the content area). Pages live in `src/pages/`.\n\nAdd a new page:\n\n```jsx\n// src/pages/About.jsx\nexport function About() {\n  return <h2>About</h2>;\n}\n```\n\n```jsx\n// src/App.jsx — add inside the existing <Routes>\nimport { About } from \"./pages/About\";\n// ...\n<Route path=\"/about\" element={<About />} />\n```\n\n`npm audit` will flag a moderate open-redirect advisory in this version (fixed only in v7, which currently has its own higher-severity advisory in the data-router/actions APIs this starter doesn't use) — it requires passing untrusted, attacker-controlled input into a `<Link>`/`useNavigate` target, which none of the code here does. Worth re-checking before you add anything that builds a redirect URL from user input.\n"
+    "wiring": {},
+    "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) v6 is wired up — `src/App.jsx` and `src/components/Navbar.jsx` are overwritten with routing-aware versions (same file paths as the base ships, so every other module's wiring into `App.jsx`'s provider anchors keeps working unmodified) that wrap `src/pages/Home.jsx` and a new `src/pages/NotFound.jsx` in `<BrowserRouter><Routes>...</Routes></BrowserRouter>`, with `Navbar`'s links using `<Link>` for real client-side navigation instead of a full page reload.\n\nAdd a new page:\n\n```jsx\n// src/pages/About.jsx\nexport function About() {\n  return <h2>About</h2>;\n}\n```\n\n```jsx\n// src/App.jsx — add inside the existing <Routes>\nimport { About } from \"./pages/About\";\n// ...\n<Route path=\"/about\" element={<About />} />\n```\n\n`npm audit` will flag a moderate open-redirect advisory in this version (fixed only in v7, which currently has its own higher-severity advisory in the data-router/actions APIs this starter doesn't use) — it requires passing untrusted, attacker-controlled input into a `<Link>`/`useNavigate` target, which none of the code here does. Worth re-checking before you add anything that builds a redirect URL from user input.\n"
   },
   "tsx": {
     "dependencies": {
       "react-router-dom": "^6.30.4"
     },
     "devDependencies": {},
-    "wiring": {
-      "app": {
-        "imports": [
-          "import { BrowserRouter, Routes, Route, Link } from \"react-router-dom\";",
-          "import { Home } from \"./pages/Home\";",
-          "import { NotFound } from \"./pages/NotFound\";"
-        ],
-        "providersOpen": [
-          "<BrowserRouter>"
-        ],
-        "providersClose": [
-          "</BrowserRouter>"
-        ],
-        "content": [
-          "<nav>",
-          "  <Link to=\"/\">Home</Link>",
-          "</nav>",
-          "<Routes>",
-          "  <Route path=\"/\" element={<Home />} />",
-          "  <Route path=\"*\" element={<NotFound />} />",
-          "</Routes>"
-        ]
-      }
-    },
-    "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) v6 is wired up in `src/App.tsx` (wraps the tree in `<BrowserRouter>`, mounts `<Routes>` in the content area). Pages live in `src/pages/`.\n\nAdd a new page:\n\n```tsx\n// src/pages/About.tsx\nexport function About() {\n  return <h2>About</h2>;\n}\n```\n\n```tsx\n// src/App.tsx — add inside the existing <Routes>\nimport { About } from \"./pages/About\";\n// ...\n<Route path=\"/about\" element={<About />} />\n```\n\n`npm audit` will flag a moderate open-redirect advisory in this version (fixed only in v7, which currently has its own higher-severity advisory in the data-router/actions APIs this starter doesn't use) — it requires passing untrusted, attacker-controlled input into a `<Link>`/`useNavigate` target, which none of the code here does. Worth re-checking before you add anything that builds a redirect URL from user input.\n"
+    "wiring": {},
+    "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) v6 is wired up — `src/App.tsx` and `src/components/Navbar.tsx` are overwritten with routing-aware versions (same file paths as the base ships, so every other module's wiring into `App.tsx`'s provider anchors keeps working unmodified) that wrap `src/pages/Home.tsx` and a new `src/pages/NotFound.tsx` in `<BrowserRouter><Routes>...</Routes></BrowserRouter>`, with `Navbar`'s links using `<Link>` for real client-side navigation instead of a full page reload.\n\nAdd a new page:\n\n```tsx\n// src/pages/About.tsx\nexport function About() {\n  return <h2>About</h2>;\n}\n```\n\n```tsx\n// src/App.tsx — add inside the existing <Routes>\nimport { About } from \"./pages/About\";\n// ...\n<Route path=\"/about\" element={<About />} />\n```\n\n`npm audit` will flag a moderate open-redirect advisory in this version (fixed only in v7, which currently has its own higher-severity advisory in the data-router/actions APIs this starter doesn't use) — it requires passing untrusted, attacker-controlled input into a `<Link>`/`useNavigate` target, which none of the code here does. Worth re-checking before you add anything that builds a redirect URL from user input.\n"
   }
 }

@@ -14,14 +14,18 @@
     "wiring": {
       "app": {
         "imports": [
-          "import { AuthProvider } from \"./auth/AuthContext\";",
-          "import { AuthStatus } from \"./components/AuthStatus\";"
+          "import { AuthProvider } from \"./auth/AuthContext\";"
         ],
         "providersOpen": [
           "<AuthProvider>"
         ],
         "providersClose": [
           "</AuthProvider>"
+        ]
+      },
+      "home": {
+        "imports": [
+          "import { AuthStatus } from \"../components/AuthStatus\";"
         ],
         "content": [
           "<AuthStatus />"
@@ -36,14 +40,18 @@
     "wiring": {
       "app": {
         "imports": [
-          "import { AuthProvider } from \"./auth/AuthContext\";",
-          "import { AuthStatus } from \"./components/AuthStatus\";"
+          "import { AuthProvider } from \"./auth/AuthContext\";"
         ],
         "providersOpen": [
           "<AuthProvider>"
         ],
         "providersClose": [
           "</AuthProvider>"
+        ]
+      },
+      "home": {
+        "imports": [
+          "import { AuthStatus } from \"../components/AuthStatus\";"
         ],
         "content": [
           "<AuthStatus />"
