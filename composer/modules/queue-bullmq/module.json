@@ -1,0 +1,89 @@
+{
+  "key": "queue-bullmq",
+  "name": "BullMQ",
+  "dimension": "queue",
+  "dependsOn": [],
+  "framework": "any",
+  "languages": ["esm", "ts", "cjs"],
+  "esm": {
+    "dependencies": { "bullmq": "^6.0.5", "ioredis": "^6.0.0" },
+    "scripts": { "dev:worker": "nodemon worker.js", "start:worker": "node worker.js" },
+    "envExample": [
+      "# Optional — falls back to REDIS_URL, then localhost, if unset.",
+      "QUEUE_REDIS_URL=redis://127.0.0.1:6379"
+    ],
+    "wiring": {
+      "app": {
+        "imports": ["import { queueConnection } from \"./config/queue.js\";"],
+        "readiness": ["{ name: \"queue\", check: () => queueConnection.status === \"ready\" },"]
+      },
+      "loaders": {
+        "imports": ["import { emailQueue } from \"../queues/email.queue.js\";"],
+        "steps": ["await emailQueue.waitUntilReady();"]
+      },
+      "server": {
+        "imports": [
+          "import { emailQueue } from \"./queues/email.queue.js\";",
+          "import { queueConnection } from \"./config/queue.js\";"
+        ],
+        "shutdown": ["await emailQueue.close();", "await queueConnection.quit();"]
+      }
+    },
+    "readme": "\n## Background jobs\n\n[BullMQ](https://docs.bullmq.io) (Redis-backed). Run one locally with `docker run -p 6379:6379 redis`, or set `REDIS_URL`/`QUEUE_REDIS_URL` in `.env`.\n\n`queues/email.queue.js` is a worked example — a producer-side `enqueueEmail({ to, subject, body })` helper you'd call from a route or service. `workers/email.worker.js` is the matching processor (currently a `TODO` stub — fill in real logic).\n\n**The worker runs as its own process, separate from the API** (`worker.js`, started with `npm run dev:worker` / `npm run start:worker`) — that's deliberate, not an oversight: a slow or stuck job then never blocks an HTTP response, and you can scale the API and the workers independently. For local dev, run it in a second terminal alongside `npm run dev`. `GET /healthz` reports whether the API process's own queue connection (used for enqueueing) is live; that's separate from whether a worker process happens to be running.\n\nNot using background jobs yet? This module is safe to leave installed and unused, or delete `config/queue.js`, `queues/`, `workers/`, `worker.js`, and the `bullmq`/`ioredis` dependencies entirely.\n"
+  },
+  "ts": {
+    "dependencies": { "bullmq": "^6.0.5", "ioredis": "^6.0.0" },
+    "scripts": {
+      "dev:worker": "nodemon --exec ts-node --esm src/worker.ts",
+      "start:worker": "node dist/worker.js"
+    },
+    "envExample": [
+      "# Optional — falls back to REDIS_URL, then localhost, if unset.",
+      "QUEUE_REDIS_URL=redis://127.0.0.1:6379"
+    ],
+    "wiring": {
+      "app": {
+        "imports": ["import { queueConnection } from \"./config/queue.js\";"],
+        "readiness": ["{ name: \"queue\", check: () => queueConnection.status === \"ready\" },"]
+      },
+      "loaders": {
+        "imports": ["import { emailQueue } from \"../queues/email.queue.js\";"],
+        "steps": ["await emailQueue.waitUntilReady();"]
+      },
+      "server": {
+        "imports": [
+          "import { emailQueue } from \"./queues/email.queue.js\";",
+          "import { queueConnection } from \"./config/queue.js\";"
+        ],
+        "shutdown": ["await emailQueue.close();", "await queueConnection.quit();"]
+      }
+    },
+    "readme": "\n## Background jobs\n\n[BullMQ](https://docs.bullmq.io) (Redis-backed, ships its own TypeScript types). Run one locally with `docker run -p 6379:6379 redis`, or set `REDIS_URL`/`QUEUE_REDIS_URL` in `.env`.\n\n`src/queues/email.queue.ts` is a worked example — a producer-side `enqueueEmail({ to, subject, body })` helper you'd call from a route or service. `src/workers/email.worker.ts` is the matching processor (currently a `TODO` stub — fill in real logic).\n\n**The worker runs as its own process, separate from the API** (`src/worker.ts`, started with `npm run dev:worker` / `npm run start:worker`) — that's deliberate, not an oversight: a slow or stuck job then never blocks an HTTP response, and you can scale the API and the workers independently. For local dev, run it in a second terminal alongside `npm run dev`. `GET /healthz` reports whether the API process's own queue connection (used for enqueueing) is live; that's separate from whether a worker process happens to be running.\n\nNot using background jobs yet? This module is safe to leave installed and unused, or delete `src/config/queue.ts`, `src/queues/`, `src/workers/`, `src/worker.ts`, and the `bullmq`/`ioredis` dependencies entirely.\n"
+  },
+  "cjs": {
+    "dependencies": { "bullmq": "^6.0.5", "ioredis": "^6.0.0" },
+    "scripts": { "dev:worker": "nodemon worker.js", "start:worker": "node worker.js" },
+    "envExample": [
+      "# Optional — falls back to REDIS_URL, then localhost, if unset.",
+      "QUEUE_REDIS_URL=redis://127.0.0.1:6379"
+    ],
+    "wiring": {
+      "app": {
+        "imports": ["const { queueConnection } = require(\"./config/queue.js\");"],
+        "readiness": ["{ name: \"queue\", check: () => queueConnection.status === \"ready\" },"]
+      },
+      "loaders": {
+        "imports": ["const { emailQueue } = require(\"../queues/email.queue.js\");"],
+        "steps": ["await emailQueue.waitUntilReady();"]
+      },
+      "server": {
+        "imports": [
+          "const { emailQueue } = require(\"./queues/email.queue.js\");",
+          "const { queueConnection } = require(\"./config/queue.js\");"
+        ],
+        "shutdown": ["await emailQueue.close();", "await queueConnection.quit();"]
+      }
+    },
+    "readme": "\n## Background jobs\n\n[BullMQ](https://docs.bullmq.io) (Redis-backed). Run one locally with `docker run -p 6379:6379 redis`, or set `REDIS_URL`/`QUEUE_REDIS_URL` in `.env`.\n\n`queues/email.queue.js` is a worked example — a producer-side `enqueueEmail({ to, subject, body })` helper you'd call from a route or service. `workers/email.worker.js` is the matching processor (currently a `TODO` stub — fill in real logic).\n\n**The worker runs as its own process, separate from the API** (`worker.js`, started with `npm run dev:worker` / `npm run start:worker`) — that's deliberate, not an oversight: a slow or stuck job then never blocks an HTTP response, and you can scale the API and the workers independently. For local dev, run it in a second terminal alongside `npm run dev`. `GET /healthz` reports whether the API process's own queue connection (used for enqueueing) is live; that's separate from whether a worker process happens to be running.\n\nNot using background jobs yet? This module is safe to leave installed and unused, or delete `config/queue.js`, `queues/`, `workers/`, `worker.js`, and the `bullmq`/`ioredis` dependencies entirely.\n"
+  }
+}
