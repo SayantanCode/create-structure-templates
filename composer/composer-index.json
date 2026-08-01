@@ -456,6 +456,123 @@
       }
     },
     {
+      "key": "cache-redis",
+      "name": "Redis",
+      "dimension": "cache",
+      "dependsOn": [],
+      "framework": "any",
+      "languages": [
+        "esm",
+        "ts",
+        "cjs"
+      ],
+      "esm": {
+        "dependencies": {
+          "ioredis": "^6.0.0"
+        },
+        "envExample": [
+          "REDIS_URL=redis://127.0.0.1:6379"
+        ],
+        "wiring": {
+          "app": {
+            "imports": [
+              "import { redis } from \"./config/redis.js\";"
+            ],
+            "readiness": [
+              "{ name: \"redis\", check: () => redis.status === \"ready\" },"
+            ]
+          },
+          "loaders": {
+            "imports": [
+              "import { connectRedis } from \"../config/redis.js\";"
+            ],
+            "steps": [
+              "await connectRedis();"
+            ]
+          },
+          "server": {
+            "imports": [
+              "import { redis } from \"./config/redis.js\";"
+            ],
+            "shutdown": [
+              "await redis.quit();"
+            ]
+          }
+        },
+        "readme": "\n## Caching\n\nRedis via [ioredis](https://github.com/redis/ioredis). Run one locally with `docker run -p 6379:6379 redis`, or set `REDIS_URL` in `.env` to point at a hosted instance. The connection is opened in `loaders/index.js` before the app starts (same pattern as the database modules), and closed gracefully on shutdown.\n\nMost app code shouldn't call `redis.get`/`redis.set` directly — use the JSON-aware `cache` helper in `utils/cache.js` instead:\n\n```js\nimport { cache } from \"./utils/cache.js\";\n\n// Cache-aside: returns the cached value if present, otherwise runs the\n// function, caches its result for 60s, and returns that.\nconst user = await cache.getOrSet(`user:${id}`, 60, () => db.findUser(id));\n\nawait cache.set(\"some:key\", { hello: \"world\" }, 300); // TTL in seconds, optional\nawait cache.del(\"some:key\");\n```\n\n`GET /healthz` reports live connectivity (`redis.status === \"ready\"`). Not using caching anywhere yet? This module is safe to leave installed and unused, or delete `config/redis.js`/`utils/cache.js` and the `ioredis` dependency entirely.\n"
+      },
+      "ts": {
+        "dependencies": {
+          "ioredis": "^6.0.0"
+        },
+        "envExample": [
+          "REDIS_URL=redis://127.0.0.1:6379"
+        ],
+        "wiring": {
+          "app": {
+            "imports": [
+              "import { redis } from \"./config/redis.js\";"
+            ],
+            "readiness": [
+              "{ name: \"redis\", check: () => redis.status === \"ready\" },"
+            ]
+          },
+          "loaders": {
+            "imports": [
+              "import { connectRedis } from \"../config/redis.js\";"
+            ],
+            "steps": [
+              "await connectRedis();"
+            ]
+          },
+          "server": {
+            "imports": [
+              "import { redis } from \"./config/redis.js\";"
+            ],
+            "shutdown": [
+              "await redis.quit();"
+            ]
+          }
+        },
+        "readme": "\n## Caching\n\nRedis via [ioredis](https://github.com/redis/ioredis) (ships its own TypeScript types, no `@types/ioredis` needed). Run one locally with `docker run -p 6379:6379 redis`, or set `REDIS_URL` in `.env` to point at a hosted instance. The connection is opened in `src/loaders/index.ts` before the app starts (same pattern as the database modules), and closed gracefully on shutdown.\n\nMost app code shouldn't call `redis.get`/`redis.set` directly — use the JSON-aware `cache` helper in `src/utils/cache.ts` instead:\n\n```ts\nimport { cache } from \"./utils/cache.js\";\n\n// Cache-aside: returns the cached value if present, otherwise runs the\n// function, caches its result for 60s, and returns that.\nconst user = await cache.getOrSet(`user:${id}`, 60, () => db.findUser(id));\n\nawait cache.set(\"some:key\", { hello: \"world\" }, 300); // TTL in seconds, optional\nawait cache.del(\"some:key\");\n```\n\n`GET /healthz` reports live connectivity (`redis.status === \"ready\"`). Not using caching anywhere yet? This module is safe to leave installed and unused, or delete `src/config/redis.ts`/`src/utils/cache.ts` and the `ioredis` dependency entirely.\n"
+      },
+      "cjs": {
+        "dependencies": {
+          "ioredis": "^6.0.0"
+        },
+        "envExample": [
+          "REDIS_URL=redis://127.0.0.1:6379"
+        ],
+        "wiring": {
+          "app": {
+            "imports": [
+              "const { redis } = require(\"./config/redis.js\");"
+            ],
+            "readiness": [
+              "{ name: \"redis\", check: () => redis.status === \"ready\" },"
+            ]
+          },
+          "loaders": {
+            "imports": [
+              "const { connectRedis } = require(\"../config/redis.js\");"
+            ],
+            "steps": [
+              "await connectRedis();"
+            ]
+          },
+          "server": {
+            "imports": [
+              "const { redis } = require(\"./config/redis.js\");"
+            ],
+            "shutdown": [
+              "await redis.quit();"
+            ]
+          }
+        },
+        "readme": "\n## Caching\n\nRedis via [ioredis](https://github.com/redis/ioredis). Run one locally with `docker run -p 6379:6379 redis`, or set `REDIS_URL` in `.env` to point at a hosted instance. The connection is opened in `loaders/index.js` before the app starts (same pattern as the database modules), and closed gracefully on shutdown.\n\nMost app code shouldn't call `redis.get`/`redis.set` directly — use the JSON-aware `cache` helper in `utils/cache.js` instead:\n\n```js\nconst { cache } = require(\"./utils/cache.js\");\n\n// Cache-aside: returns the cached value if present, otherwise runs the\n// function, caches its result for 60s, and returns that.\nconst user = await cache.getOrSet(`user:${id}`, 60, () => db.findUser(id));\n\nawait cache.set(\"some:key\", { hello: \"world\" }, 300); // TTL in seconds, optional\nawait cache.del(\"some:key\");\n```\n\n`GET /healthz` reports live connectivity (`redis.status === \"ready\"`). Not using caching anywhere yet? This module is safe to leave installed and unused, or delete `config/redis.js`/`utils/cache.js` and the `ioredis` dependency entirely.\n"
+      }
+    },
+    {
       "key": "ci",
       "name": "GitHub Actions",
       "dimension": "ci",
