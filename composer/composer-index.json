@@ -858,6 +858,39 @@
       }
     },
     {
+      "key": "logging-winston",
+      "name": "Winston",
+      "dimension": "logging",
+      "dependsOn": [],
+      "framework": "express",
+      "languages": [
+        "esm",
+        "ts",
+        "cjs"
+      ],
+      "esm": {
+        "dependencies": {
+          "winston": "^3.19.0"
+        },
+        "wiring": {},
+        "readme": "\n## Logging\n\nWinston, instead of the Pino default. `utils/logger.js` exports the same `logger.info/warn/error/fatal/debug` calls every other module in this project already uses, so nothing else needed to change when you picked this. `middlewares/requestLogger.js` replaces `pino-http` with an equivalent hand-rolled middleware (attaches `req.log`, logs one line per finished request). Note: `pino`/`pino-http`/`pino-pretty` stay listed in `package.json` since they're baked into the base template — they're unused here and safe to remove by hand if you want a leaner `node_modules`.\n"
+      },
+      "ts": {
+        "dependencies": {
+          "winston": "^3.19.0"
+        },
+        "wiring": {},
+        "readme": "\n## Logging\n\nWinston, instead of the Pino default. `src/utils/logger.ts` exports the same `logger.info/warn/error/fatal/debug` calls every other module in this project already uses, so nothing else needed to change when you picked this. `src/middlewares/requestLogger.ts` replaces `pino-http` with an equivalent hand-rolled middleware (attaches `req.log`, logs one line per finished request). Note: `pino`/`pino-http`/`pino-pretty` stay listed in `package.json` since they're baked into the base template — they're unused here and safe to remove by hand if you want a leaner `node_modules`.\n"
+      },
+      "cjs": {
+        "dependencies": {
+          "winston": "^3.19.0"
+        },
+        "wiring": {},
+        "readme": "\n## Logging\n\nWinston, instead of the Pino default. `utils/logger.js` exports the same `logger.info/warn/error/fatal/debug` calls every other module in this project already uses, so nothing else needed to change when you picked this. `middlewares/requestLogger.js` replaces `pino-http` with an equivalent hand-rolled middleware (attaches `req.log`, logs one line per finished request). Note: `pino`/`pino-http`/`pino-pretty` stay listed in `package.json` since they're baked into the base template — they're unused here and safe to remove by hand if you want a leaner `node_modules`.\n"
+      }
+    },
+    {
       "key": "rbac-permission",
       "name": "Permission-based RBAC",
       "dimension": "rbac",
