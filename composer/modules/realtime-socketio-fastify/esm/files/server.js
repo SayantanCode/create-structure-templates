@@ -1,12 +1,11 @@
 import "dotenv/config";
-import { createServer } from "./app.js";
+import { loadApp } from "./loaders/index.js";
 import { Server } from "socket.io";
 import { registerSocketHandlers } from "./sockets/index.js";
 // __COMPOSER_IMPORTS__
 
 async function bootstrap() {
-  // __COMPOSER_STARTUP__
-  const app = createServer();
+  const app = await loadApp();
   const port = Number(process.env.PORT || 4000);
 
   // Socket.IO needs the raw http.Server to intercept the WebSocket upgrade —

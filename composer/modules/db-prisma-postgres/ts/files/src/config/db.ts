@@ -1,5 +1,6 @@
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/prisma/client.js";
+import { logger } from "../utils/logger.js";
 
 // Prisma 7's client requires an explicit driver adapter built from
 // DATABASE_URL, unlike Mongoose's mongoose.connect() which can be called
@@ -26,5 +27,5 @@ export const prisma = new Proxy({} as PrismaClient, {
 
 export async function connectDB() {
   await prisma.$connect();
-  console.log("🗄️  Connected to PostgreSQL");
+  logger.info("Connected to PostgreSQL");
 }

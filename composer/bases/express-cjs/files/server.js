@@ -1,12 +1,11 @@
 require("dotenv/config");
-const { createServer } = require("./app.js");
+const { loadApp } = require("./loaders/index.js");
 const { logger } = require("./utils/logger.js");
 const { env } = require("./config/env.js");
 // __COMPOSER_IMPORTS__
 
 async function bootstrap() {
-  // __COMPOSER_STARTUP__
-  const app = createServer();
+  const app = await loadApp();
   const port = env.PORT;
   const httpServer = app.listen(port, () => {
     logger.info(`🚀 Server ready at http://localhost:${port}`);

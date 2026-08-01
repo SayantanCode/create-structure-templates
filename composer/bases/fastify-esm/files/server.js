@@ -1,10 +1,9 @@
 import "dotenv/config";
-import { createServer } from "./app.js";
+import { loadApp } from "./loaders/index.js";
 // __COMPOSER_IMPORTS__
 
 async function bootstrap() {
-  // __COMPOSER_STARTUP__
-  const app = createServer();
+  const app = await loadApp();
   const port = Number(process.env.PORT || 4000);
   try {
     await app.listen({ port, host: "0.0.0.0" });
