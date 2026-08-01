@@ -11,13 +11,13 @@ export function requestLogger(req, res, next) {
   const start = process.hrtime.bigint();
 
   req.log = {
-    info: (message) => logger.info(message, { reqId }),
+    info: (message) => logger.info({ reqId }, message),
     error: (err) => logger.error({ err }, err instanceof Error ? err.message : String(err)),
   };
 
   res.on("finish", () => {
     const ms = Number(process.hrtime.bigint() - start) / 1e6;
-    logger.info(`${req.method} ${req.originalUrl} ${res.statusCode} ${ms.toFixed(1)}ms`, { reqId });
+    logger.info({ reqId }, `${req.method} ${req.originalUrl} ${res.statusCode} ${ms.toFixed(1)}ms`);
   });
 
   next();

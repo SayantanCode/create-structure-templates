@@ -27,35 +27,35 @@ const base = winston.createLogger({
   transports: [new winston.transports.Console()],
 });
 
-// The rest of this project calls logger.error({ err }, "message") and
-// logger.fatal(err, "message") — pino's "object/error argument first"
-// call style, so that every module built against `logger` (database
-// connectors, the realtime server, ...) works unchanged no matter which
-// logging library you picked. This wrapper normalizes both call shapes
-// onto Winston's own (message, meta) signature. Error objects don't
-// survive JSON.stringify on their own (message/stack are non-enumerable),
-// so we pull those out into plain fields — otherwise a crash would log
-// as an empty `{}` with no stack trace to debug it from.
+// Every level here accepts pino's own two call shapes — logger.info("msg")
+// and logger.error({ err }, "msg") / logger.fatal(err, "msg") (merging
+// object or error argument first, message second) — so every module built
+// against `logger` (database connectors, the realtime server, background
+// workers, ...) works unchanged no matter which logging library you
+// picked, and so this logger behaves like pino would if code elsewhere
+// calls it with metadata at any level, not just error/fatal. Error
+// objects don't survive JSON.stringify on their own (message/stack are
+// non-enumerable), so we pull those out into plain fields — otherwise a
+// crash would log as an empty `{}` with no stack trace to debug it from.
 function normalize(a, b) {
-  if (typeof a === "string" && b === undefined) return [a, {}];
+  if (typeof a === "string") return [a, {}];
   const err = a instanceof Error ? a : a?.err;
   const meta = a instanceof Error ? {} : { ...a };
   if (err instanceof Error) meta.err = { name: err.name, message: err.message, stack: err.stack };
   return [b ?? err?.message ?? String(a), meta];
 }
 
+function log(level, a, b) {
+  const [message, meta] = normalize(a, b);
+  base.log(level, message, meta);
+}
+
 const logger = {
-  fatal: (a, b) => {
-    const [message, meta] = normalize(a, b);
-    base.log("fatal", message, meta);
-  },
-  error: (a, b) => {
-    const [message, meta] = normalize(a, b);
-    base.log("error", message, meta);
-  },
-  warn: (message, meta) => base.warn(message, meta),
-  info: (message, meta) => base.info(message, meta),
-  debug: (message, meta) => base.debug(message, meta),
+  fatal: (a, b) => log("fatal", a, b),
+  error: (a, b) => log("error", a, b),
+  warn: (a, b) => log("warn", a, b),
+  info: (a, b) => log("info", a, b),
+  debug: (a, b) => log("debug", a, b),
 };
 
 module.exports = { logger };
