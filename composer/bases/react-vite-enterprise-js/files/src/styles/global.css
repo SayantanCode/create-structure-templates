@@ -1,0 +1,26 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  background: rgba(99, 102, 241, 0.1);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* MUI's CssBaseline (wired up in shared/providers/AppThemeProvider) handles
+   the rest of the reset — this file only holds the handful of things that
+   are genuinely global and outside MUI's own theming (the code style
+   above, and the html/body/#root sizing needed for a full-height layout). */

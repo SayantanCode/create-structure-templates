@@ -1,0 +1,71 @@
+{
+  "key": "state-redux",
+  "name": "Redux Toolkit",
+  "dimension": "state",
+  "dependsOn": [],
+  "framework": "react",
+  "languages": [
+    "jsx",
+    "tsx"
+  ],
+  "jsx": {
+    "dependencies": {
+      "@reduxjs/toolkit": "^2.9.0",
+      "react-redux": "^9.2.0"
+    },
+    "devDependencies": {},
+    "wiring": {
+      "app": {
+        "imports": [
+          "import { Provider } from \"react-redux\";",
+          "import { store } from \"@/store/store\";"
+        ],
+        "providersOpen": [
+          "<Provider store={store}>"
+        ],
+        "providersClose": [
+          "</Provider>"
+        ]
+      },
+      "home": {
+        "imports": [
+          "import { CounterDemo } from \"@/components/CounterDemo\";"
+        ],
+        "content": [
+          "<CounterDemo />"
+        ]
+      }
+    },
+    "readme": "\n## State\n\n[Redux Toolkit](https://redux-toolkit.js.org/) example slice at `src/store/counterSlice.js`, combined into the store at `src/store/store.js` (demoed by `src/components/CounterDemo.jsx`). Add your own state as a new slice, one `createSlice()` call per feature, added as one more key to the store's `reducer` map:\n\n```js\n// src/store/userPrefsSlice.js\nimport { createSlice } from \"@reduxjs/toolkit\";\n\nconst userPrefsSlice = createSlice({\n  name: \"userPrefs\",\n  initialState: { theme: \"light\" },\n  reducers: {\n    setTheme: (state, action) => {\n      state.theme = action.payload;\n    },\n  },\n});\n\nexport const { setTheme } = userPrefsSlice.actions;\nexport default userPrefsSlice.reducer;\n```\n\n```js\n// src/store/store.js\nimport userPrefsReducer from \"@/store/userPrefsSlice\";\n\nexport const store = configureStore({\n  reducer: {\n    counter: counterReducer,\n    userPrefs: userPrefsReducer,\n  },\n});\n```\n\n```jsx\nimport { useDispatch, useSelector } from \"react-redux\";\nimport { setTheme } from \"@/store/userPrefsSlice\";\n\nconst theme = useSelector((state) => state.userPrefs.theme);\nconst dispatch = useDispatch();\ndispatch(setTheme(\"dark\"));\n```\n\n`<Provider store={store}>` is already wired up in `src/App.jsx`, wrapping the whole tree.\n"
+  },
+  "tsx": {
+    "dependencies": {
+      "@reduxjs/toolkit": "^2.9.0",
+      "react-redux": "^9.2.0"
+    },
+    "devDependencies": {},
+    "wiring": {
+      "app": {
+        "imports": [
+          "import { Provider } from \"react-redux\";",
+          "import { store } from \"@/store/store\";"
+        ],
+        "providersOpen": [
+          "<Provider store={store}>"
+        ],
+        "providersClose": [
+          "</Provider>"
+        ]
+      },
+      "home": {
+        "imports": [
+          "import { CounterDemo } from \"@/components/CounterDemo\";"
+        ],
+        "content": [
+          "<CounterDemo />"
+        ]
+      }
+    },
+    "readme": "\n## State\n\n[Redux Toolkit](https://redux-toolkit.js.org/) example slice at `src/store/counterSlice.ts`, combined into the store at `src/store/store.ts` (demoed by `src/components/CounterDemo.tsx`). Add your own state as a new slice, one `createSlice()` call per feature, added as one more key to the store's `reducer` map:\n\n```ts\n// src/store/userPrefsSlice.ts\nimport { createSlice, type PayloadAction } from \"@reduxjs/toolkit\";\n\ninterface UserPrefsState {\n  theme: \"light\" | \"dark\";\n}\n\nconst userPrefsSlice = createSlice({\n  name: \"userPrefs\",\n  initialState: { theme: \"light\" } as UserPrefsState,\n  reducers: {\n    setTheme: (state, action: PayloadAction<\"light\" | \"dark\">) => {\n      state.theme = action.payload;\n    },\n  },\n});\n\nexport const { setTheme } = userPrefsSlice.actions;\nexport default userPrefsSlice.reducer;\n```\n\n```ts\n// src/store/store.ts\nimport userPrefsReducer from \"@/store/userPrefsSlice\";\n\nexport const store = configureStore({\n  reducer: {\n    counter: counterReducer,\n    userPrefs: userPrefsReducer,\n  },\n});\n```\n\n```tsx\nimport { useDispatch, useSelector } from \"react-redux\";\nimport { setTheme } from \"@/store/userPrefsSlice\";\nimport type { RootState, AppDispatch } from \"@/store/store\";\n\nconst theme = useSelector((state: RootState) => state.userPrefs.theme);\nconst dispatch = useDispatch<AppDispatch>();\ndispatch(setTheme(\"dark\"));\n```\n\n`<Provider store={store}>` is already wired up in `src/App.tsx`, wrapping the whole tree. `RootState`/`AppDispatch` (exported from `src/store/store.ts`) are the types to reach for whenever you need `useSelector`/`useDispatch` typed against your store.\n"
+  }
+}
