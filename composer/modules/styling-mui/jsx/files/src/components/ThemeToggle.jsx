@@ -3,7 +3,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import SettingsBrightnessIcon from "@mui/icons-material/SettingsBrightness";
-import { useTheme } from "../theme/ThemeContext";
+import { useTheme } from "@/theme/ThemeContext";
 
 export function ThemeToggle() {
   const { mode, setMode } = useTheme();

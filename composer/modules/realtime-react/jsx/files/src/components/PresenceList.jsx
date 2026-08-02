@@ -1,5 +1,5 @@
-import { useAuth } from "../auth/AuthContext";
-import { useRealtime } from "../realtime/RealtimeContext";
+import { useAuth } from "@/auth/AuthContext";
+import { useRealtime } from "@/realtime/RealtimeContext";
 
 // Demonstrates useRealtime() end to end — safe to delete once you've wired
 // your own real-time features. Requires being logged in (see AuthStatus):

@@ -11,12 +11,12 @@
     "envExample": ["VITE_SOCKET_URL=http://localhost:4000"],
     "wiring": {
       "app": {
-        "imports": ["import { RealtimeProvider } from \"./realtime/RealtimeContext\";"],
+        "imports": ["import { RealtimeProvider } from \"@/realtime/RealtimeContext\";"],
         "providersOpen": ["<RealtimeProvider>"],
         "providersClose": ["</RealtimeProvider>"]
       },
       "home": {
-        "imports": ["import { PresenceList } from \"../components/PresenceList\";"],
+        "imports": ["import { PresenceList } from \"@/components/PresenceList\";"],
         "content": ["<PresenceList />"]
       }
     },
@@ -28,12 +28,12 @@
     "envExample": ["VITE_SOCKET_URL=http://localhost:4000"],
     "wiring": {
       "app": {
-        "imports": ["import { RealtimeProvider } from \"./realtime/RealtimeContext\";"],
+        "imports": ["import { RealtimeProvider } from \"@/realtime/RealtimeContext\";"],
         "providersOpen": ["<RealtimeProvider>"],
         "providersClose": ["</RealtimeProvider>"]
       },
       "home": {
-        "imports": ["import { PresenceList } from \"../components/PresenceList\";"],
+        "imports": ["import { PresenceList } from \"@/components/PresenceList\";"],
         "content": ["<PresenceList />"]
       }
     },

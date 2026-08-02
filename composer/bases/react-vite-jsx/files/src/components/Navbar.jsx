@@ -1,4 +1,4 @@
-import { ThemeToggle } from "./ThemeToggle";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 // Always present, regardless of whether router-react is picked — a stable
 // brand/navigation anchor so Home and (when routing is on) 404 read as

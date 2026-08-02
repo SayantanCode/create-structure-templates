@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "../components/Button";
+import { Button } from "@/components";
 
 // A real, separate page (not a fragment squeezed into the showcase card) —
 // its own background, its own illustration. The SVG below is an original,

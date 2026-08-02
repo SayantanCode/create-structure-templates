@@ -18,6 +18,7 @@ src/
   theme/
     ThemeContext.tsx     — useTheme()/ThemeProvider — light/dark/system
   components/
+    index.ts               — barrel export: `import { Button, Input } from "@/components"`
     Navbar.tsx            — floating top nav (brand + Home link + ThemeToggle)
     Button.tsx           — reusable button (implementation depends on which styling library you picked)
     Input.tsx             — reusable text input
@@ -25,14 +26,19 @@ src/
     Spinner.tsx           — reusable loading indicator
     ThemeToggle.tsx        — the light/dark/system switcher, lives in Navbar
     ErrorBoundary.tsx     — catches render errors, shows a fallback instead of a blank screen
+    FormField.tsx          — icon + label + input (+ password show/hide toggle) — see "Forms" below
 ```
+
+## Path aliases
+
+`@/` maps to `src/` (configured in `vite.config.ts`'s `resolve.alias` and mirrored in `tsconfig.json`'s `paths` so editors resolve it too) — `@/components`, `@/theme/ThemeContext`, `@/auth/AuthContext`, and so on, instead of `../../../` chains that get worse the deeper a file lives. Every file in this project already uses it; keep doing the same as you add your own.
 
 ## Theming: light / dark / system
 
 `ThemeProvider` (in `src/theme/ThemeContext.tsx`) wraps the whole app — always on, not a scaffold-time choice — with three built-in modes, persisted to `localStorage`. `ThemeToggle` (fixed top-right) switches between them; picking "System" live-tracks the OS `prefers-color-scheme` setting.
 
 ```tsx
-import { useTheme } from "./theme/ThemeContext";
+import { useTheme } from "@/theme/ThemeContext";
 
 const { mode, setMode } = useTheme(); // mode: "light" | "dark" | "system"
 ```
@@ -43,17 +49,34 @@ If you picked MUI or Ant Design, their own theming API (`ThemeProvider`/`createT
 
 ## The `components/` contract
 
-`Button` / `Input` / `Modal` / `Spinner` / `ThemeToggle` are the one place every other module (auth forms, router pages, the state demo, ...) depends on — and the _only_ thing that changes based on which styling library you picked at scaffold time (Tailwind / MUI / Ant Design / plain CSS). Whichever one you chose owns these files; everything else in the project imports them the same way regardless of which library is actually behind them:
+`Button` / `Input` / `Modal` / `Spinner` / `ThemeToggle` are the one place every other module (auth forms, router pages, the state demo, ...) depends on — and the _only_ thing that changes based on which styling library you picked at scaffold time (Tailwind / MUI / Ant Design / plain CSS). Whichever one you chose owns these files; everything else in the project imports them the same way regardless of which library is actually behind them, through the barrel export at `src/components/index.ts`:
 
 ```tsx
-import { Button } from "./components/Button";
-import { Input } from "./components/Input";
+import { Button, Input } from "@/components";
 
 <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
 <Button onClick={handleSubmit}>Submit</Button>
 ```
 
 Want to switch styling libraries later? Re-run the composer, or hand-replace these files with your own implementation — nothing else in the project needs to change. The component showcase on the home page (`src/pages/Home.tsx`) exercises all four — a real, working example of each, not just an import you have to trust. If you picked MUI or Ant Design, their own `createTheme`/`ConfigProvider` primary color is pinned to the same indigo/purple accent the hero and Tailwind's own `Button` use, so the brand stays consistent regardless of which styling library is behind the widgets.
+
+## Forms
+
+`FormField` (`src/components/FormField.tsx`) is the icon + label + input wrapper every form in this project builds on — it composes the swappable `Input` primitive above, so it already looks right whichever styling library you picked, and manages its own show/hide toggle when `type="password"` instead of every form re-implementing that. Add a field the same way the Auth module's `LoginForm`/`RegisterForm` do:
+
+```tsx
+<FormField
+  id="login-email"
+  label="Email"
+  type="email"
+  icon={<EmailIcon />}
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  required
+/>
+```
+
+`icon` takes any `ReactNode` — an inline SVG (see `LoginForm.tsx` for examples) or an icon from a library if you add one. There's no per-field error prop by design: this project's forms show one error banner per form (server-side validation result), not per-field client-side errors — add your own `error` prop to `FormField` if you want the latter.
 
 ## Linting & formatting
 

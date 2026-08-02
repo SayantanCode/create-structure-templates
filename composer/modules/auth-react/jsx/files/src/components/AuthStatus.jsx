@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { useAuth } from "../auth/AuthContext";
-import { LoginForm } from "./LoginForm";
-import { RegisterForm } from "./RegisterForm";
-import { Button } from "./Button";
-import { Spinner } from "./Spinner";
+import { useAuth } from "@/auth/AuthContext";
+import { LoginForm } from "@/components/LoginForm";
+import { RegisterForm } from "@/components/RegisterForm";
+import { Button, Spinner } from "@/components";
 
 // Demonstrates useAuth() end to end — safe to delete once you've wired
 // login/register into your own pages/routes.

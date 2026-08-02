@@ -1,7 +1,7 @@
-import { ThemeProvider } from "./theme/ThemeContext";
-import { Navbar } from "./components/Navbar";
-import { Home } from "./pages/Home";
-import "./App.css";
+import { ThemeProvider } from "@/theme/ThemeContext";
+import { Navbar } from "@/components";
+import { Home } from "@/pages/Home";
+import "@/App.css";
 // __COMPOSER_IMPORTS__
 
 function App() {

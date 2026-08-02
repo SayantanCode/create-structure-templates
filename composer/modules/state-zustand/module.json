@@ -16,7 +16,7 @@
     "wiring": {
       "home": {
         "imports": [
-          "import { CounterDemo } from \"../components/CounterDemo\";"
+          "import { CounterDemo } from \"@/components/CounterDemo\";"
         ],
         "content": [
           "<CounterDemo />"
@@ -33,7 +33,7 @@
     "wiring": {
       "home": {
         "imports": [
-          "import { CounterDemo } from \"../components/CounterDemo\";"
+          "import { CounterDemo } from \"@/components/CounterDemo\";"
         ],
         "content": [
           "<CounterDemo />"

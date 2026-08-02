@@ -1,8 +1,5 @@
 import { useState } from "react";
-import { Button } from "../components/Button";
-import { Input } from "../components/Input";
-import { Modal } from "../components/Modal";
-import { Spinner } from "../components/Spinner";
+import { Button, Input, Modal, Spinner } from "@/components";
 // __COMPOSER_IMPORTS__
 
 export function Home() {

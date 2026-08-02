@@ -1,5 +1,5 @@
-import { useStore } from "../store/useStore";
-import { Button } from "./Button";
+import { useStore } from "@/store/useStore";
+import { Button } from "@/components";
 
 // Demonstrates the store from src/store/useStore.js — safe to delete once
 // you've wired up your own state.

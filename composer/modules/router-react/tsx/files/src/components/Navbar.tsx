@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ThemeToggle } from "./ThemeToggle";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 // Overwrites the base's Navbar (same file path) with one that uses
 // react-router's <Link> instead of a plain <a> — client-side navigation

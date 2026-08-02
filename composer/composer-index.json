@@ -408,7 +408,7 @@
         "wiring": {
           "app": {
             "imports": [
-              "import { AuthProvider } from \"./auth/AuthContext\";"
+              "import { AuthProvider } from \"@/auth/AuthContext\";"
             ],
             "providersOpen": [
               "<AuthProvider>"
@@ -419,14 +419,14 @@
           },
           "home": {
             "imports": [
-              "import { AuthStatus } from \"../components/AuthStatus\";"
+              "import { AuthStatus } from \"@/components/AuthStatus\";"
             ],
             "content": [
               "<AuthStatus />"
             ]
           }
         },
-        "readme": "\n## Auth\n\n`useAuth()` (from `src/auth/AuthContext.jsx`) talks to the exact JWT contract the backend composer's `auth-jwt*` modules expose: `POST /auth/{register,login,refresh,logout}`, `GET /auth/me`. The access token is kept in memory only; the refresh token is an httpOnly cookie the browser sends automatically (`credentials: \"include\"` in `src/auth/authApi.js`) — a page reload silently re-authenticates via that cookie, nothing is ever put in localStorage.\n\n```jsx\nimport { useAuth } from \"./auth/AuthContext\";\nimport { Button } from \"./components/Button\";\nimport { Spinner } from \"./components/Spinner\";\nimport { LoginForm } from \"./components/LoginForm\";\n\nfunction Profile() {\n  const { user, loading, logout } = useAuth();\n  if (loading) return <Spinner />;\n  if (!user) return <LoginForm />;\n  return (\n    <>\n      <p>Signed in as {user.email}</p>\n      <Button onClick={logout}>Log out</Button>\n    </>\n  );\n}\n```\n\n`LoginForm` / `RegisterForm` / `AuthStatus` in `src/components/` are ready-made — `AuthStatus` is the pattern above, already wired together, and is what's dropped into `src/App.jsx` by default.\n\nSet `VITE_API_URL` in `.env` to point at your backend (defaults to `http://localhost:4000/api/v1`, matching the backend composer's default). If your backend runs on a different origin than this frontend's dev server, also set `CORS_ORIGIN` on the *backend* to match this app's URL — the backend composer's CORS setup only allows one specific origin plus credentials, by design (a wildcard origin can't be paired with credentialed requests at all).\n"
+        "readme": "\n## Auth\n\n`useAuth()` (from `src/auth/AuthContext.jsx`) talks to the exact JWT contract the backend composer's `auth-jwt*` modules expose: `POST /auth/{register,login,refresh,logout}`, `GET /auth/me`. The access token is kept in memory only; the refresh token is an httpOnly cookie the browser sends automatically (`credentials: \"include\"` in `src/auth/authApi.js`) — a page reload silently re-authenticates via that cookie, nothing is ever put in localStorage.\n\n```jsx\nimport { useAuth } from \"@/auth/AuthContext\";\nimport { Button, Spinner } from \"@/components\";\nimport { LoginForm } from \"@/components/LoginForm\";\n\nfunction Profile() {\n  const { user, loading, logout } = useAuth();\n  if (loading) return <Spinner />;\n  if (!user) return <LoginForm />;\n  return (\n    <>\n      <p>Signed in as {user.email}</p>\n      <Button onClick={logout}>Log out</Button>\n    </>\n  );\n}\n```\n\n`LoginForm` / `RegisterForm` / `AuthStatus` in `src/components/` are ready-made — `AuthStatus` is the pattern above, already wired together, and is what's dropped into `src/App.jsx` by default.\n\nSet `VITE_API_URL` in `.env` to point at your backend (defaults to `http://localhost:4000/api/v1`, matching the backend composer's default). If your backend runs on a different origin than this frontend's dev server, also set `CORS_ORIGIN` on the *backend* to match this app's URL — the backend composer's CORS setup only allows one specific origin plus credentials, by design (a wildcard origin can't be paired with credentialed requests at all).\n"
       },
       "tsx": {
         "dependencies": {},
@@ -434,7 +434,7 @@
         "wiring": {
           "app": {
             "imports": [
-              "import { AuthProvider } from \"./auth/AuthContext\";"
+              "import { AuthProvider } from \"@/auth/AuthContext\";"
             ],
             "providersOpen": [
               "<AuthProvider>"
@@ -445,14 +445,14 @@
           },
           "home": {
             "imports": [
-              "import { AuthStatus } from \"../components/AuthStatus\";"
+              "import { AuthStatus } from \"@/components/AuthStatus\";"
             ],
             "content": [
               "<AuthStatus />"
             ]
           }
         },
-        "readme": "\n## Auth\n\n`useAuth()` (from `src/auth/AuthContext.tsx`) talks to the exact JWT contract the backend composer's `auth-jwt*` modules expose: `POST /auth/{register,login,refresh,logout}`, `GET /auth/me`. The access token is kept in memory only; the refresh token is an httpOnly cookie the browser sends automatically (`credentials: \"include\"` in `src/auth/authApi.ts`) — a page reload silently re-authenticates via that cookie, nothing is ever put in localStorage.\n\n```tsx\nimport { useAuth } from \"./auth/AuthContext\";\nimport { Button } from \"./components/Button\";\nimport { Spinner } from \"./components/Spinner\";\nimport { LoginForm } from \"./components/LoginForm\";\n\nfunction Profile() {\n  const { user, loading, logout } = useAuth();\n  if (loading) return <Spinner />;\n  if (!user) return <LoginForm />;\n  return (\n    <>\n      <p>Signed in as {user.email}</p>\n      <Button onClick={logout}>Log out</Button>\n    </>\n  );\n}\n```\n\n`LoginForm` / `RegisterForm` / `AuthStatus` in `src/components/` are ready-made — `AuthStatus` is the pattern above, already wired together, and is what's dropped into `src/App.tsx` by default.\n\nSet `VITE_API_URL` in `.env` to point at your backend (defaults to `http://localhost:4000/api/v1`, matching the backend composer's default). If your backend runs on a different origin than this frontend's dev server, also set `CORS_ORIGIN` on the *backend* to match this app's URL — the backend composer's CORS setup only allows one specific origin plus credentials, by design (a wildcard origin can't be paired with credentialed requests at all).\n"
+        "readme": "\n## Auth\n\n`useAuth()` (from `src/auth/AuthContext.tsx`) talks to the exact JWT contract the backend composer's `auth-jwt*` modules expose: `POST /auth/{register,login,refresh,logout}`, `GET /auth/me`. The access token is kept in memory only; the refresh token is an httpOnly cookie the browser sends automatically (`credentials: \"include\"` in `src/auth/authApi.ts`) — a page reload silently re-authenticates via that cookie, nothing is ever put in localStorage.\n\n```tsx\nimport { useAuth } from \"@/auth/AuthContext\";\nimport { Button, Spinner } from \"@/components\";\nimport { LoginForm } from \"@/components/LoginForm\";\n\nfunction Profile() {\n  const { user, loading, logout } = useAuth();\n  if (loading) return <Spinner />;\n  if (!user) return <LoginForm />;\n  return (\n    <>\n      <p>Signed in as {user.email}</p>\n      <Button onClick={logout}>Log out</Button>\n    </>\n  );\n}\n```\n\n`LoginForm` / `RegisterForm` / `AuthStatus` in `src/components/` are ready-made — `AuthStatus` is the pattern above, already wired together, and is what's dropped into `src/App.tsx` by default.\n\nSet `VITE_API_URL` in `.env` to point at your backend (defaults to `http://localhost:4000/api/v1`, matching the backend composer's default). If your backend runs on a different origin than this frontend's dev server, also set `CORS_ORIGIN` on the *backend* to match this app's URL — the backend composer's CORS setup only allows one specific origin plus credentials, by design (a wildcard origin can't be paired with credentialed requests at all).\n"
       }
     },
     {
@@ -1583,7 +1583,7 @@
         "wiring": {
           "app": {
             "imports": [
-              "import { RealtimeProvider } from \"./realtime/RealtimeContext\";"
+              "import { RealtimeProvider } from \"@/realtime/RealtimeContext\";"
             ],
             "providersOpen": [
               "<RealtimeProvider>"
@@ -1594,7 +1594,7 @@
           },
           "home": {
             "imports": [
-              "import { PresenceList } from \"../components/PresenceList\";"
+              "import { PresenceList } from \"@/components/PresenceList\";"
             ],
             "content": [
               "<PresenceList />"
@@ -1614,7 +1614,7 @@
         "wiring": {
           "app": {
             "imports": [
-              "import { RealtimeProvider } from \"./realtime/RealtimeContext\";"
+              "import { RealtimeProvider } from \"@/realtime/RealtimeContext\";"
             ],
             "providersOpen": [
               "<RealtimeProvider>"
@@ -1625,7 +1625,7 @@
           },
           "home": {
             "imports": [
-              "import { PresenceList } from \"../components/PresenceList\";"
+              "import { PresenceList } from \"@/components/PresenceList\";"
             ],
             "content": [
               "<PresenceList />"
@@ -1717,7 +1717,7 @@
         },
         "devDependencies": {},
         "wiring": {},
-        "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) v6 is wired up — `src/App.jsx` and `src/components/Navbar.jsx` are overwritten with routing-aware versions (same file paths as the base ships, so every other module's wiring into `App.jsx`'s provider anchors keeps working unmodified) that wrap `src/pages/Home.jsx` and a new `src/pages/NotFound.jsx` in `<BrowserRouter><Routes>...</Routes></BrowserRouter>`, with `Navbar`'s links using `<Link>` for real client-side navigation instead of a full page reload.\n\nAdd a new page:\n\n```jsx\n// src/pages/About.jsx\nexport function About() {\n  return <h2>About</h2>;\n}\n```\n\n```jsx\n// src/App.jsx — add inside the existing <Routes>\nimport { About } from \"./pages/About\";\n// ...\n<Route path=\"/about\" element={<About />} />\n```\n\n`npm audit` will flag a moderate open-redirect advisory in this version (fixed only in v7, which currently has its own higher-severity advisory in the data-router/actions APIs this starter doesn't use) — it requires passing untrusted, attacker-controlled input into a `<Link>`/`useNavigate` target, which none of the code here does. Worth re-checking before you add anything that builds a redirect URL from user input.\n"
+        "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) v6 is wired up — `src/App.jsx` and `src/components/Navbar.jsx` are overwritten with routing-aware versions (same file paths as the base ships, so every other module's wiring into `App.jsx`'s provider anchors keeps working unmodified) that wrap `src/pages/Home.jsx` and a new `src/pages/NotFound.jsx` in `<BrowserRouter><Routes>...</Routes></BrowserRouter>`, with `Navbar`'s links using `<Link>` for real client-side navigation instead of a full page reload.\n\nAdd a new page:\n\n```jsx\n// src/pages/About.jsx\nexport function About() {\n  return <h2>About</h2>;\n}\n```\n\n```jsx\n// src/App.jsx — add inside the existing <Routes>\nimport { About } from \"@/pages/About\";\n// ...\n<Route path=\"/about\" element={<About />} />\n```\n\n`npm audit` will flag a moderate open-redirect advisory in this version (fixed only in v7, which currently has its own higher-severity advisory in the data-router/actions APIs this starter doesn't use) — it requires passing untrusted, attacker-controlled input into a `<Link>`/`useNavigate` target, which none of the code here does. Worth re-checking before you add anything that builds a redirect URL from user input.\n"
       },
       "tsx": {
         "dependencies": {
@@ -1725,7 +1725,7 @@
         },
         "devDependencies": {},
         "wiring": {},
-        "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) v6 is wired up — `src/App.tsx` and `src/components/Navbar.tsx` are overwritten with routing-aware versions (same file paths as the base ships, so every other module's wiring into `App.tsx`'s provider anchors keeps working unmodified) that wrap `src/pages/Home.tsx` and a new `src/pages/NotFound.tsx` in `<BrowserRouter><Routes>...</Routes></BrowserRouter>`, with `Navbar`'s links using `<Link>` for real client-side navigation instead of a full page reload.\n\nAdd a new page:\n\n```tsx\n// src/pages/About.tsx\nexport function About() {\n  return <h2>About</h2>;\n}\n```\n\n```tsx\n// src/App.tsx — add inside the existing <Routes>\nimport { About } from \"./pages/About\";\n// ...\n<Route path=\"/about\" element={<About />} />\n```\n\n`npm audit` will flag a moderate open-redirect advisory in this version (fixed only in v7, which currently has its own higher-severity advisory in the data-router/actions APIs this starter doesn't use) — it requires passing untrusted, attacker-controlled input into a `<Link>`/`useNavigate` target, which none of the code here does. Worth re-checking before you add anything that builds a redirect URL from user input.\n"
+        "readme": "\n## Routing\n\n[React Router](https://reactrouter.com) v6 is wired up — `src/App.tsx` and `src/components/Navbar.tsx` are overwritten with routing-aware versions (same file paths as the base ships, so every other module's wiring into `App.tsx`'s provider anchors keeps working unmodified) that wrap `src/pages/Home.tsx` and a new `src/pages/NotFound.tsx` in `<BrowserRouter><Routes>...</Routes></BrowserRouter>`, with `Navbar`'s links using `<Link>` for real client-side navigation instead of a full page reload.\n\nAdd a new page:\n\n```tsx\n// src/pages/About.tsx\nexport function About() {\n  return <h2>About</h2>;\n}\n```\n\n```tsx\n// src/App.tsx — add inside the existing <Routes>\nimport { About } from \"@/pages/About\";\n// ...\n<Route path=\"/about\" element={<About />} />\n```\n\n`npm audit` will flag a moderate open-redirect advisory in this version (fixed only in v7, which currently has its own higher-severity advisory in the data-router/actions APIs this starter doesn't use) — it requires passing untrusted, attacker-controlled input into a `<Link>`/`useNavigate` target, which none of the code here does. Worth re-checking before you add anything that builds a redirect URL from user input.\n"
       }
     },
     {
@@ -1746,7 +1746,7 @@
         "wiring": {
           "home": {
             "imports": [
-              "import { CounterDemo } from \"../components/CounterDemo\";"
+              "import { CounterDemo } from \"@/components/CounterDemo\";"
             ],
             "content": [
               "<CounterDemo />"
@@ -1763,7 +1763,7 @@
         "wiring": {
           "home": {
             "imports": [
-              "import { CounterDemo } from \"../components/CounterDemo\";"
+              "import { CounterDemo } from \"@/components/CounterDemo\";"
             ],
             "content": [
               "<CounterDemo />"

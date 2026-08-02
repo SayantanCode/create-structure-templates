@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { useTheme, ThemeMode } from "../theme/ThemeContext";
+import { useTheme, ThemeMode } from "@/theme/ThemeContext";
 
 const OPTIONS: { mode: ThemeMode; label: string; icon: ReactNode }[] = [
   {

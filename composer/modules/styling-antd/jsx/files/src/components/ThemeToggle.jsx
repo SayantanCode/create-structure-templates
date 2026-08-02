@@ -1,6 +1,6 @@
 import Segmented from "antd/es/segmented";
 import { BulbOutlined, BulbFilled, DesktopOutlined } from "@ant-design/icons";
-import { useTheme } from "../theme/ThemeContext";
+import { useTheme } from "@/theme/ThemeContext";
 
 export function ThemeToggle() {
   const { mode, setMode } = useTheme();
